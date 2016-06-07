@@ -1,0 +1,30 @@
+{
+  "name": "team-organiser",
+  "version": "1.0.0",
+  "description": "UI for updating custodian teams",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.svc.ft.com:7999/cmdb/cmdb-key-manager.git"
+  },
+  "keywords": [
+    "teams",
+    "delivery teams",
+    "custodian teams",
+    "third-line support"
+  ],
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "mustache-express": "^1.2.2",
+    "request": "^2.69.0",
+    "s3o-middleware": "^1.6.0"
+  },
+  "engines": {
+    "node": "5.3.0"
+  }
+}
