@@ -61,8 +61,8 @@
 			{{#teams}}
 				<div class='team'>
 					<h3>{{name}}</h3>
-					Slack: #{{slack}}<br/>
-					Email: {{email}}<br/>
+					{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
+					{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
 					{{#programme}}Programme: {{programme}}{{/programme}}
 
 					<form action="/teams/{{teamid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
