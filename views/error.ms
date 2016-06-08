@@ -2,7 +2,7 @@
 <html>
   	<head>
 		<meta charset="UTF-8">
-		<title>Error | Team Organiser</title>
+		<title>Error | Contact Organiser</title>
 		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3" />
 
 	    <style type="text/css">
@@ -23,7 +23,7 @@
 					<div class="o-header__primary__left">
 						<a href="/" class="o-header__logo o-header__logo--ft">
 							<abbr title="Financial Times">FT</abbr>
-							<h1 class="o-header__title">Team Organiser</h1>
+							<h1 class="o-header__title">Contact Organiser</h1>
 						</a>
 					</div>
 					<div class="o-header__primary__center"><h3 class="o-header__tagline">Organising the Custodians of our Systems</h3>

@@ -1,6 +1,6 @@
-# Team Organiser
+# Contact Organiser
 
-A user interface for updating custodian teams of our systems.
+A user interface for updating inforamtion about the custodians of our systems.
 
 ## Local Dev
 Run `npm start`

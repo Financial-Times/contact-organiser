@@ -2,7 +2,7 @@
 <html>
   	<head>
 		<meta charset="UTF-8">
-		<title>Team Organiser</title>
+		<title>Contact Organiser</title>
 		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3" />
 
 		<style type="text/css">
@@ -15,14 +15,14 @@
 			.edit-button {
 				float: right;
 			}
-			.team {
+			.contact {
 				margin: 1em auto;
 				border: 1px solid #ccc;
     			padding: 0 14px 2em;
     			display: block;
 			}
 			@media (min-width: 750px) {
-				.team {
+				.contact {
 					margin: 15px;
 					width: 300px;
 					max-width: 100%;
@@ -49,7 +49,7 @@
 					<div class="o-header__primary__left">
 						<a href="/" class="o-header__logo o-header__logo--ft">
 							<abbr title="Financial Times">FT</abbr>
-							<h1 class="o-header__title">Team Organiser</h1>
+							<h1 class="o-header__title">Contact Organiser</h1>
 						</a>
 					</div>
 					<div class="o-header__primary__center"><h3 class="o-header__tagline">Organising the Custodians of our Systems</h3>
@@ -58,17 +58,17 @@
 			</div>
 		</header>
 		<div id='content'>
-			{{#teams}}
-				<div class='team'>
+			{{#contacts}}
+				<div class='contact'>
 					<h3>{{name}}</h3>
 					{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
 					{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
 					{{#programme}}Programme: {{programme}}{{/programme}}
 
-					<form action="/teams/{{teamid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+					<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 				</div>
-			{{/teams}}
-			<form id='new' action="/new"><input type='submit' class="o-buttons o-buttons--standout" value="Add New Team"></form>
+			{{/contacts}}
+			<form id='new' action="/new"><input type='submit' class="o-buttons o-buttons--standout" value="Add New Contact"></form>
 
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3"></script>

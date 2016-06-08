@@ -2,7 +2,7 @@
 <html>
   	<head>
 		<meta charset="UTF-8">
-		<title>Team Organiser</title>
+		<title>Contact Organiser</title>
 		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3" />
 
 		<style type="text/css">
@@ -67,7 +67,7 @@
 					<div class="o-header__primary__left">
 						<a href="/" class="o-header__logo o-header__logo--ft">
 							<abbr title="Financial Times">FT</abbr>
-							<h1 class="o-header__title">Team Organiser</h1>
+							<h1 class="o-header__title">Contact Organiser</h1>
 						</a>
 					</div>
 					<div class="o-header__primary__center"><h3 class="o-header__tagline">Organising the Custodians of our Systems</h3>
@@ -76,17 +76,17 @@
 			</div>
 		</header>
 		<div id='content'>
-			<form action="{{#_new}}/new{{/_new}}{{^_new}}/teams/{{teamid}}{{/_new}}" method="post">
-				{{#_saved}}<span id='saved'>Team data saved</span>{{/_saved}}
-				{{#_new}}<label>Team ID: <input name="teamid" placeholder="team-name" /> (cannot be changed after setting)</label>{{/_new}}
-				<label>Name: <input name="name" value="{{name}}" placeholder="Name of Team" /></label>
-				<label>Slack: #<input name="slack" value="{{slack}}" placeholder="teamname-support"/></label>
-				<label>Email: <input name="email" value="{{email}}" placeholder="team.name@ft.com"/></label>
+			<form action="{{#_new}}/new{{/_new}}{{^_new}}/contacts/{{contactid}}{{/_new}}" method="post">
+				{{#_saved}}<span id='saved'>Contact data saved</span>{{/_saved}}
+				{{#_new}}<label>Contact ID: <input name="contactid" placeholder="contact-name" /> (cannot be changed after setting)</label>{{/_new}}
+				<label>Name: <input name="name" value="{{name}}" placeholder="Name of Contact" /></label>
+				<label>Slack Channel: #<input name="slack" value="{{slack}}" placeholder="contactname-support"/></label>
+				<label>Email: <input name="email" value="{{email}}" placeholder="contact.name@ft.com"/></label>
 				<label>Programme: <input name="programme" value="{{programme}}" placeholder="Programme" /></label>
 
 				<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>
 			</form>
-			{{^_new}}<form id="delete" action="/teams/{{teamid}}/delete" method="post">
+			{{^_new}}<form id="delete" action="/contacts/{{contactid}}/delete" method="post">
 				<input type='submit' class="o-buttons o-buttons--standout delete-button" value='Delete' />
 			</form>{{/_new}}
 
