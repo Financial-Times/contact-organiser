@@ -3,7 +3,7 @@
   	<head>
 		<meta charset="UTF-8">
 		<title>Contact Organiser</title>
-		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3" />
+		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.3" />
 
 		<style type="text/css">
 		  	body {
@@ -31,17 +31,18 @@
 				float: right;
 			}
 			#saved {
-				display: block;
-			    background: #cfc;
-			    padding: 0.5em;
-			    font-weight: bold;
-			    text-align: center;
 			    transition: opacity 5s;
 			}
-			#saved.hidden {
+			#saved.hide {
 				opacity: 0;
 			}
 			label {
+				display: block;
+			}
+			.o-forms-errortext {
+				display: none;
+			}
+			.o-forms--error > .o-forms-errortext {
 				display: block;
 			}
   		</style>
@@ -53,9 +54,28 @@
 					window.setTimeout(function () {
 						var savedmessage = document.querySelector('#saved');
 						if (savedmessage) {
-							savedmessage.setAttribute("class", "hidden");
+							savedmessage.setAttribute("class", savedmessage.getAttribute("class")+" hide");
 						}
 					}, 5000);
+					function checkValidity(input, group) {
+						if(!input.value) {
+							group.setAttribute("class","o-forms-group");
+						} else if(input.checkValidity()){
+							group.setAttribute("class","o-forms-group o-forms--valid");
+						} else {
+							group.setAttribute("class","o-forms-group o-forms--error");
+						}
+					}
+					var emailinput = document.querySelector('#email');
+					checkValidity(emailinput, emailinput.parentNode);
+					emailinput.addEventListener('change', function (){
+						checkValidity(emailinput, emailinput.parentNode);
+					});
+					var slackinput = document.querySelector('#slack');
+					checkValidity(slackinput, slackinput.parentNode.parentNode);
+					slackinput.addEventListener('change', function (){
+						checkValidity(slackinput, slackinput.parentNode.parentNode);
+					});
   				});
   			-->
   		</script>
@@ -77,12 +97,34 @@
 		</header>
 		<div id='content'>
 			<form action="{{#_new}}/new{{/_new}}{{^_new}}/contacts/{{contactid}}{{/_new}}" method="post">
-				{{#_saved}}<span id='saved'>Contact data saved</span>{{/_saved}}
+				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
+					<p>Contact data saved</p>
+				</div>{{/_saved}}
 				{{#_new}}<label>Contact ID: <input name="contactid" placeholder="contact-name" /> (cannot be changed after setting)</label>{{/_new}}
-				<label>Name: <input name="name" value="{{name}}" placeholder="Name of Contact" /></label>
-				<label>Slack Channel: #<input name="slack" value="{{slack}}" placeholder="contactname-support"/></label>
-				<label>Email: <input name="email" value="{{email}}" placeholder="contact.name@ft.com"/></label>
-				<label>Programme: <input name="programme" value="{{programme}}" placeholder="Programme" /></label>
+				<div class="o-forms-wrapper o-forms-wrapper--highlight">
+					<div class="o-forms-group">
+						<label class="o-forms-label" for="name">Name</label>
+						<small class="o-forms-additional-info">The name of the team or individual</small>
+						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms-text" id="name" required></input>
+					</div>
+				</div>
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="slack">Slack Channel</label>
+					<div class="o-forms-affix-wrapper">
+						<span class="o-forms-prefix">#</span>
+						<input type="text" name="slack" value="{{slack}}" placeholder="teamname-support" class="o-forms-text" id="slack" pattern="[a-z0-9\-_]{1,21}"></input>
+					</div>
+					<div class="o-forms-errortext">Please enter a valid slack channel</div>
+				</div>
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="email">Email</label>
+					<input type="email" name="email" value="{{email}}" placeholder="contact.name@ft.com" class="o-forms-text" id="email"></input>
+					<div class="o-forms-errortext">Please enter a valid email address</div>
+				</div>
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="programme">Programme</label>
+					<input type="text" name="programme" value="{{programme}}" placeholder="Programme" class="o-forms-text" id="programme"></input>
+				</div>
 
 				<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>
 			</form>
@@ -91,6 +133,6 @@
 			</form>{{/_new}}
 
 		</div>
-		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3"></script>
+		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.3"></script>
 	</body>
 </html>
