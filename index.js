@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const crypto = require('crypto');
+const uuid = require('node-uuid');
 
 var authS3O = require('s3o-middleware');
 app.use(authS3O);
@@ -86,12 +87,12 @@ app.get('/new', function (req, res) {
 
 
 /**
- * Processes the new contact form and redirects to appropriate url.
+ * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
 
-	// TODO: check whether the ID already exists and show an error.
-	res.redirect(307, '/contacts/' + req.body.contactid);
+	// HACK: truncate the uuid to match CMDB's limit.  Remove substring when limit is removed.
+	res.redirect(307, '/contacts/' + uuid.v4().substring(0, 30));
 });
 
 
@@ -99,9 +100,6 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-
-	// contactid is included for new contacts.  Remove it from body as it's in the URL.
-	delete req.body.contactid;
 	request({
 		url: cmdbapi + '/items/contact/'+req.params.contactid,
 		method: 'PUT',

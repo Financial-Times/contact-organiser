@@ -100,7 +100,6 @@
 				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
 					<p>Contact data saved</p>
 				</div>{{/_saved}}
-				{{#_new}}<label>Contact ID: <input name="contactid" placeholder="contact-name" /> (cannot be changed after setting)</label>{{/_new}}
 				<div class="o-forms-wrapper o-forms-wrapper--highlight">
 					<div class="o-forms-group">
 						<label class="o-forms-label" for="name">Name</label>
