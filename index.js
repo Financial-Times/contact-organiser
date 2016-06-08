@@ -4,6 +4,7 @@ var request = require("request");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+const crypto = require('crypto');
 
 var authS3O = require('s3o-middleware');
 app.use(authS3O);
@@ -46,11 +47,7 @@ app.get('/', function (req, res) {
 			res.render("error", {message: "Problem connecting to CMDB"});
 			return;
 		}
-		body.forEach(function(thing) {
-			thing.contactid = thing.dataItemID;
-			delete thing.dataItemID;
-			delete thing.dataTypeID;
-		});
+		body.forEach(cleanContact);
 		res.render('index', {contacts: body});
 	});
 });
@@ -74,9 +71,7 @@ app.get('/contacts/:contactid', function (req, res) {
 			res.render("error", {message: "Problem connecting to CMDB"});
 			return;
 		}
-		body.contactid = body.dataItemID;
-		delete body.dataItemID;
-		delete body.dataTypeID;
+		cleanContact(body);
 		res.render('contact', body);
 	});
 });
@@ -122,10 +117,8 @@ app.post('/contacts/:contactid', function (req, res) {
 			res.render("error", {message: "Problem connecting to CMDB"});
 			return;
 		}
-		body.contactid = body.dataItemID;
+		cleanContact(body);
 		body._saved = true;
-		delete body.dataItemID;
-		delete body.dataTypeID;
 		res.render('contact', body);
 	});
 });
@@ -167,3 +160,23 @@ app.use(function(err, req, res, next) {
 app.listen(port, function () {
   console.log('App listening on port '+port);
 });
+
+/** 
+ * Ties up the contact data coming from CMDB to something expected by the templates
+ */
+function cleanContact(contact) {
+	contact.contactid = contact.dataItemID;
+	delete contact.dataItemID;
+	delete contact.dataTypeID;
+
+	if (!contact.avatar) {
+
+		// Use gravatar to get avatar from email
+		var md5hash = "";
+		if (contact.email) {
+			md5hash = crypto.createHash('md5').update(contact.email).digest('hex');
+		}
+		contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
+	}
+	return contact;
+}

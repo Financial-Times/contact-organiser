@@ -14,16 +14,20 @@
 			}
 			.edit-button {
 				float: right;
+				clear: both;
+				margin: 5px;
 			}
 			.contact {
 				margin: 1em auto;
 				border: 1px solid #ccc;
-    			padding: 0 14px 2em;
     			display: block;
+    			overflow: hidden;
 			}
-			@media (min-width: 750px) {
+
+			/* Ideally this would be 690px, but leave a 15px error margin in case there's a scroll bar */
+			@media (min-width: 705px) {
 				.contact {
-					margin: 15px;
+					margin: 14px;
 					width: 300px;
 					max-width: 100%;
 					float: left;
@@ -38,6 +42,15 @@
 			}
 			#new input {
 				width: 100%;
+			}
+			.avatar {
+				float: right;
+				width: 40px;
+				margin: 5px;
+			}
+			.details {
+				margin: 0 14px 2em;
+				display: block;
 			}
   		</style>
 
@@ -60,10 +73,13 @@
 		<div id='content'>
 			{{#contacts}}
 				<div class='contact'>
-					<h3>{{name}}</h3>
-					{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
-					{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
-					{{#programme}}Programme: {{programme}}{{/programme}}
+					<img class='avatar' src="{{avatar}}" />
+					<span class='details'>
+						<h3>{{name}}</h3>
+						{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
+						{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
+						{{#programme}}Programme: {{programme}}{{/programme}}
+					</span>
 
 					<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 				</div>
