@@ -139,7 +139,7 @@
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="contactPref">Preferred contact method</label>
 						<small class="o-forms-additional-info">How you'd prefer operations to contact you (free text field)</small>
-					<input type="text" name="contactPref" value="{{contactPref}}" placeholder="Slack 10am-6pm; email out-of-hours" class="o-forms-text" id="contactPref"></input>
+					<input type="text" name="contactPref" value="{{contactPref}}" placeholder="eg Slack 10am-6pm; email out-of-hours" class="o-forms-text" id="contactPref"></input>
 				</div>
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="programme">Programme</label>
