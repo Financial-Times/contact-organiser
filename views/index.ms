@@ -52,6 +52,10 @@
 				margin: 0 14px 2em;
 				display: block;
 			}
+			h3 > a {
+				color: inherit;
+				text-decoration: inherit;
+			}
   		</style>
 
   	</head>
@@ -75,7 +79,7 @@
 				<div class='contact'>
 					<img class='avatar' src="{{avatar}}" />
 					<span class='details'>
-						<h3>{{name}}</h3>
+						<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
 						{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
 						{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
 						{{#contactPref}}Preferred contact method: {{contactPref}}{{/contactPref}}
