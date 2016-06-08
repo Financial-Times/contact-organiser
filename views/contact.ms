@@ -45,6 +45,20 @@
 			.o-forms--error > .o-forms-errortext {
 				display: block;
 			}
+			.link-all a{
+				color: inherit;
+				text-decoration: none;
+			}
+			.link-all a:hover {
+				text-decoration: underline;
+			}
+			.link-all {
+				margin-bottom: 1em;
+    			font-size: small;
+			}
+			h1 {
+				text-align: center;
+			}
   		</style>
 
   		<script type="text/javascript">
@@ -97,6 +111,8 @@
 		</header>
 		<div id='content'>
 			<form action="{{#_new}}/new{{/_new}}{{^_new}}/contacts/{{contactid}}{{/_new}}" method="post">
+				<div class='link-all'><a href="/">&lt;- View all Contacts</a></div>
+				<h1>{{#_new}}Add New{{/_new}}{{^_new}}Edit{{/_new}} Contact</h1>
 				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
 					<p>Contact data saved</p>
 				</div>{{/_saved}}
