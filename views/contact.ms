@@ -104,7 +104,7 @@
 				<div class="o-forms-wrapper o-forms-wrapper--highlight">
 					<div class="o-forms-group">
 						<label class="o-forms-label" for="name">Name</label>
-						<small class="o-forms-additional-info">The name of the team or individual</small>
+						<small class="o-forms-additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms-text" id="name" required></input>
 					</div>
 				</div>
@@ -122,7 +122,13 @@
 					<div class="o-forms-errortext">Please enter a valid email address</div>
 				</div>
 				<div class="o-forms-group">
+					<label class="o-forms-label" for="contactPref">Preferred contact method</label>
+						<small class="o-forms-additional-info">How you'd prefer operations to contact you (free text field)</small>
+					<input type="text" name="contactPref" value="{{contactPref}}" placeholder="Slack 10am-6pm; email out-of-hours" class="o-forms-text" id="contactPref"></input>
+				</div>
+				<div class="o-forms-group">
 					<label class="o-forms-label" for="programme">Programme</label>
+						<small class="o-forms-additional-info">Experimental field, may change in future</small>
 					<input type="text" name="programme" value="{{programme}}" placeholder="Programme" class="o-forms-text" id="programme"></input>
 				</div>
 
