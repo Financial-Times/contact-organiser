@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Error | Contact Organiser</title>
 		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3" />
+		<meta name=viewport content="width=device-width, initial-scale=1">
 
 	    <style type="text/css">
 	      	body {
