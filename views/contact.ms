@@ -86,6 +86,11 @@
 					emailinput.addEventListener('change', function (){
 						checkValidity(emailinput, emailinput.parentNode);
 					});
+					var phoneinput = document.querySelector('#phone');
+					checkValidity(phoneinput, phoneinput.parentNode);
+					phoneinput.addEventListener('change', function (){
+						checkValidity(phoneinput, phoneinput.parentNode);
+					});
 					var slackinput = document.querySelector('#slack');
 					checkValidity(slackinput, slackinput.parentNode.parentNode);
 					slackinput.addEventListener('change', function (){
@@ -136,6 +141,11 @@
 					<label class="o-forms-label" for="email">Email</label>
 					<input type="email" name="email" value="{{email}}" placeholder="contact.name@ft.com" class="o-forms-text" id="email"></input>
 					<div class="o-forms-errortext">Please enter a valid email address</div>
+				</div>
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="phone">Phone number</label>
+					<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms-text" id="phone" pattern="\+?[0-9\s\-]+"></input>
+					<div class="o-forms-errortext">Please enter a valid phone number</div>
 				</div>
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="contactPref">Preferred contact method</label>

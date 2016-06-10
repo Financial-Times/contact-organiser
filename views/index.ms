@@ -83,6 +83,7 @@
 						<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
 						{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
 						{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
+						{{#phone}}Phone Number: <a href="tel:{{phone}}">{{phone}}</a>{{/phone}}<br/>
 						{{#contactPref}}Preferred contact method: {{contactPref}}{{/contactPref}}
 						<br/>
 						{{#programme}}Programme: {{programme}}{{/programme}}
