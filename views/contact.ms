@@ -72,30 +72,34 @@
 							savedmessage.setAttribute("class", savedmessage.getAttribute("class")+" hide");
 						}
 					}, 5000);
-					function checkValidity(input, group) {
-						if(!input.value) {
-							group.setAttribute("class","o-forms-group");
-						} else if(input.checkValidity()){
-							group.setAttribute("class","o-forms-group o-forms--valid");
-						} else {
-							group.setAttribute("class","o-forms-group o-forms--error");
+
+					/**
+					 * Check the validity of a field on page load and each time the field changes 
+					 **/
+					function addChecks(input, group) {
+						function checkValidity() {
+							if(!input.value) {
+								group.setAttribute("class","o-forms-group");
+							} else if(input.checkValidity()){
+								group.setAttribute("class","o-forms-group o-forms--valid");
+							} else {
+								group.setAttribute("class","o-forms-group o-forms--error");
+							}
 						}
+						input.addEventListener('change', checkValidity);
+						checkValidity();
 					}
 					var emailinput = document.querySelector('#email');
-					checkValidity(emailinput, emailinput.parentNode);
-					emailinput.addEventListener('change', function (){
-						checkValidity(emailinput, emailinput.parentNode);
-					});
+					addChecks(emailinput, emailinput.parentNode);
+
 					var phoneinput = document.querySelector('#phone');
-					checkValidity(phoneinput, phoneinput.parentNode);
-					phoneinput.addEventListener('change', function (){
-						checkValidity(phoneinput, phoneinput.parentNode);
-					});
+					addChecks(phoneinput, phoneinput.parentNode);
+
 					var slackinput = document.querySelector('#slack');
-					checkValidity(slackinput, slackinput.parentNode.parentNode);
-					slackinput.addEventListener('change', function (){
-						checkValidity(slackinput, slackinput.parentNode.parentNode);
-					});
+					addChecks(slackinput, slackinput.parentNode.parentNode);
+
+					var supportrotainput = document.querySelector('#supportRota');
+					addChecks(supportrotainput, supportrotainput.parentNode);
   				});
   			-->
   		</script>
@@ -146,6 +150,11 @@
 					<label class="o-forms-label" for="phone">Phone number</label>
 					<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms-text" id="phone" pattern="\+?[0-9\s\-]+"></input>
 					<div class="o-forms-errortext">Please enter a valid phone number</div>
+				</div>
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="supportRota">Support Rota</label>
+					<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms-text" id="supportRota"></input>
+					<div class="o-forms-errortext">Please enter a valid URL</div>
 				</div>
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="contactPref">Preferred contact method</label>

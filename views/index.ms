@@ -84,6 +84,7 @@
 						{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
 						{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
 						{{#phone}}Phone Number: <a href="tel:{{phone}}">{{phone}}</a>{{/phone}}<br/>
+						{{#supportRota}}<form action="{{supportRota}}" target="_blank"><button class="o-buttons o-buttons--standout o-buttons--small">View Support Rota</button></form>{{/supportRota}}
 						{{#contactPref}}Preferred contact method: {{contactPref}}{{/contactPref}}
 						<br/>
 						{{#programme}}Programme: {{programme}}{{/programme}}
