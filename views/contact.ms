@@ -152,13 +152,13 @@
 					<div class="o-forms-errortext">Please enter a valid phone number</div>
 				</div>
 				<div class="o-forms-group">
-					<label class="o-forms-label" for="supportRota">Support Rota</label>
+					<label class="o-forms-label" for="supportRota">Support Rota</label><small class="o-forms-additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
 					<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms-text" id="supportRota"></input>
 					<div class="o-forms-errortext">Please enter a valid URL</div>
 				</div>
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="contactPref">Preferred contact method</label>
-						<small class="o-forms-additional-info">How you'd prefer operations to contact you (free text field)</small>
+					<small class="o-forms-additional-info">How you'd prefer operations to contact you (free text field)</small>
 					<input type="text" name="contactPref" value="{{contactPref}}" placeholder="eg Slack 10am-6pm; email out-of-hours" class="o-forms-text" id="contactPref"></input>
 				</div>
 				<div class="o-forms-group">
