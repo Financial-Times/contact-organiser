@@ -24,6 +24,9 @@
     			display: block;
     			overflow: hidden;
 			}
+			.contactfield {
+				display: block;
+			}
 
 			/* Ideally this would be 690px, but leave a 15px error margin in case there's a scroll bar */
 			@media (min-width: 705px) {
@@ -81,13 +84,12 @@
 					<img class='avatar' src="{{avatar}}" />
 					<span class='details'>
 						<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
-						{{#slack}}Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a>{{/slack}}<br/>
-						{{#email}}Email: <a href="mailto:{{email}}">{{email}}</a>{{/email}}<br/>
-						{{#phone}}Phone Number: <a href="tel:{{phone}}">{{phone}}</a>{{/phone}}<br/>
+						{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
+						{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
+						{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
 						{{#supportRota}}<form action="{{supportRota}}" target="_blank"><button class="o-buttons o-buttons--standout o-buttons--small">View Support Rota</button></form>{{/supportRota}}
-						{{#contactPref}}Preferred contact method: {{contactPref}}{{/contactPref}}
-						<br/>
-						{{#programme}}Programme: {{programme}}{{/programme}}
+						{{#contactPref}}<span class='contactfield'>Preferred contact method: {{contactPref}}</span>{{/contactPref}}
+						{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
 					</span>
 
 					<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
