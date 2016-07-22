@@ -30,7 +30,9 @@ app.get('/', function (req, res) {
 	getAll(cmdbEndpoint, res.locals.s3o_username, function success(body) {
 		body.forEach(cleanContact);
 		body.sort(function (a,b){
-			return a.name > b.name;
+			if (!a.name) return -1;
+			if (!b.name) return 1;
+			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
 		});
 		res.render('index', {contacts: body});
 	}, function fail() {
