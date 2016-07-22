@@ -29,6 +29,9 @@ var apikey = process.env.APIKEY || 'changeme';
 app.get('/', function (req, res) {
 	getAll(cmdbEndpoint, res.locals.s3o_username, function success(body) {
 		body.forEach(cleanContact);
+		body.sort(function (a,b){
+			return a.name > b.name;
+		});
 		res.render('index', {contacts: body});
 	}, function fail() {
 		res.status(502);
