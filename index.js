@@ -27,29 +27,12 @@ var apikey = process.env.APIKEY || 'changeme';
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-
-	request({
-		url: cmdbEndpoint,
-		json: true,
-		headers: {
-			'APIKEY': apikey,
-			'FT-Forwarded-Auth': "ad:"+ res.locals.s3o_username,
-		}
-	}, function (error, response, body) {
-
-		// CMDB returns entirely different output when there are zero contacts
-		// Re-write the response to match normal output.
-		if (response.statusCode == 404) {
-			response.statusCode = 200;
-			body = [];
-		}
-		if (error || response.statusCode != 200) {
-			res.status(502);
-			res.render("error", {message: "Problem connecting to CMDB"});
-			return;
-		}
+	getAll(cmdbEndpoint, res.locals.s3o_username, function success(body) {
 		body.forEach(cleanContact);
 		res.render('index', {contacts: body});
+	}, function fail() {
+		res.status(502);
+		res.render("error", {message: "Problem connecting to CMDB"});
 	});
 });
 
@@ -177,4 +160,68 @@ function cleanContact(contact) {
 		contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
 	}
 	return contact;
+}
+
+/**
+ * Gets a request from CMDB, recursively following all the next links
+ */
+function getAll(url, username, success, fail) {
+
+	request({
+		url: url,
+		json: true,
+		headers: {
+			'APIKEY': apikey,
+			'FT-Forwarded-Auth': "ad:" + username,
+		}
+	}, function (error, response, body) {
+
+		// CMDB returns entirely different output when there are zero contacts
+		// Re-write the response to match normal output.
+		if (response.statusCode == 404) {
+			response.statusCode = 200;
+			body = [];
+		}
+		if (error || response.statusCode != 200) {
+			fail();
+			return;
+		}
+
+		// Check whether there is a 'next' link on the response
+		var links = parse_link_header(response.headers.link);
+		if (links.next) {
+
+			// If there is a next link, request it and concatenate it to the current response
+			// As this is recursive, it'll continue to request next links until no further next link is provided by the API
+			getAll(links.next, username, function (remainingBody) {
+				success(body.concat(remainingBody));
+			}, fail);
+		} else {
+			success(body);
+		}
+	});
+}
+
+/**
+ * Taken from https://gist.github.com/niallo/3109252
+ */
+function parse_link_header(header) {
+    if (header.length === 0) {
+        throw new Error("input must not be of zero length");
+    }
+
+    // Split parts by comma
+    var parts = header.split(',');
+    var links = {};
+    // Parse each part into a named link
+    for(var i=0; i<parts.length; i++) {
+        var section = parts[i].split(';');
+        if (section.length !== 2) {
+            throw new Error("section could not be split on ';'");
+        }
+        var url = section[0].replace(/<(.*)>/, '$1').trim();
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+        links[name] = url;
+    }
+    return links;
 }
