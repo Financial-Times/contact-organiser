@@ -20,7 +20,7 @@ app.set('views', __dirname + '/views');
 
 /** Environment variables **/
 var port = process.env.PORT || 3001;
-var cmdbapi = process.env.CMDBAPI || 'https://cmdb.ft.com/v2';
+var cmdbEndpoint = process.env.CMDB_ENDPOINT || 'https://cmdb.ft.com/v2/items/contact';
 var apikey = process.env.APIKEY || 'changeme';
 
 /**
@@ -29,7 +29,7 @@ var apikey = process.env.APIKEY || 'changeme';
 app.get('/', function (req, res) {
 
 	request({
-		url: cmdbapi + '/items/contact',
+		url: cmdbEndpoint,
 		json: true,
 		headers: {
 			'APIKEY': apikey,
@@ -59,7 +59,7 @@ app.get('/', function (req, res) {
 app.get('/contacts/:contactid', function (req, res) {
 
 	request({
-		url: cmdbapi + '/items/contact/'+req.params.contactid,
+		url: cmdbEndpoint + '/'+req.params.contactid,
 		json: true,
 		headers: {
 			'APIKEY': apikey,
@@ -101,7 +101,7 @@ app.post('/new', function (req, res) {
  */
 app.post('/contacts/:contactid', function (req, res) {
 	request({
-		url: cmdbapi + '/items/contact/'+req.params.contactid,
+		url: cmdbEndpoint + '/'+req.params.contactid,
 		method: 'PUT',
 		json: true,
 		headers: {
@@ -127,7 +127,7 @@ app.post('/contacts/:contactid', function (req, res) {
 app.post('/contacts/:contactid/delete', function (req, res) {
 
 	request({
-		url: cmdbapi + '/items/contact/'+req.params.contactid,
+		url: cmdbEndpoint + '/'+req.params.contactid,
 		method: 'DELETE',
 		json: true,
 		headers: {
