@@ -49,6 +49,8 @@
 			.link-all a{
 				color: inherit;
 				text-decoration: none;
+				font-weight: bold;
+				font-size: larger;
 			}
 			.link-all a:hover {
 				text-decoration: underline;
