@@ -31,7 +31,7 @@
 					margin: 14px;
 					width: 300px;
 					max-width: 100%;
-					float: left;
+					display: inline-block;
 				}
 			}
 			#new {
