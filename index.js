@@ -206,11 +206,11 @@ function getAll(url, username, success, fail) {
 }
 
 /**
- * Taken from https://gist.github.com/niallo/3109252
+ * Based on https://gist.github.com/niallo/3109252
  */
 function parse_link_header(header) {
-    if (header.length === 0) {
-        throw new Error("input must not be of zero length");
+    if (!header || header.length === 0) {
+        return {};
     }
 
     // Split parts by comma
