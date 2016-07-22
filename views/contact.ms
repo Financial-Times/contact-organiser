@@ -62,6 +62,14 @@
 			h1 {
 				text-align: center;
 			}
+			.last-update {
+				background: #333;
+				color: #fff;
+				display: block;
+				text-align: right;
+				margin-top: 1em;
+				padding: 0.4em 1em;
+			}
   		</style>
 
   		<script type="text/javascript">
@@ -174,8 +182,9 @@
 			{{^_new}}<form id="delete" action="/contacts/{{contactid}}/delete" method="post">
 				<input type='submit' class="o-buttons o-buttons--standout delete-button" value='Delete' />
 			</form>{{/_new}}
-
 		</div>
+
+		{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.3"></script>
 	</body>
 </html>
