@@ -9,5 +9,5 @@ Run `npm start`
 All environment variables are optional.
 
 - _PORT_ The HTTP port to listen on.  Defaults to 3001;
-- _CMDB_ENDPOINT_ The CMDB API to use.  Defaults to 'https://cmdb.ft.com/v2/items/contact';
+- _CMDBAPI_ The CMDB API to use.  Defaults to 'https://cmdb.ft.com/v2';
 - _APIKEY_ The API key for this application to talk to CMDB.  Defaults to 'changeme';
