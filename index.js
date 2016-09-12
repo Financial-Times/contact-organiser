@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
-var request = require("request");
 var bodyParser = require('body-parser');
+var CMDB = require("cmdb.js");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const crypto = require('crypto');
@@ -20,14 +20,16 @@ app.set('views', __dirname + '/views');
 
 /** Environment variables **/
 var port = process.env.PORT || 3001;
-var cmdbEndpoint = process.env.CMDB_ENDPOINT || 'https://cmdb.ft.com/v2/items/contact';
-var apikey = process.env.APIKEY || 'changeme';
+var cmdb = new CMDB({
+	api: process.env.CMDBAPI,
+	apikey: process.env.APIKEY,
+});
 
 /**
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	getAll(cmdbEndpoint, res.locals.s3o_username, function success(body) {
+	cmdb.getAllItems(res.locals, 'contact').then(function (body) {
 		body.forEach(cleanContact);
 		body.sort(function (a,b){
 			if (!a.name) return -1;
@@ -35,9 +37,9 @@ app.get('/', function (req, res) {
 			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
 		});
 		res.render('index', {contacts: body});
-	}, function fail() {
+	}).catch(function (error) {
 		res.status(502);
-		res.render("error", {message: "Problem connecting to CMDB"});
+		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
 	});
 });
 
@@ -45,23 +47,12 @@ app.get('/', function (req, res) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
-
-	request({
-		url: cmdbEndpoint + '/'+req.params.contactid,
-		json: true,
-		headers: {
-			'APIKEY': apikey,
-			'FT-Forwarded-Auth': "ad:"+ res.locals.s3o_username,
-		}
-	}, function (error, response, body) {
-
-		if (error || response.statusCode != 200) {
-			res.status(502);
-			res.render("error", {message: "Problem connecting to CMDB"});
-			return;
-		}
-		cleanContact(body);
-		res.render('contact', body);
+	cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
+		cleanContact(result);
+		res.render('contact', result);
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
 	});
 });
 
@@ -88,24 +79,13 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	request({
-		url: cmdbEndpoint + '/'+req.params.contactid,
-		method: 'PUT',
-		json: true,
-		headers: {
-			'APIKEY': apikey,
-			'FT-Forwarded-Auth': "ad:"+ res.locals.s3o_username,
-		},
-		body: req.body,
-	}, function (error, response, body) {
-		if (error || response.statusCode != 200) {
-			res.status(502);
-			res.render("error", {message: "Problem connecting to CMDB"});
-			return;
-		}
-		cleanContact(body);
-		body._saved = true;
-		res.render('contact', body);
+	cmdb.putItem(res.locals, 'contact', req.params.contactid, req.body).then(function (result) {
+		cleanContact(result);
+		result._saved = true;
+		res.render('contact', result);
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
 	});
 });
 
@@ -114,23 +94,13 @@ app.post('/contacts/:contactid', function (req, res) {
  */
 app.post('/contacts/:contactid/delete', function (req, res) {
 
-	request({
-		url: cmdbEndpoint + '/'+req.params.contactid,
-		method: 'DELETE',
-		json: true,
-		headers: {
-			'APIKEY': apikey,
-			'FT-Forwarded-Auth': "ad:"+ res.locals.s3o_username,
-		},
-	}, function (error, response, body) {
-		if (error || response.statusCode != 200) {
-			res.status(502);
-			res.render("error", {message: "Problem connecting to CMDB"});
-			return;
-		}
-
+	cmdb.deleteItem(res.locals, 'contact', req.params.contactid).then(function (result) {
+		
 		// TODO: show messaging to indicate the delete was successful
 		res.redirect(303, '/');
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
 	});
 });
 
@@ -167,66 +137,3 @@ function cleanContact(contact) {
 	return contact;
 }
 
-/**
- * Gets a request from CMDB, recursively following all the next links
- */
-function getAll(url, username, success, fail) {
-
-	request({
-		url: url,
-		json: true,
-		headers: {
-			'APIKEY': apikey,
-			'FT-Forwarded-Auth': "ad:" + username,
-		}
-	}, function (error, response, body) {
-
-		// CMDB returns entirely different output when there are zero contacts
-		// Re-write the response to match normal output.
-		if (response.statusCode == 404) {
-			response.statusCode = 200;
-			body = [];
-		}
-		if (error || response.statusCode != 200) {
-			fail();
-			return;
-		}
-
-		// Check whether there is a 'next' link on the response
-		var links = parse_link_header(response.headers.link);
-		if (links.next) {
-
-			// If there is a next link, request it and concatenate it to the current response
-			// As this is recursive, it'll continue to request next links until no further next link is provided by the API
-			getAll(links.next, username, function (remainingBody) {
-				success(body.concat(remainingBody));
-			}, fail);
-		} else {
-			success(body);
-		}
-	});
-}
-
-/**
- * Based on https://gist.github.com/niallo/3109252
- */
-function parse_link_header(header) {
-    if (!header || header.length === 0) {
-        return {};
-    }
-
-    // Split parts by comma
-    var parts = header.split(',');
-    var links = {};
-    // Parse each part into a named link
-    for(var i=0; i<parts.length; i++) {
-        var section = parts[i].split(';');
-        if (section.length !== 2) {
-            throw new Error("section could not be split on ';'");
-        }
-        var url = section[0].replace(/<(.*)>/, '$1').trim();
-        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
-        links[name] = url;
-    }
-    return links;
-}

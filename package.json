@@ -25,7 +25,8 @@
     "mustache-express": "^1.2.2",
     "node-uuid": "^1.4.7",
     "request": "^2.69.0",
-    "s3o-middleware": "^1.6.0"
+    "s3o-middleware": "^1.6.0",
+    "cmdb.js": "^0.0.1"
   },
   "engines": {
     "node": "5.3.0"
