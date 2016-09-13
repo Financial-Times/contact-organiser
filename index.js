@@ -7,9 +7,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const crypto = require('crypto');
 const uuid = require('node-uuid');
 
-var authS3O = require('s3o-middleware');
-app.use(authS3O);
-
 var mustacheExpress = require('mustache-express');
 
 // Register '.ms' extension with The Mustache Express
@@ -24,6 +21,49 @@ var cmdb = new CMDB({
 	api: process.env.CMDBAPI,
 	apikey: process.env.APIKEY,
 });
+
+
+var path = require('path');
+var ftwebservice = require('express-ftwebservice');
+ftwebservice(app, {
+	manifestPath: path.join(__dirname, 'package.json'),
+	about: {
+		"systemCode": "contact-organiser",
+		"name": "Contact Organiser",
+		"audience": "FT Technology",
+		"serviceTier": "bronze",
+	},
+
+	// Always pass good to go.	If application is healthy enough to return it, then it can serve traffic.
+	goodToGoTest: function() {
+		return new Promise(function(resolve, reject) {
+			resolve(true);
+		});
+	},
+
+	// Check that track can talk to CMDB
+	healthCheck: function() {
+		return cmdb.getItem(null, 'contact', 'operationalintelligence').then(function (result) {
+			return false;
+		}).catch(function (error) {
+			return error.message;
+		}).then(function (output) {
+			 return [{
+				id: 'cmdb-connection',
+				name: "Connectivity to CMDB",
+				ok: !output,
+				severity: 1,
+				businessImpact: "Can't view/edit contacts in Contact Organiser UI",
+				technicalSummary: "App can't connect make a GET request to CMDB",
+				panicGuide: "Check for alerts related to cmdb.ft.com.	Check connectivity to cmdb.ft.com",
+				checkOutput: output,
+				lastUpdated: new Date().toISOString(),
+			}];
+		});
+	}
+});
+var authS3O = require('s3o-middleware');
+app.use(authS3O);
 
 /**
  * Gets a list of Contacts from the CMDB and renders them nicely
