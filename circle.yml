@@ -5,26 +5,26 @@ deployment:
   dev:
     branch: id-in-use
     commands:
-      - heroku maintenance:on --app contact-organiser-dev
+      - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow
-      - git push git@heroku.com:contact-organiser-dev.git $CIRCLE_SHA1:refs/heads/master
-      - heroku maintenance:off --app contact-organiser-dev
+      - git push git@heroku.com:oi-contact-organiser-dev.git $CIRCLE_SHA1:refs/heads/master
+      - heroku maintenance:off --app oi-contact-organiser-dev
 
   staging:
     branch: test
     commands:
-      - heroku maintenance:on --app contact-organiser-test
+      - heroku maintenance:on --app oi-contact-organiser-test
       - git fetch origin --unshallow
-      - git push git@heroku.com:contact-organiser-test.git $CIRCLE_SHA1:refs/heads/master
-      - heroku maintenance:off --app contact-organiser-test
+      - git push git@heroku.com:oi-contact-organiser-test.git $CIRCLE_SHA1:refs/heads/master
+      - heroku maintenance:off --app oi-contact-organiser-test
 
   production:
     branch: master
     commands:
-      - heroku maintenance:on --app contact-organiser
+      - heroku maintenance:on --app oi-contact-organiser
       - git fetch origin --unshallow
-      - git push git@heroku.com:contact-organiser.git $CIRCLE_SHA1:refs/heads/master
-      - heroku maintenance:off --app contact-organiser
+      - git push git@heroku.com:oi-contact-organiser.git $CIRCLE_SHA1:refs/heads/master
+      - heroku maintenance:off --app oi-contact-organiser
 
 test:
   override:
