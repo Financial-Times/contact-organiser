@@ -162,6 +162,9 @@ app.listen(port, function () {
  */
 function cleanContact(contact) {
 	contact.contactid = contact.dataItemID;
+	if (!contact.name) {
+		contact.name = contact.contactid
+	}
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
 
