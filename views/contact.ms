@@ -32,10 +32,42 @@
 				float: right;
 			}
 			#saved {
-			    transition: opacity 5s;
+				padding: 0;
+				padding-bottom: 0.1em;
 			}
-			#saved.hide {
-				opacity: 0;
+			#saved .success {
+				background-color: green;
+				color: white;
+				padding: 8px;
+				border-radius: 5px 5px 0 0;
+				font-weight: bold;
+				font-size: large;
+			}
+			#saved aside > div {
+				margin: 8px;
+			}
+			#saved aside[data-collapse=true] > div {
+				display: none;
+			}
+			#saved aside > h3 {
+				cursor: pointer;
+				margin: 0.5em 3px;
+			}
+			#saved aside > h3:before {
+				width: 1em;
+				float: left;
+				text-align: center;
+			}
+			#saved aside[data-collapse="true"] > h3:before {
+				content: "+ ";
+			}
+			#saved aside[data-collapse="false"] > h3:before {
+				content: "- ";
+			}
+			#saved aside pre {
+				padding: 8px;
+				border: groove;
+				border-radius: 4px;
 			}
 			label {
 				display: block;
