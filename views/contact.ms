@@ -76,14 +76,12 @@
 
   		<script type="text/javascript">
   			<!--
-  				// Hide the "saved" message after a few seconds
+
   				document.addEventListener("DOMContentLoaded", function() {
-					window.setTimeout(function () {
-						var savedmessage = document.querySelector('#saved');
-						if (savedmessage) {
-							savedmessage.setAttribute("class", savedmessage.getAttribute("class")+" hide");
-						}
-					}, 5000);
+					var savedmessagetitle = document.querySelector('#saved h3');
+					if (savedmessagetitle) savedmessagetitle.addEventListener('click', function () {
+						savedmessagetitle.parentNode.dataset.collapse = savedmessagetitle.parentNode.dataset.collapse != "true";
+					});
 
 					/**
 					 * Check the validity of a field on page load and each time the field changes 
@@ -138,7 +136,7 @@
 			<form action="{{#_new}}/new{{/_new}}{{^_new}}/contacts/{{contactid}}{{/_new}}" method="post">
 				<div class='link-all'><a href="/">&lt;- View all Contacts</a></div>
 				<h1>{{#_new}}Add New{{/_new}}{{^_new}}Edit{{/_new}} Contact</h1>
-				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
+				{{#saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
 					<p class='success'>Contact data saved succesfully</p>
 					<aside data-collapse='true'>
 						<h3>How can I automate this action?</h3>
@@ -149,7 +147,7 @@
 							<p>NB: both these methods will require an <a href="https://cmdb-key-manager-prod.herokuapp.com/">API Key</a></p>
 						</div>
 					</aside>
-				</div>{{/_saved}}
+				</div>{{/saved}}
 
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="name">Name</label>
