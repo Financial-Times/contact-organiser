@@ -131,7 +131,7 @@ app.post('/contacts/:contactid', function (req, res) {
 			contactid: req.params.contactid,
 
 			// TODO: replace with pretty print function
-			json: JSON.stringify(contact).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
+			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
 			
 			// TODO: get actual url from cmdb.js
 			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
