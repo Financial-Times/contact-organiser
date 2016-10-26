@@ -111,7 +111,12 @@ app.get('/new', function (req, res) {
 app.post('/new', function (req, res) {
 
 	// HACK: truncate the uuid to match CMDB's limit.  Remove substring when limit is removed.
-	res.redirect(307, '/contacts/' + uuid.v4().substring(0, 30));
+//	res.redirect(307, '/contacts/' + uuid.v4().substring(0, 30));
+	contactid = req.body.id
+	if (!id) {
+		contactid = req.body.name
+	}
+	res.redirect(307, '/contacts/' + contactid);
 });
 
 
