@@ -101,6 +101,9 @@
 						input.addEventListener('change', checkValidity);
 						checkValidity();
 					}
+					var nameinput = document.querySelector('#name');
+					addChecks(nameinput, nameinput.parentNode);
+
 					var emailinput = document.querySelector('#email');
 					addChecks(emailinput, emailinput.parentNode);
 
@@ -138,13 +141,23 @@
 				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
 					<p>Contact data saved</p>
 				</div>{{/_saved}}
+
+				<div class="o-forms-group">
+					<label class="o-forms-label" for="name">Name</label>
+					<small class="o-forms-additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
+					<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms-text" id="name" required></input>
+				</div>
+
 				<div class="o-forms-wrapper o-forms-wrapper--highlight">
-					<div class="o-forms-group">
-						<label class="o-forms-label" for="name">Name</label>
-						<small class="o-forms-additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
-						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms-text" id="name" required></input>
+					<div class="o-forms-group {{#iderror}}o-forms--error{{/iderror}}">
+						<label class="o-forms-label" for="id">ID</label>
+						<small class="o-forms-additional-info">A unique identification for the contact (defaults to name).</small>
+						{{#id}}<small class="o-forms-additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/id}}
+						<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms-text" id="id" {{^iderror}}{{#id}}disabled{{/id}}{{/iderror}}></input>
+						{{#iderror}}<div class="o-forms-errortext">{{iderror}}</div>{{/iderror}}
 					</div>
 				</div>
+
 				<div class="o-forms-group">
 					<label class="o-forms-label" for="slack">Slack Channel</label>
 					<div class="o-forms-affix-wrapper">
