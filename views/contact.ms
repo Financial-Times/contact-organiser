@@ -139,7 +139,16 @@
 				<div class='link-all'><a href="/">&lt;- View all Contacts</a></div>
 				<h1>{{#_new}}Add New{{/_new}}{{^_new}}Edit{{/_new}} Contact</h1>
 				{{#_saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
-					<p>Contact data saved</p>
+					<p class='success'>Contact data saved succesfully</p>
+					<aside data-collapse='true'>
+						<h3>How can I automate this action?</h3>
+						<div>
+							<p>If you're using javascript, use the <a href="https://github.com/Financial-Times/cmdb.js">cmdb.js</a> library as follows:</p>
+							<pre>cmdb.putItem({{locals}}, "contact", "{{contactid}}", {{json}});</pre>
+							<p>Alternatively, make a HTTP PUT request to <a href="{{url}}">{{url}}</a> with the following body:</p><pre>{{json}}</pre>
+							<p>NB: both these methods will require an <a href="https://cmdb-key-manager-prod.herokuapp.com/">API Key</a></p>
+						</div>
+					</aside>
 				</div>{{/_saved}}
 
 				<div class="o-forms-group">
@@ -153,7 +162,7 @@
 						<label class="o-forms-label" for="id">ID</label>
 						<small class="o-forms-additional-info">A unique identification for the contact (defaults to name).</small>
 						{{#id}}<small class="o-forms-additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/id}}
-						<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms-text" id="id" {{^iderror}}{{#id}}disabled{{/id}}{{/iderror}}></input>
+						<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms-text" id="id" {{#id}}disabled{{/id}}></input>
 						{{#iderror}}<div class="o-forms-errortext">{{iderror}}</div>{{/iderror}}
 					</div>
 				</div>

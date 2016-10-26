@@ -126,7 +126,16 @@ app.post('/new', function (req, res) {
 app.post('/contacts/:contactid', function (req, res) {
 	cmdb.putItem(res.locals, 'contact', req.params.contactid, req.body).then(function (result) {
 		cleanContact(result);
-		result._saved = true;
+		result.saved = {
+			locals: JSON.stringify(res.locals),
+			contactid: req.params.contactid,
+
+			// TODO: replace with pretty print function
+			json: JSON.stringify(contact).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
+			
+			// TODO: get actual url from cmdb.js
+			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+		}
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
