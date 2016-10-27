@@ -69,7 +69,7 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	cmdb.getAllItems(res.locals, 'contact').then(function (body) {
+	cmdb.getAllItems(res.locals, 'contact?outputfields=name,slack,email').then(function (body) {
 		body.forEach(cleanContact);
 		body.sort(function (a,b){
 			if (!a.name) return -1;
