@@ -82,7 +82,7 @@ app.get('/', function (req, res) {
 	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
 		if (req.query.sortby) { console.log(req.query.sortby) } // check how sort param is provided
 		contacts.sort(CompareOnKey(req.query.sortby));
-		body.forEach(cleanContact);
+		contacts.forEach(cleanContact);
 		res.render('index', {contacts: body});
 	}).catch(function (error) {
 		res.status(502);
