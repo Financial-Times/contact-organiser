@@ -201,3 +201,20 @@ function cleanContact(contact) {
 	return contact;
 }
 
+
+function remove_blank_values(obj, recurse) {
+	for (var i in obj) {
+		if (obj[i] === null || obj[i] === '') {
+			delete obj[i];
+		} else {
+			if (recurse && typeof obj[i] === 'object') {
+				remove_blank_values(obj[i], recurse);
+				if (Object.keys(obj[i]).length == 0) {
+					{
+						delete obj[i];
+					}
+				}
+			}
+		}
+	}
+}
