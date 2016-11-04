@@ -73,7 +73,7 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	contactsurl = process.env.CMDB_API + "/items/contact";
+	contactsurl = process.env.CMDBAPI + "/items/contact";
 	params = req.query;
 	console.log("params:",params);
 	params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
