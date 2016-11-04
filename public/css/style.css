@@ -1,97 +1,116 @@
-		  	body {
-				margin:0;
-			}
-			#content {
-				padding: 15px;
-			}
-			#save, #delete {
-				margin: auto;
-				padding: 0.5em 0;
-				max-width: 400px;
-				display: block;
-				clear: both;
-			}
-			#save {
-				padding-top: 3em;
-			}
-			#save input {
-				width: 100%;
-			}
-			#delete input {
-				background: #900;
-				border-color: #900;
-				float: right;
-			}
-			#saved {
-				padding: 0;
-				padding-bottom: 0.1em;
-			}
-			#saved .success {
-				background-color: green;
-				color: white;
-				padding: 8px;
-				border-radius: 5px 5px 0 0;
-				font-weight: bold;
-				font-size: large;
-			}
-			#saved aside > div {
-				margin: 8px;
-			}
-			#saved aside[data-collapse=true] > div {
-				display: none;
-			}
-			#saved aside > h3 {
-				cursor: pointer;
-				margin: 0.5em 3px;
-			}
-			#saved aside > h3:before {
-				width: 1em;
-				float: left;
-				text-align: center;
-			}
-			#saved aside[data-collapse="true"] > h3:before {
-				content: "+ ";
-			}
-			#saved aside[data-collapse="false"] > h3:before {
-				content: "- ";
-			}
-			#saved aside pre {
-				padding: 8px;
-				border: groove;
-				border-radius: 4px;
-			}
-			label {
-				display: block;
-			}
-			.o-forms-errortext {
-				display: none;
-			}
-			.o-forms--error > .o-forms-errortext {
-				display: block;
-			}
-			.link-all a{
-				color: inherit;
-				text-decoration: none;
-				font-weight: bold;
-				font-size: larger;
-			}
-			.link-all a:hover {
-				text-decoration: underline;
-			}
-			.link-all {
-				margin-bottom: 1em;
-    			font-size: small;
-			}
-			h1 {
-				text-align: center;
-			}
-			.last-update {
-				background: #333;
-				color: #fff;
-				display: block;
-				text-align: right;
-				margin-top: 1em;
-				padding: 0.4em 1em;
-			}
-			.o-header__logo--ft abbr {
+body {
+	margin:0;
+}
+#content {
+	padding: 15px;
+}
+.edit-button {
+	float: right;
+	clear: both;
+	margin: 5px;
+}
+.contact {
+	margin: 1em auto;
+	border: 1px solid #ccc;
+	display: block;
+	overflow: hidden;
+}
+.contactfield {
+	display: block;
+}
+
+/* Ideally this would be 690px, but leave a 15px error margin in case there's a scroll bar */
+@media (min-width: 705px) {
+	.contact {
+		margin: 14px;
+		width: 300px;
+		max-width: 100%;
+		display: inline-block;
+	}
+}
+#new {
+	margin: auto;
+	padding: 3em 0;
+	max-width: 400px;
+	display: block;
+	clear: both;
+}
+#new input {
+	width: 100%;
+}
+.avatar {
+	float: right;
+	width: 40px;
+	margin: 5px;
+}
+.details {
+	margin: 0 14px 2em;
+	display: block;
+}
+h1 {
+	text-align: center;
+}
+h3 > a {
+	color: inherit;
+	text-decoration: inherit;
+}
+.o-header__logo--ft abbr {
 	background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzkwIiBoZWlnaHQ9IjM5MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnPgogIDxlbGxpcHNlIHJ5PSI1My41IiByeD0iNTMuNSIgY3k9IjgzLjUiIGN4PSI3NiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPHBhdGggZD0ibTExLjAwNzUwMywyNjQuOTI2ODY1bDY1LjAwMDAwMSwtMjIzLjAwMDAzMWw2NS4wMDAwMDEsMjIzLjAwMDAzMWwtMTMwLjAwMDAwMiwweiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPGVsbGlwc2Ugcnk9IjUzLjUiIHJ4PSI1My41IiBjeT0iMTc2LjUiIGN4PSIxOTUiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LDI0MSwyMjQpOyIvPgogIDxwYXRoIGQ9Im0xMzAuMDA3NSwzNTcuOTI2ODZsNjUsLTIyMy4wMDAwM2w2NS4wMDAwMSwyMjMuMDAwMDNsLTEzMC4wMDAwMSwweiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPGVsbGlwc2Ugcnk9IjUzLjUiIHJ4PSI1My41IiBjeT0iODMuNSIgY3g9IjMxNiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPHBhdGggZD0ibTI1MS4wMDc1LDI2NC45MjY4Nmw2NSwtMjIzLjAwMDAzbDY1LjAwMDAxLDIyMy4wMDAwM2wtMTMwLjAwMDAxLDB6IiBzdHlsZT0iZmlsbDogcmdiKDI1NSwyNDEsMjI0KTsiLz4KIDwvZz4KPC9zdmc+Cg==);
+}
+#save, #delete {
+	margin: auto;
+	padding: 0.5em 0;
+	max-width: 400px;
+	display: block;
+	clear: both;
+}
+#save {
+	padding-top: 3em;
+}
+#save input {
+	width: 100%;
+}
+#delete input {
+	background: #900;
+	border-color: #900;
+	float: right;
+}
+#saved {
+    transition: opacity 5s;
+}
+#saved.hide {
+	opacity: 0;
+}
+label {
+	display: block;
+}
+.o-forms-errortext {
+	display: none;
+}
+.o-forms--error > .o-forms-errortext {
+	display: block;
+}
+.link-all a{
+	color: inherit;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: larger;
+}
+.link-all a:hover {
+	text-decoration: underline;
+}
+.link-all {
+	margin-bottom: 1em;
+	font-size: small;
+}
+h1 {
+	text-align: center;
+}
+.last-update {
+	background: #333;
+	color: #fff;
+	display: block;
+	text-align: right;
+	margin-top: 1em;
+	padding: 0.4em 1em;
+}
