@@ -83,7 +83,7 @@ app.get('/', function (req, res) {
 		if (req.query.sortby) { console.log(req.query.sortby) } // check how sort param is provided
 		contacts.sort(CompareOnKey(req.query.sortby));
 		contacts.forEach(cleanContact);
-		res.render('index', {contacts: body});
+		res.render('index', {contacts: contacts});
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
