@@ -90,6 +90,19 @@ app.get('/', function (req, res) {
 	});
 });
 
+function CompareOnKey(key) {
+	return function(a,b) {
+		if (!key) {  // default to url sort
+			key = 'dataItemID';
+		}
+		avalue = a[key];
+		bvalue = b[key];
+		if (!avalue) return -1;
+		if (!bvalue) return 1;
+		return avalue.toLowerCase() > bvalue.toLowerCase() ? 1 : -1;
+	};
+}
+
 /**
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
