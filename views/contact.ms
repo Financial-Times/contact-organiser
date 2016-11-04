@@ -1,170 +1,11 @@
 <!DOCTYPE html>
 <html>
-  	<head>
-		<meta charset="UTF-8">
-		<title>Contact Organiser</title>
-		<link rel="stylesheet" href="https://build.origami.ft.com/v2/bundles/css?modules=o-header@^4.0.0,o-table@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.3" />
-		<meta name=viewport content="width=device-width, initial-scale=1">
-
-		<style type="text/css">
-		  	body {
-				margin:0;
-			}
-			#content {
-				padding: 15px;
-			}
-			#save, #delete {
-				margin: auto;
-				padding: 0.5em 0;
-				max-width: 400px;
-				display: block;
-				clear: both;
-			}
-			#save {
-				padding-top: 3em;
-			}
-			#save input {
-				width: 100%;
-			}
-			#delete input {
-				background: #900;
-				border-color: #900;
-				float: right;
-			}
-			#saved {
-				padding: 0;
-				padding-bottom: 0.1em;
-			}
-			#saved .success {
-				background-color: green;
-				color: white;
-				padding: 8px;
-				border-radius: 5px 5px 0 0;
-				font-weight: bold;
-				font-size: large;
-			}
-			#saved aside > div {
-				margin: 8px;
-			}
-			#saved aside[data-collapse=true] > div {
-				display: none;
-			}
-			#saved aside > h3 {
-				cursor: pointer;
-				margin: 0.5em 3px;
-			}
-			#saved aside > h3:before {
-				width: 1em;
-				float: left;
-				text-align: center;
-			}
-			#saved aside[data-collapse="true"] > h3:before {
-				content: "+ ";
-			}
-			#saved aside[data-collapse="false"] > h3:before {
-				content: "- ";
-			}
-			#saved aside pre {
-				padding: 8px;
-				border: groove;
-				border-radius: 4px;
-			}
-			label {
-				display: block;
-			}
-			.o-forms-errortext {
-				display: none;
-			}
-			.o-forms--error > .o-forms-errortext {
-				display: block;
-			}
-			.link-all a{
-				color: inherit;
-				text-decoration: none;
-				font-weight: bold;
-				font-size: larger;
-			}
-			.link-all a:hover {
-				text-decoration: underline;
-			}
-			.link-all {
-				margin-bottom: 1em;
-    			font-size: small;
-			}
-			h1 {
-				text-align: center;
-			}
-			.last-update {
-				background: #333;
-				color: #fff;
-				display: block;
-				text-align: right;
-				margin-top: 1em;
-				padding: 0.4em 1em;
-			}
-			.o-header__logo--ft abbr {
-	background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzkwIiBoZWlnaHQ9IjM5MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnPgogIDxlbGxpcHNlIHJ5PSI1My41IiByeD0iNTMuNSIgY3k9IjgzLjUiIGN4PSI3NiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPHBhdGggZD0ibTExLjAwNzUwMywyNjQuOTI2ODY1bDY1LjAwMDAwMSwtMjIzLjAwMDAzMWw2NS4wMDAwMDEsMjIzLjAwMDAzMWwtMTMwLjAwMDAwMiwweiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPGVsbGlwc2Ugcnk9IjUzLjUiIHJ4PSI1My41IiBjeT0iMTc2LjUiIGN4PSIxOTUiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LDI0MSwyMjQpOyIvPgogIDxwYXRoIGQ9Im0xMzAuMDA3NSwzNTcuOTI2ODZsNjUsLTIyMy4wMDAwM2w2NS4wMDAwMSwyMjMuMDAwMDNsLTEzMC4wMDAwMSwweiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPGVsbGlwc2Ugcnk9IjUzLjUiIHJ4PSI1My41IiBjeT0iODMuNSIgY3g9IjMxNiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsMjQxLDIyNCk7Ii8+CiAgPHBhdGggZD0ibTI1MS4wMDc1LDI2NC45MjY4Nmw2NSwtMjIzLjAwMDAzbDY1LjAwMDAxLDIyMy4wMDAwM2wtMTMwLjAwMDAxLDB6IiBzdHlsZT0iZmlsbDogcmdiKDI1NSwyNDEsMjI0KTsiLz4KIDwvZz4KPC9zdmc+Cg==);
-  		</style>
-
-  		<script type="text/javascript">
-  			<!--
-
-  				document.addEventListener("DOMContentLoaded", function() {
-					var savedmessagetitle = document.querySelector('#saved h3');
-					if (savedmessagetitle) savedmessagetitle.addEventListener('click', function () {
-						savedmessagetitle.parentNode.dataset.collapse = savedmessagetitle.parentNode.dataset.collapse != "true";
-					});
-
-					/**
-					 * Check the validity of a field on page load and each time the field changes 
-					 **/
-					function addChecks(input, group) {
-						function checkValidity() {
-							if(!input.value) {
-								group.setAttribute("class","o-forms-group");
-							} else if(input.checkValidity()){
-								group.setAttribute("class","o-forms-group o-forms--valid");
-							} else {
-								group.setAttribute("class","o-forms-group o-forms--error");
-							}
-						}
-						input.addEventListener('change', checkValidity);
-						checkValidity();
-					}
-					var nameinput = document.querySelector('#name');
-					addChecks(nameinput, nameinput.parentNode);
-
-					var emailinput = document.querySelector('#email');
-					addChecks(emailinput, emailinput.parentNode);
-
-					var phoneinput = document.querySelector('#phone');
-					addChecks(phoneinput, phoneinput.parentNode);
-
-					var slackinput = document.querySelector('#slack');
-					addChecks(slackinput, slackinput.parentNode.parentNode);
-
-					var supportrotainput = document.querySelector('#supportRota');
-					addChecks(supportrotainput, supportrotainput.parentNode);
-  				});
-  			-->
-  		</script>
+  	{{> _head }}
   	</head>
 	<body>
-		<header data-o-component="o-header" class="o-header o-header--tall">
-			<div class="o-header__container">
-				<div class="o-header__primary">
-					<div class="o-header__primary__left">
-						<a href="/" class="o-header__logo o-header__logo--ft">
-							<abbr title="Financial Times">FT</abbr>
-							<h1 class="o-header__title">Contact Organiser</h1>
-						</a>
-					</div>
-					<div class="o-header__primary__center"><h3 class="o-header__tagline">Organising the Custodians of our Systems</h3>
-					</div>
-				</div>
-			</div>
-		</header>
-		<div id='content'>
+		{{> _header }}
+		<div id='content' class="o-grid-container">
+			<div class="o-grid-row" data-o-grid-colspan="9">
 			<form action="{{#_new}}/new{{/_new}}{{^_new}}/contacts/{{contactid}}{{/_new}}" method="post">
 				<div class='link-all'><a href="/">&lt;- View all Contacts</a></div>
 				<h1>{{#_new}}Add New{{/_new}}{{^_new}}Edit{{/_new}} Contact</h1>
@@ -236,6 +77,7 @@
 			{{^_new}}<form id="delete" action="/contacts/{{contactid}}/delete" method="post">
 				<input type='submit' class="o-buttons o-buttons--standout delete-button" value='Delete' />
 			</form>{{/_new}}
+			</div>
 		</div>
 
 		{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
