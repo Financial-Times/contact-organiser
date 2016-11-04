@@ -82,34 +82,34 @@
 			</div>
 		</header>
 
-		<div id='content'>
+		<div id='content' class="o-grid-container">
 			<form id="filter" action="/" method="get">
 				<div class="o-forms-group">
 					<div class="o-grid-container">
 						<div class="o-grid-row">
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="dataItemID">URL</label>
-								<input name="dataItemID" value="{{dataItemID}}" class="o-forms__text" id="dataItemID"></input>
+								<label class="o-forms-label" for="dataItemID">URL</label>
+								<input name="dataItemID" value="{{dataItemID}}" class="o-forms-text" id="dataItemID"></input>
 							</div>
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="name">Name</label>
-								<input name="name" value="{{name}}" class="o-forms__text" id="name"></input>
+								<label class="o-forms-label" for="name">Name</label>
+								<input name="name" value="{{name}}" class="o-forms-text" id="name"></input>
 							</div>
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="slack">Slack Channel</label>
-								<input name="slack" value="{{slack}}" class="o-forms__text" id="slack"></input>
+								<label class="o-forms-label" for="slack">Slack Channel</label>
+								<input name="slack" value="{{slack}}" class="o-forms-text" id="slack"></input>
 							</div>
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="email">Email</label>
-								<input name="email" value="{{email}}" class="o-forms__text" id="email"></input>
+								<label class="o-forms-label" for="email">Email</label>
+								<input name="email" value="{{email}}" class="o-forms-text" id="email"></input>
 							</div>
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="phone">Phone</label>
-								<input name="phone" value="{{phone}}" class="o-forms__text" id="phone"></input>
+								<label class="o-forms-label" for="phone">Phone</label>
+								<input name="phone" value="{{phone}}" class="o-forms-text" id="phone"></input>
 							</div>
 							<div data-o-grid-colspan="3">
-								<label class="o-forms__label" for="programme">Programme</label>
-								<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
+								<label class="o-forms-label" for="programme">Programme</label>
+								<input name="programme" value="{{programme}}" class="o-forms-text" id="programme"></input>
 							</div>
 						</div>
 					</div>

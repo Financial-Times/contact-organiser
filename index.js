@@ -92,8 +92,8 @@ app.get('/', function (req, res) {
 
 function CompareOnKey(key) {
 	return function(a,b) {
-		if (!key) {  // default to url sort
-			key = 'dataItemID';
+		if (!key) {  // default to name sort
+			key = 'name';
 		}
 		avalue = a[key];
 		bvalue = b[key];
