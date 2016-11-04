@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+const querystring = require('querystring');
 var CMDB = require("cmdb.js");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -69,15 +70,19 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	contactsurl = process.env.CMDBAPI + '/items/contact?outputfields=name,slack,email,phone,supportRota,contactPref,programme&subjectDetail=False&objectDetail=False'
-	console.log(contactsurl)
-	cmdb._fetchAll(res.locals, contactsurl).then(function (body) {
+	contactsurl = process.env.CMDB_API + "/items/contact";
+	params = req.query;
+	console.log("params:",params);
+	params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
+	params['objectDetail'] = "False";
+	params['subjectDetail'] = "False";
+	remove_blank_values(params);
+	contactsurl = contactsurl + '?' +querystring.stringify(params);
+	console.log("url:",contactsurl)
+	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
+		if (req.query.sortby) { console.log(req.query.sortby) } // check how sort param is provided
+		contacts.sort(CompareOnKey(req.query.sortby));
 		body.forEach(cleanContact);
-		body.sort(function (a,b){
-			if (!a.name) return -1;
-			if (!b.name) return 1;
-			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
-		});
 		res.render('index', {contacts: body});
 	}).catch(function (error) {
 		res.status(502);

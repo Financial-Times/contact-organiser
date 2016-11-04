@@ -81,6 +81,43 @@
 				</div>
 			</div>
 		</header>
+
+		<form id="filter" action="/" method="get">
+			<div class="o-forms-group">
+				<div class="o-grid-container">
+					<div class="o-grid-row">
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="dataItemID">URL</label>
+							<input name="dataItemID" value="{{dataItemID}}" class="o-forms__text" id="dataItemID"></input>
+						</div>
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="name">Name</label>
+							<input name="name" value="{{name}}" class="o-forms__text" id="name"></input>
+						</div>
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="slack">Slack Channel</label>
+							<input name="slack" value="{{slack}}" class="o-forms__text" id="slack"></input>
+						</div>
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="email">Email</label>
+							<input name="email" value="{{email}}" class="o-forms__text" id="email"></input>
+						</div>
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="phone">Phone</label>
+							<input name="phone" value="{{phone}}" class="o-forms__text" id="phone"></input>
+						</div>
+						<div data-o-grid-colspan="3">
+							<label class="o-forms__label" for="programme">Programme</label>
+							<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
+						</div>
+					</div>
+				</div>
+				<input type='submit' class="o-buttons o-buttons--standout " value='Filter (blanks show whole index) ' />
+			</div>
+		</form>
+
+
+
 		<div id='content'>
 			{{#contacts}}
 				<div class='contact'>
