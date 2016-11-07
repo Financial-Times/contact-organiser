@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   	{{> _head }}
-  	</head>
 	<body>
 		{{> _header }}
 		<div id='content' class="o-grid-container">
