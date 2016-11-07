@@ -43,7 +43,7 @@
 			</form>
 
 			<div class="o-grid-row">
-				<div data-o-grid-colspan="9">
+				<div data-o-grid-colspan="12">
 				{{#contacts}}
 					<div class='contact'>
 						<img class='avatar' src="{{avatar}}" />
