@@ -4,6 +4,10 @@
 	<body>
 		{{> _header }}
 		<div id='content' class="o-grid-container">
+			<h2>Existing Contacts</h2>
+
+			</p>
+
 			<form id="filter" action="/" method="get">
 				<div class="o-forms-group">
 					<div class="o-grid-container">
@@ -38,24 +42,27 @@
 				</div>
 			</form>
 
-			{{#contacts}}
-				<div class='contact'>
-					<img class='avatar' src="{{avatar}}" />
-					<span class='details'>
-						<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
-						{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
-						{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
-						{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
-						{{#supportRota}}<form action="{{supportRota}}" target="_blank"><button class="o-buttons o-buttons--standout o-buttons--small">View Support Rota</button></form>{{/supportRota}}
-						{{#contactPref}}<span class='contactfield'>Preferred contact method: {{contactPref}}</span>{{/contactPref}}
-						{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
-					</span>
+			<div class="o-grid-row">
+				<div data-o-grid-colspan="9">
+				{{#contacts}}
+					<div class='contact'>
+						<img class='avatar' src="{{avatar}}" />
+						<span class='details'>
+							<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
+							{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
+							{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
+							{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
+							{{#supportRota}}<form action="{{supportRota}}" target="_blank"><button class="o-buttons o-buttons--standout o-buttons--small">View Support Rota</button></form>{{/supportRota}}
+							{{#contactPref}}<span class='contactfield'>Preferred contact method: {{contactPref}}</span>{{/contactPref}}
+							{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
+						</span>
 
-					<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+						<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+					</div>
+				{{/contacts}}
 				</div>
-			{{/contacts}}
-			<form id='new' action="/new"><input type='submit' class="o-buttons o-buttons--standout" value="Add New Contact"></form>
-
+				<form id='new' action="/new"><input type='submit' class="o-buttons o-buttons--standout" value="Add New Contact"></form>
+			</div>
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1"></script>
 	</body>
