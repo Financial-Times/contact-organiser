@@ -18,7 +18,7 @@
 							</div>
 							<div data-o-grid-colspan="3">
 								<label class="o-forms__label" for="name">Name</label>
-								<input name="name" value="{{name}}" class="o-forms___text" id="name"></input>
+								<input name="name" value="{{name}}" class="o-forms__text" id="name"></input>
 							</div>
 							<div data-o-grid-colspan="3">
 								<label class="o-forms__label" for="slack">Slack Channel</label>
@@ -37,8 +37,12 @@
 								<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 							</div>
 						</div>
+						<div class="o-grid-row">
+							<div data-o-grid-colspan="3">
+								<input type='submit' class="o-buttons o-buttons--standout " value='Filter (blanks show whole index) ' />
+							</div>
+						</div>
 					</div>
-					<input type='submit' class="o-buttons o-buttons--standout " value='Filter (blanks show whole index) ' />
 				</div>
 			</form>
 
