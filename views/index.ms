@@ -4,9 +4,6 @@
 	<body>
 		{{> _header }}
 		<div id='content' class="o-grid-container">
-			<h2>Existing Contacts</h2>
-
-			</p>
 
 			<form id="filter" action="/" method="get">
 				<div class="o-forms-group">
@@ -48,6 +45,8 @@
 					</fieldset>
 				</div>
 			</form>
+
+			<h2>Existing Contacts</h2>
 
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
