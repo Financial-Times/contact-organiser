@@ -132,7 +132,7 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-	contactid = req.params.contactid
+	var contactid = req.params.contactid
 	if (!contactid) {
 		contactid = req.body.name
 	}
