@@ -132,9 +132,6 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-
-	// HACK: truncate the uuid to match CMDB's limit.  Remove substring when limit is removed.
-//	res.redirect(307, '/contacts/' + uuid.v4().substring(0, 30));
 	contactid = req.params.contactid
 	if (!contactid) {
 		contactid = req.body.name

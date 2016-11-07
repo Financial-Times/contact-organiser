@@ -29,10 +29,10 @@
 
 				<div class="o-forms-wrapper o-forms-wrapper--highlight">
 					<div class="o-forms o-forms--wide {{#iderror}}o-forms--error{{/iderror}}">
-						<label class="o-forms__label" for="id">ID</label>
+						<label class="o-forms__label" for="contactid">ID</label>
 						<small class="o-forms__additional-info">A unique identification for the contact (defaults to name).</small>
-						{{#id}}<small class="o-forms__additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/id}}
-						<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms__text" id="id" {{#id}}disabled{{/id}}></input>
+						{{#contactid}}<small class="o-forms__additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/contactid}}
+						<input type="text" name="contactid" value="{{contactid}}" placeholder="{{name}}" default="{{name}}" class="o-forms__text" id="contactid" {{#contactid}}disabled{{/contactid}}></input>
 						{{#iderror}}<div class="o-forms-errortext">{{iderror}}</div>{{/iderror}}
 					</div>
 				</div>
