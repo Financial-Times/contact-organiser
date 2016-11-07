@@ -144,8 +144,17 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	cmdb.putItem(res.locals, 'contact', req.params.contactid, req.body).then(function (result) {
-		cleanContact(result);
+	var contact = {
+		name: req.body.name,
+		slack: req.body.slack,
+		email: req.body.email,
+		phone: req.body.phone,
+		supportRota: req.body.supportRota,
+		contactPref: req.body.preferedContact,
+		programme: req.body.programme,
+	}
+
+	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
 			contactid: req.params.contactid,
