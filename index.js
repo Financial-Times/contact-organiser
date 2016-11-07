@@ -154,16 +154,16 @@ app.post('/contacts/:contactid', function (req, res) {
 		programme: req.body.programme,
 	}
 
-	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
+	cmdb.putItem(res.locals, 'contact', contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
-			contactid: req.params.contactid,
+			contactid: contactid,
 
 			// TODO: replace with pretty print function
 			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
 			
 			// TODO: get actual url from cmdb.js
-			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+			url: 'https://cmdb.ft.com/v2/items/contact/'+contactid,
 		}
 		res.render('contact', result);
 	}).catch(function (error) {
