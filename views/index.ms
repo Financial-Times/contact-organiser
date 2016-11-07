@@ -49,7 +49,7 @@
 						<img class='avatar' src="{{avatar}}" />
 						<span class='details'>
 							<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
-							(id:{{dataItemID}})
+							id:{{contactid}}
 							{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
 							{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
 							{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
