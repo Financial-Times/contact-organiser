@@ -124,7 +124,18 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-	res.render('contact', {'_new': true});
+	var defaultdata = {
+		name: "",
+		id: "",
+		slack: "",
+		email: "",
+		phone: "",
+		supportRota: "",
+		contactPref: "",
+		programme: "",
+		localpath: '/new',
+	};
+	res.render('system', defaultdata);
 });
 
 
@@ -132,7 +143,7 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-	var contactid = req.params.contactid
+	contactid = req.body.id
 	if (!contactid) {
 		contactid = req.body.name
 	}
@@ -144,6 +155,7 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
+	contactid = req.body.id;
 	var contact = {
 		name: req.body.name,
 		slack: req.body.slack,
@@ -154,16 +166,16 @@ app.post('/contacts/:contactid', function (req, res) {
 		programme: req.body.programme,
 	}
 
-	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
+	cmdb.putItem(res.locals, 'contact', contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
-			contactid: req.params.contactid,
+			contactid: req.body.id,
 
 			// TODO: replace with pretty print function
 			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
 			
 			// TODO: get actual url from cmdb.js
-			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+			url: 'https://cmdb.ft.com/v2/items/contact/'+req.body.id,
 		}
 		res.render('contact', result);
 	}).catch(function (error) {
@@ -204,12 +216,13 @@ app.listen(port, function () {
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
 function cleanContact(contact) {
-	contact.contactid = contact.dataItemID;
+	contact.id = contact.dataItemID;
 	if (!contact.name) {
-		contact.name = contact.contactid
+		contact.name = contact.id
 	}
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
+	contact.localpath = "/contacts/"+contact.id;
 
 	if (!contact.avatar) {
 
