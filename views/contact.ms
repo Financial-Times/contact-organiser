@@ -6,7 +6,7 @@
 		<div id='content' class="o-grid-container">
 			<div class="o-grid-row" data-o-grid-colspan="9">
 				<form action="{{localpath}}" method="post">
-					<div class='link-all'><<a href="/"><i class="o-icons-icon o-icons-icon--arrow-left"></i>View all Contacts</a></div>
+					<div class='link-all'><a href="/"><i class="o-icons-icon o-icons-icon--arrow-left"></i>View all Contacts</a></div>
 					<h1>{{^id}}Add New{{/id}}{{#id}}Edit{{/id}} Contact</h1>
 					{{#saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
 						<p class='success'>Contact data saved succesfully</p>
