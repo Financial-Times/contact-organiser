@@ -169,7 +169,7 @@ app.post('/contacts/:contactid', function (req, res) {
 	cmdb.putItem(res.locals, 'contact', contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
-			contactid: req.body.id,
+			contactid: contactid,
 
 			// TODO: replace with pretty print function
 			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
