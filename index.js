@@ -135,7 +135,7 @@ app.get('/new', function (req, res) {
 		programme: "",
 		localpath: '/new',
 	};
-	res.render('system', defaultdata);
+	res.render('contact', defaultdata);
 });
 
 
