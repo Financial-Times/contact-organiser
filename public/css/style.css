@@ -188,3 +188,30 @@ h1 {
 	margin-top: 1em;
 	padding: 0.4em 1em;
 }
+
+	.o-icons-icon {
+		width: 20px;
+		height: 20px;
+		vertical-align: bottom;
+	}
+
+	.o-icons--big {
+		width: 40px;
+		height: 40px;
+		vertical-align: bottom;
+		margin-right: 10px;
+	}
+
+	.o-icons-icon--warning {
+		border-radius: 50%;
+		background-color: white;
+	}
+
+	.delete-notice-container {
+		border: 1px solid #900;
+		margin-top: 3em;
+		padding: 1em;
+		border-radius: 2px;
+		background-color: #e1b3b3;
+		margin-bottom: 3em;
+	}

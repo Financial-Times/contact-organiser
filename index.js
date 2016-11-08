@@ -177,6 +177,7 @@ app.post('/contacts/:contactid', function (req, res) {
 			// TODO: get actual url from cmdb.js
 			url: 'https://cmdb.ft.com/v2/items/contact/'+req.body.id,
 		}
+		contact.id = contactid
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
