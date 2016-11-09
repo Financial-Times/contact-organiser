@@ -126,7 +126,7 @@ app.get('/contacts/:contactid', function (req, res) {
 app.get('/new', function (req, res) {
 	var defaultdata = {
 		name: "",
-		id: "",
+		contactid: "",
 		slack: "",
 		email: "",
 		phone: "",
@@ -144,10 +144,15 @@ app.get('/new', function (req, res) {
  */
 app.post('/new', function (req, res) {
 	contactid = req.body.id
-	if (!contactid) {
+	if (!contactid.trim()) {
 		contactid = req.body.name
-	}
-	res.redirect(307, '/contacts/' + contactid);
+	};
+	cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
+		req.body.iderror = "ID already in use, please re-enter"
+		res.render('contact', req.body);
+	}).catch(function (error) {
+		res.redirect(307, '/contacts/' + contactid);
+	});
 });
 
 
@@ -155,7 +160,6 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	contactid = req.body.id;
 	var contact = {
 		name: req.body.name,
 		slack: req.body.slack,
@@ -166,16 +170,16 @@ app.post('/contacts/:contactid', function (req, res) {
 		programme: req.body.programme,
 	}
 
-	cmdb.putItem(res.locals, 'contact', contactid, contact).then(function (result) {
+	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
-			contactid: contactid,
+			contactid: req.params.contactid,
 
 			// TODO: replace with pretty print function
 			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
 			
 			// TODO: get actual url from cmdb.js
-			url: 'https://cmdb.ft.com/v2/items/contact/'+req.body.id,
+			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
 		}
 		cleanContact(result);
 		res.render('contact', result);
@@ -218,7 +222,7 @@ app.listen(port, function () {
  */
 function cleanContact(contact) {
 	contact.id = contact.dataItemID;
-	if (!contact.name) {
+	if (!contact.hasOwnProperty('name')) {
 		contact.name = contact.id
 	}
 	delete contact.dataItemID;
