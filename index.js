@@ -76,6 +76,8 @@ app.get('/', function (req, res) {
 	contactsurl = process.env.CMDBAPI + "/items/contact";
 	params = req.query;
 	console.log("params:",params);
+	sortby = params.sortby
+	delete params.sortby // to avoid it being added to cmdb params
 	params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
 	params['objectDetail'] = "False";
 	params['subjectDetail'] = "False";
@@ -83,9 +85,8 @@ app.get('/', function (req, res) {
 	contactsurl = contactsurl + '?' +querystring.stringify(params);
 	console.log("url:",contactsurl)
 	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
-		if (req.query.sortby) { console.log(req.query.sortby) } // check how sort param is provided
 		contacts.forEach(cleanContact);
-		contacts.sort(CompareOnKey(req.query.sortby));
+		contacts.sort(CompareOnKey(sortby));
 		res.render('index', {contacts: contacts});
 	}).catch(function (error) {
 		res.status(502);
@@ -221,13 +222,13 @@ app.listen(port, function () {
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
 function cleanContact(contact) {
-	contact.id = contact.dataItemID;
+	contact.contactid = contact.dataItemID;
 	if (!contact.hasOwnProperty('name')) {
-		contact.name = contact.id
+		contact.name = contact.contactid
 	}
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
-	contact.localpath = "/contacts/"+contact.id;
+	contact.localpath = "/contacts/"+contact.contactid;
 
 	if (!contact.avatar) {
 
