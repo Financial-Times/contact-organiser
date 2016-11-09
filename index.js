@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+const querystring = require('querystring');
 var CMDB = require("cmdb.js");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,6 +15,9 @@ app.engine('ms', mustacheExpress());
 
 app.set('view engine', 'ms');
 app.set('views', __dirname + '/views');
+
+// Set the public directory as public for serving assets
+app.use(express.static('public'));
 
 /** Environment variables **/
 var port = process.env.PORT || 3001;
@@ -69,21 +73,39 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	contactsurl = process.env.CMDBAPI + '/items/contact?outputfields=name,slack,email,phone,supportRota,contactPref,programme&subjectDetail=False&objectDetail=False'
-	console.log(contactsurl)
-	cmdb._fetchAll(res.locals, contactsurl).then(function (body) {
-		body.forEach(cleanContact);
-		body.sort(function (a,b){
-			if (!a.name) return -1;
-			if (!b.name) return 1;
-			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
-		});
-		res.render('index', {contacts: body});
+	contactsurl = process.env.CMDBAPI + "/items/contact";
+	params = req.query;
+	console.log("params:",params);
+	sortby = params.sortby
+	delete params.sortby // to avoid it being added to cmdb params
+	params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
+	params['objectDetail'] = "False";
+	params['subjectDetail'] = "False";
+	remove_blank_values(params);
+	contactsurl = contactsurl + '?' +querystring.stringify(params);
+	console.log("url:",contactsurl)
+	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
+		contacts.forEach(cleanContact);
+		contacts.sort(CompareOnKey(sortby));
+		res.render('index', {contacts: contacts});
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
 	});
 });
+
+function CompareOnKey(key) {
+	return function(a,b) {
+		if (!key) {  // default to name sort
+			key = 'name';
+		}
+		avalue = a[key];
+		bvalue = b[key];
+		if (!avalue) return -1;
+		if (!bvalue) return 1;
+		return avalue.toLowerCase() > bvalue.toLowerCase() ? 1 : -1;
+	};
+}
 
 /**
  * Gets info about a given Contact from the CMDB and provides a form for editing it
@@ -103,7 +125,18 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-	res.render('contact', {'_new': true});
+	var defaultdata = {
+		name: "",
+		contactid: "",
+		slack: "",
+		email: "",
+		phone: "",
+		supportRota: "",
+		contactPref: "",
+		programme: "",
+		localpath: '/new',
+	};
+	res.render('contact', defaultdata);
 });
 
 
@@ -111,14 +144,16 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-
-	// HACK: truncate the uuid to match CMDB's limit.  Remove substring when limit is removed.
-//	res.redirect(307, '/contacts/' + uuid.v4().substring(0, 30));
-	contactid = req.params.contactid
-	if (!contactid) {
+	contactid = req.body.id
+	if (!contactid.trim()) {
 		contactid = req.body.name
-	}
-	res.redirect(307, '/contacts/' + contactid);
+	};
+	cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
+		req.body.iderror = "ID already in use, please re-enter"
+		res.render('contact', req.body);
+	}).catch(function (error) {
+		res.redirect(307, '/contacts/' + contactid);
+	});
 });
 
 
@@ -126,8 +161,17 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	cmdb.putItem(res.locals, 'contact', req.params.contactid, req.body).then(function (result) {
-		cleanContact(result);
+	var contact = {
+		name: req.body.name,
+		slack: req.body.slack,
+		email: req.body.email,
+		phone: req.body.phone,
+		supportRota: req.body.supportRota,
+		contactPref: req.body.contactPref,
+		programme: req.body.programme,
+	}
+
+	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
 		result.saved = {
 			locals: JSON.stringify(res.locals),
 			contactid: req.params.contactid,
@@ -138,6 +182,7 @@ app.post('/contacts/:contactid', function (req, res) {
 			// TODO: get actual url from cmdb.js
 			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
 		}
+		cleanContact(result);
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
@@ -178,11 +223,12 @@ app.listen(port, function () {
  */
 function cleanContact(contact) {
 	contact.contactid = contact.dataItemID;
-	if (!contact.name) {
+	if (!contact.hasOwnProperty('name')) {
 		contact.name = contact.contactid
 	}
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
+	contact.localpath = "/contacts/"+contact.contactid;
 
 	if (!contact.avatar) {
 
@@ -196,3 +242,20 @@ function cleanContact(contact) {
 	return contact;
 }
 
+
+function remove_blank_values(obj, recurse) {
+	for (var i in obj) {
+		if (obj[i] === null || obj[i] === '') {
+			delete obj[i];
+		} else {
+			if (recurse && typeof obj[i] === 'object') {
+				remove_blank_values(obj[i], recurse);
+				if (Object.keys(obj[i]).length == 0) {
+					{
+						delete obj[i];
+					}
+				}
+			}
+		}
+	}
+}
