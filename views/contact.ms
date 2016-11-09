@@ -21,19 +21,19 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms o-forms--wide">
+					<div class="o-forms--wide">
 						<label class="o-forms__label" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
 					</div>
 
-					<div class="o-forms-wrapper o-forms-wrapper--highlight">
+					<div class="o-forms--wide o-forms-wrapper o-forms-wrapper--highlight">
 						<div class="o-forms o-forms--wide {{#iderror}}o-forms--error{{/iderror}}">
 							<label class="o-forms__label" for="id">ID</label>
 							<small class="o-forms__additional-info">A unique identification for the contact (defaults to name).</small>
 							{{#id}}<small class="o-forms__additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/id}}
 							<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms__text" id="id" {{#id}}disabled{{/id}}></input>
-							{{#iderror}}<div class="o-forms-errortext">{{iderror}}</div>{{/iderror}}
+							{{#iderror}}<div class="o-forms__errortext">{{iderror}}</div>{{/iderror}}
 						</div>
 					</div>
 
@@ -43,22 +43,22 @@
 							<span class="o-forms-prefix">#</span>
 							<input type="text" name="slack" value="{{slack}}" placeholder="teamname-support" class="o-forms__text" id="slack" pattern="[a-z0-9\-_]{1,21}"></input>
 						</div>
-						<div class="o-forms-errortext">Please enter a valid slack channel</div>
+						<div class="o-forms__errortext">Please enter a valid slack channel</div>
 					</div>
 					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="email">Email</label>
 						<input type="email" name="email" value="{{email}}" placeholder="contact.name@ft.com" class="o-forms__text" id="email"></input>
-						<div class="o-forms-errortext">Please enter a valid email address</div>
+						<div class="o-forms__errortext">Please enter a valid email address</div>
 					</div>
 					<div cclass="o-forms o-forms--wide">
 						<label class="o-forms__label" for="phone">Phone number</label>
 						<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms__text" id="phone" pattern="\+?[0-9\s\-]+"></input>
-						<div class="o-forms-errortext">Please enter a valid phone number</div>
+						<div class="o-forms__errortext">Please enter a valid phone number</div>
 					</div>
 					<div cclass="o-forms o-forms--wide">
 						<label class="o-forms__label" for="supportRota">Support Rota</label><small class="o-forms__additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
 						<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms__text" id="supportRota"></input>
-						<div class="o-forms-errortext">Please enter a valid URL</div>
+						<div class="o-forms__errortext">Please enter a valid URL</div>
 					</div>
 					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="contactPref">Preferred contact method</label>
