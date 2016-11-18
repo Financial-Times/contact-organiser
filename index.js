@@ -281,24 +281,29 @@ function getProgrammeList(user, selected) {
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
+		console.log("programmes:",programmes);
 		programmes.forEach(function(contact) {
+			console.log("contact:",contact);
 			programmmeList.push({name:contact.name, value:contact.name});
+			console.log("list:",programmeList);
 		});
-		var found = false;
-		programmeList.forEach(function (programme) {
-			if (programme.value == selected) {
-				programme.selected = true;
-				found = true;
-			}
-		});
-		if (!found) {
-			programmeList[programmeList.length-1].selected = true;
-		}
-		return programmeList;
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
 	});
+
+	var found = false;
+	programmeList.forEach(function (programme) {
+		if (programme.value == selected) {
+			programme.selected = true;
+			found = true;
+		}
+	});
+	if (!found) {
+		programmeList[programmeList.length-1].selected = true;
+	}
+	console.log("final list:",programmeList);
+	return programmeList;
 }
 
 function remove_blank_values(obj, recurse) {
