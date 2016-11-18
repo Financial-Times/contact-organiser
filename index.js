@@ -73,7 +73,8 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	programmeList = readProgrammeList(res.locals)
+	programmeList = readProgrammeList(res.locals);
+	console.log("read list of programmes:",programmeList);
 	contactsurl = process.env.CMDBAPI + "/items/contact";
 	params = req.query;
 	console.log("params:",params);
@@ -262,6 +263,7 @@ function readProgrammeList(user) {
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
 function cleanContact(contact, programmeList) {
+	console.log("clean contact:",contact, programmeList);
 	contact.contactid = contact.dataItemID;
 	if (!contact.hasOwnProperty('name')) {
 		contact.name = contact.contactid
