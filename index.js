@@ -253,6 +253,7 @@ function readCMDBProgrammeList(user) {
 	params['objectDetail'] = "False";
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
+	console.log("programmesurl:",programmesurl);
 	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 		console.log("programmes:",programmes);
 		programmes.forEach(function(contact) {
@@ -268,6 +269,7 @@ function readCMDBProgrammeList(user) {
 		console.log("default programme list:",programmeList);
 		return programmeList;
 	});
+	console.log("no programme list!")
 }
 
 /** 
