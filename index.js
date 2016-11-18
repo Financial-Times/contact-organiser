@@ -85,7 +85,9 @@ app.get('/', function (req, res) {
 	contactsurl = contactsurl + '?' +querystring.stringify(params);
 	console.log("url:",contactsurl)
 	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
-		contacts.forEach(cleanContact(res.locals));
+		contacts.forEach(function (contact) {
+			cleanContact(res.locals, contact);
+		});
 		contacts.sort(CompareOnKey(sortby));
 		res.render('index', {contacts: contacts});
 	}).catch(function (error) {
