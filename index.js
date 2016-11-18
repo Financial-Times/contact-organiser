@@ -283,9 +283,9 @@ function getProgrammeList(user, selected) {
 	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 		console.log("programmes:",programmes);
 		programmes.forEach(function(contact) {
-			console.log("contact:",contact);
-			programmmeList.push({name:contact.name, value:contact.name});
-			console.log("list:",programmeList);
+			console.log("contact:",contact)
+			programmeList.push({name:contact.name, value:contact.name})
+			console.log("list:",programmeList)
 		});
 	}).catch(function (error) {
 		res.status(502);
