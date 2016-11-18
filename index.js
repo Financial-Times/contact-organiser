@@ -235,8 +235,8 @@ function readProgrammeList(user) {
 			{name: "Undefined", value: "Undefined"},
 	];
 	programmesurl = process.env.CMDBAPI + "/items/contact";
-	params['outputfields'] = "name";
 	params = [];
+	params['outputfields'] = "name";
 	params['contactType'] = "Programme";
 	params['objectDetail'] = "False";
 	params['subjectDetail'] = "False";
