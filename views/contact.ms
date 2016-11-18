@@ -38,6 +38,14 @@
 					</div>
 
 					<div class="o-forms o-forms--wide">
+						<label class="o-forms__label o-forms__label--required" for="contactType">Contact Type</label>
+						<small class="o-forms__additional-info">Is this a person, team or programme?</small>
+						<select class="o-forms__select" id="contactType" name="contactType" data-bind="contactType">
+							{{#ctypelist}}<option value="{{value}}" default="Team" {{#selected}}selected{{/selected}}>{{name}}</option>{{/ctypelist}}
+						</select>
+					</div>
+
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="slack">Slack Channel</label>
 						<div class="o-forms-affix-wrapper">
 							<span class="o-forms-prefix">#</span>

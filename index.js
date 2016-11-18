@@ -128,6 +128,7 @@ app.get('/new', function (req, res) {
 	var defaultdata = {
 		name: "",
 		contactid: "",
+		ctypelist: getCtypeList("Team"),
 		slack: "",
 		email: "",
 		phone: "",
@@ -163,6 +164,7 @@ app.post('/new', function (req, res) {
 app.post('/contacts/:contactid', function (req, res) {
 	var contact = {
 		name: req.body.name,
+		contactType: req.body.contactType,
 		slack: req.body.slack,
 		email: req.body.email,
 		phone: req.body.phone,
@@ -229,6 +231,8 @@ function cleanContact(contact) {
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
 	contact.localpath = "/contacts/"+contact.contactid;
+	contact.ctypelist = getCtypeList(contact.contactType);
+
 
 	if (!contact.avatar) {
 
@@ -240,6 +244,27 @@ function cleanContact(contact) {
 		contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
 	}
 	return contact;
+}
+
+function getCtypeList(selected) {
+	var ctypelist = [
+		{name: "Person", value: "Person"},
+		{name: "Team", value: "Team"},
+		{name: "Company", value: "Company"},
+		{name: "Programme", value: "Programme"},
+		{name: "Undefined", value: "Undefined"},
+	];
+	var found = false;
+	ctypelist.forEach(function (stype) {
+		if (ctype.value == selected) {
+			ctype.selected = true;
+			found = true;
+		}
+	});
+	if (!found) {
+		ctypelist[ctypelist.length-1].selected = true;
+	}
+	return ctypelist;
 }
 
 

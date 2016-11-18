@@ -3,7 +3,7 @@ machine:
 
 deployment:
   dev:
-    branch: filter-index
+    branch: MON-2113
     commands:
       - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow
