@@ -257,6 +257,7 @@ function readProgrammeList(user) {
 		console.log("default programme list:",programmeList);
 		return programmeList;
 	});
+	return programmeList;
 }
 
 /** 
