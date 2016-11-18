@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
 	contactsurl = contactsurl + '?' +querystring.stringify(params);
 	console.log("url:",contactsurl)
 	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
-		contacts.forEach(cleanContact);
+		contacts.forEach(cleanContact(res.locals));
 		contacts.sort(CompareOnKey(sortby));
 		res.render('index', {contacts: contacts});
 	}).catch(function (error) {
@@ -112,7 +112,7 @@ function CompareOnKey(key) {
  */
 app.get('/contacts/:contactid', function (req, res) {
 	cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
-		cleanContact(result);
+		cleanContact(res.locals, result);
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
@@ -134,7 +134,7 @@ app.get('/new', function (req, res) {
 		phone: "",
 		supportRota: "",
 		contactPref: "",
-		programmeList: getProgrammeList("Undefined"),
+		programmeList: getProgrammeList(res.locals,"Undefined"),
 		localpath: '/new',
 	};
 	res.render('contact', defaultdata);
@@ -184,7 +184,7 @@ app.post('/contacts/:contactid', function (req, res) {
 			// TODO: get actual url from cmdb.js
 			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
 		}
-		cleanContact(result);
+		cleanContact(res.locals, result);
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
@@ -223,7 +223,7 @@ app.listen(port, function () {
 /** 
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
-function cleanContact(contact) {
+function cleanContact(user, contact) {
 	contact.contactid = contact.dataItemID;
 	if (!contact.hasOwnProperty('name')) {
 		contact.name = contact.contactid
@@ -232,7 +232,7 @@ function cleanContact(contact) {
 	delete contact.dataTypeID;
 	contact.localpath = "/contacts/"+contact.contactid;
 	contact.ctypeList = getCtypeList(contact.contactType);
-	contact.programmeList = getProgrammeList(contact.programme);
+	contact.programmeList = getProgrammeList(user, contact.programme);
 
 	if (!contact.avatar) {
 
@@ -267,7 +267,7 @@ function getCtypeList(selected) {
 	return ctypeList;
 }
 
-function getProgrammeList(selected) {
+function getProgrammeList(user, selected) {
 	programmeList = [
 			{name: "Undefined", value: "Undefined"},
 	];
@@ -278,7 +278,7 @@ function getProgrammeList(selected) {
 	params['objectDetail'] = "False";
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
-	cmdb._fetchAll(res.locals, programmesurl).then(function (programmes) {
+	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 		programmes.forEach(function(contact) {
 			programmmeList.push({name:contact.name, value:contact.name});
 		});
