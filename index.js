@@ -233,11 +233,12 @@ app.listen(port, function () {
 **/
 function readProgrammeList(user) {
 	readCMDBProgrammeList(user).then( function (programmes) {
+		console.log("A programme list");
 		return programmes;
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
-		console.log("no programme list");
+		console.log("no programme list!");
 		return programmes;
 	});
 }
@@ -254,22 +255,20 @@ function readCMDBProgrammeList(user) {
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	console.log("programmesurl:",programmesurl);
-	cmdb._fetchAll(user, programmesurl).done(function (programmes) {
+	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 		console.log("programmes:",programmes);
 		programmes.forEach(function(contact) {
 			console.log("contact:",contact)
 			programmeList.push({name:contact.name, value:contact.name})
-			console.log("list:",programmeList)
+			console.log("populated programme list:",programmeList)
 		});
-		console.log("programme list:",programmeList);
-		return programmeList;
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
-		console.log("default programme list:",programmeList);
-		return programmeList;
+		console.log("error programme list:",programmeList);
 	});
-	console.log("no programme list!")
+	console.log("returned programme list:",programmeList);
+	return programmeList;
 }
 
 /** 
