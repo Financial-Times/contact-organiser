@@ -232,18 +232,6 @@ app.listen(port, function () {
 	Obtain list of programme contacts
 **/
 function readProgrammeList(user) {
-	readCMDBProgrammeList(user).then( function (programmes) {
-		console.log("A programme list");
-		return programmes;
-	}).catch(function (error) {
-		res.status(502);
-		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
-		console.log("no programme list!");
-		return programmes;
-	});
-}
-
-function readCMDBProgrammeList(user) {
 	var programmeList = [
 			{name: "Undefined", value: "Undefined"},
 	];
