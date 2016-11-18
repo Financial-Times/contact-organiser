@@ -296,15 +296,15 @@ function getProgrammeList(user, selected) {
 			}
 		});
 		if (!found) {
-			programmeList[programmeList.length-1].selected = true;
+			programmeList[0].selected = true;
 		}
-		console.log("final list:",programmeList);
-		return programmeList;
-		
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
 	});
+
+	console.log("final list:",programmeList);
+	return programmeList;
 }
 
 function remove_blank_values(obj, recurse) {
