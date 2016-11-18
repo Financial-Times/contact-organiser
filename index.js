@@ -73,6 +73,7 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
+	programmeList = readProgrammeList(res.locals)
 	contactsurl = process.env.CMDBAPI + "/items/contact";
 	params = req.query;
 	console.log("params:",params);
@@ -86,7 +87,7 @@ app.get('/', function (req, res) {
 	console.log("url:",contactsurl)
 	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
 		contacts.forEach(function (contact) {
-			cleanContact(res.locals, contact);
+			cleanContact(contact, programmeList);
 		});
 		contacts.sort(CompareOnKey(sortby));
 		res.render('index', {contacts: contacts});
@@ -113,8 +114,9 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
+	programmeList = readProgrammeList(res.locals)
 	cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
-		cleanContact(res.locals, result);
+		cleanContact(result, programmeList);
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
@@ -127,6 +129,7 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
+	programmeList = readProgrammeList(res.locals)
 	var defaultdata = {
 		name: "",
 		contactid: "",
@@ -136,7 +139,7 @@ app.get('/new', function (req, res) {
 		phone: "",
 		supportRota: "",
 		contactPref: "",
-		programmeList: getProgrammeList(res.locals,"Undefined"),
+		programmeList: getProgrammeList(programmeList, "Undefined"),
 		localpath: '/new',
 	};
 	res.render('contact', defaultdata);
@@ -164,6 +167,7 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
+	programmeList = readProgrammeList(res.locals)
 	var contact = {
 		name: req.body.name,
 		contactType: req.body.contactType,
@@ -186,7 +190,7 @@ app.post('/contacts/:contactid', function (req, res) {
 			// TODO: get actual url from cmdb.js
 			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
 		}
-		cleanContact(res.locals, result);
+		cleanContact(result, programmeList);
 		res.render('contact', result);
 	}).catch(function (error) {
 		res.status(502);
@@ -222,10 +226,42 @@ app.listen(port, function () {
   console.log('App listening on port '+port);
 });
 
+
+/**
+	Obtain list of programme contacts
+**/
+function readProgrammeList(user) {
+	var programmeList = [
+			{name: "Undefined", value: "Undefined"},
+	];
+	programmesurl = process.env.CMDBAPI + "/items/contact";
+	params['outputfields'] = "name";
+	params = [];
+	params['contactType'] = "Programme";
+	params['objectDetail'] = "False";
+	params['subjectDetail'] = "False";
+	programmesurl = programmesurl + '?' +querystring.stringify(params);
+	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
+		console.log("programmes:",programmes);
+		programmes.forEach(function(contact) {
+			console.log("contact:",contact)
+			programmeList.push({name:contact.name, value:contact.name})
+			console.log("list:",programmeList)
+		});
+		console.log("programme list:",programmeList);
+		return programmeList;
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("default programme list:",programmeList);
+		return programmeList;
+	});
+}
+
 /** 
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
-function cleanContact(user, contact) {
+function cleanContact(contact, programmeList) {
 	contact.contactid = contact.dataItemID;
 	if (!contact.hasOwnProperty('name')) {
 		contact.name = contact.contactid
@@ -234,7 +270,7 @@ function cleanContact(user, contact) {
 	delete contact.dataTypeID;
 	contact.localpath = "/contacts/"+contact.contactid;
 	contact.ctypeList = getCtypeList(contact.contactType);
-	contact.programmeList = getProgrammeList(user, contact.programme);
+	contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
 	if (!contact.avatar) {
 
@@ -269,41 +305,18 @@ function getCtypeList(selected) {
 	return ctypeList;
 }
 
-function getProgrammeList(user, selected) {
-	programmeList = [
-			{name: "Undefined", value: "Undefined"},
-	];
-	programmesurl = process.env.CMDBAPI + "/items/contact";
-	params['outputfields'] = "name";
-	params = [];
-	params['contactType'] = "Programme";
-	params['objectDetail'] = "False";
-	params['subjectDetail'] = "False";
-	programmesurl = programmesurl + '?' +querystring.stringify(params);
-	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
-		console.log("programmes:",programmes);
-		programmes.forEach(function(contact) {
-			console.log("contact:",contact)
-			programmeList.push({name:contact.name, value:contact.name})
-			console.log("list:",programmeList)
-		});
-
-		var found = false;
-		programmeList.forEach(function (programme) {
-			if (programme.value == selected) {
-				programme.selected = true;
-				found = true;
-			}
-		});
-		if (!found) {
-			programmeList[0].selected = true;
+function getProgrammeList(programmeList, selected) {
+	var found = false;
+	programmeList.forEach(function (programme) {
+		if (programme.value == selected) {
+			programme.selected = true;
+			found = true;
 		}
-	}).catch(function (error) {
-		res.status(502);
-		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
 	});
-
-	console.log("final list:",programmeList);
+	if (!found) {
+		programmeList[0].selected = true;
+	}
+	console.log("programme list:",programmeList);
 	return programmeList;
 }
 
