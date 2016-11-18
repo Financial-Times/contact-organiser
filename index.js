@@ -255,7 +255,7 @@ function getCtypeList(selected) {
 		{name: "Undefined", value: "Undefined"},
 	];
 	var found = false;
-	ctypelist.forEach(function (stype) {
+	ctypelist.forEach(function (ctype) {
 		if (ctype.value == selected) {
 			ctype.selected = true;
 			found = true;
