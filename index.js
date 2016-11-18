@@ -128,13 +128,13 @@ app.get('/new', function (req, res) {
 	var defaultdata = {
 		name: "",
 		contactid: "",
-		ctypelist: getCtypeList("Team"),
+		ctypeList: getCtypeList("Team"),
 		slack: "",
 		email: "",
 		phone: "",
 		supportRota: "",
 		contactPref: "",
-		programme: "",
+		programmeList: getProgrammeList("Undefined"),
 		localpath: '/new',
 	};
 	res.render('contact', defaultdata);
@@ -231,8 +231,8 @@ function cleanContact(contact) {
 	delete contact.dataItemID;
 	delete contact.dataTypeID;
 	contact.localpath = "/contacts/"+contact.contactid;
-	contact.ctypelist = getCtypeList(contact.contactType);
-
+	contact.ctypeList = getCtypeList(contact.contactType);
+	contact.programmeList = getProgrammeList(contact.programme);
 
 	if (!contact.avatar) {
 
@@ -247,7 +247,7 @@ function cleanContact(contact) {
 }
 
 function getCtypeList(selected) {
-	var ctypelist = [
+	var ctypeList = [
 		{name: "Person", value: "Person"},
 		{name: "Team", value: "Team"},
 		{name: "Company", value: "Company"},
@@ -255,18 +255,49 @@ function getCtypeList(selected) {
 		{name: "Undefined", value: "Undefined"},
 	];
 	var found = false;
-	ctypelist.forEach(function (ctype) {
+	ctypeList.forEach(function (ctype) {
 		if (ctype.value == selected) {
 			ctype.selected = true;
 			found = true;
 		}
 	});
 	if (!found) {
-		ctypelist[ctypelist.length-1].selected = true;
+		ctypeList[ctypeList.length-1].selected = true;
 	}
-	return ctypelist;
+	return ctypeList;
 }
 
+function getProgrammeList(selected) {
+	programmeList = [
+			{name: "Undefined", value: "Undefined"},
+	];
+	programmesurl = process.env.CMDBAPI + "/items/contact";
+	params['outputfields'] = "name";
+	params = [];
+	params['contactType'] = "Programme";
+	params['objectDetail'] = "False";
+	params['subjectDetail'] = "False";
+	programmesurl = programmesurl + '?' +querystring.stringify(params);
+	cmdb._fetchAll(res.locals, programmesurl).then(function (programmes) {
+		programmes.forEach(function(contact) {
+			programmmeList.push({name:contact.name, value:contact.name});
+		});
+		var found = false;
+		programmeList.forEach(function (programme) {
+			if (programme.value == selected) {
+				programme.selected = true;
+				found = true;
+			}
+		});
+		if (!found) {
+			programmeList[programmeList.length-1].selected = true;
+		}
+		return programmeList;
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+	});
+}
 
 function remove_blank_values(obj, recurse) {
 	for (var i in obj) {
