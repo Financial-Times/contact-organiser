@@ -259,7 +259,7 @@ app.listen(port, function () {
 });
 
 
-function programmesURl() {
+function programmesURL() {
 	programmesurl = process.env.CMDBAPI + "/items/contact";
 	params = [];
 	params['outputfields'] = "name";
@@ -268,6 +268,7 @@ function programmesURl() {
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	console.log("programmesurl:",programmesurl);
+	return programmesURL
 }
 
 function programmeList(programmes) {
