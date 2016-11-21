@@ -74,7 +74,7 @@ app.use(authS3O);
  */
 app.get('/', function (req, res) {
 	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
-		programmeList = programmeList(programmes);
+		programmeList = programmeNames(programmes);
 		console.log("read list of programmes:",programmeList);
 		cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
 			contacts.forEach(function (contact) {
@@ -126,7 +126,7 @@ function CompareOnKey(key) {
  */
 app.get('/contacts/:contactid', function (req, res) {
 	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
-		programmeList = programmeList(programmes);
+		programmeList = programmeNames(programmes);
 		console.log("read list of programmes:",programmeList);
 		cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
 			cleanContact(result, programmeList);
@@ -148,7 +148,7 @@ app.get('/contacts/:contactid', function (req, res) {
  */
 app.get('/new', function (req, res) {
 	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
-		programmeList = programmeList(programmes);
+		programmeList = programmeNames(programmes);
 		console.log("read list of programmes:",programmeList);
 		var defaultdata = {
 			name: "",
@@ -193,7 +193,7 @@ app.post('/new', function (req, res) {
  */
 app.post('/contacts/:contactid', function (req, res) {
 	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
-		programmeList = programmeList(programmes);
+		programmeList = programmeNames(programmes);
 		console.log("read list of programmes:",programmeList);
 		var contact = {
 			name: req.body.name,
@@ -271,7 +271,7 @@ function getProgrammesURL() {
 	return programmesurl
 }
 
-function programmeList(programmes) {
+function programmeNames(programmes) {
 	var programmeList = [
 			{name: "Undefined", value: "Undefined"},
 	];
