@@ -260,15 +260,15 @@ app.listen(port, function () {
 
 
 function getProgrammesURL() {
-	programmesurl = process.env.CMDBAPI + "/items/contact";
-	params = [];
+	var programmesurl = process.env.CMDBAPI + "/items/contact";
+	var params = [];
 	params['outputfields'] = "name";
 	params['contactType'] = "Programme";
 	params['objectDetail'] = "False";
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	console.log("programmesurl:",programmesurl);
-	return programmesURL
+	return programmesurl
 }
 
 function programmeList(programmes) {
