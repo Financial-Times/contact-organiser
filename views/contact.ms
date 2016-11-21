@@ -21,8 +21,8 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms--wide">
-						<label class="o-forms__label" for="name">Name</label>
+					<div class="o-forms--wide ">
+						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
 					</div>
@@ -61,7 +61,8 @@
 						<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms__text" id="phone" pattern="\+?[0-9\s\-]+"></input>
 					</div>
 					<div cclass="o-forms o-forms--wide">
-						<label class="o-forms__label" for="supportRota">Support Rota</label><small class="o-forms__additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
+						<label class="o-forms__label" for="supportRota">Support Rota</label>
+						<small class="o-forms__additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
 						<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms__text" id="supportRota"></input>
 					</div>
 					<div class="o-forms o-forms--wide">
