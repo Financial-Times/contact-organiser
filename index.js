@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
 		}).catch(function (error) {
 			res.status(502);
 			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
-		});
+		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
@@ -294,6 +294,7 @@ function programmeList(programmes) {
 		console.log("contact:",contact)
 		programmeList.push({name:contact.name, value:contact.name})
 		console.log("populated programme list:",programmeList)
+	});
 	return programmeList
 }
 /** 
