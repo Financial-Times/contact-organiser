@@ -126,7 +126,7 @@ app.get('/contacts/:contactid', function (req, res) {
 		}).catch(function (error) {
 			res.status(502);
 			res.render("error", {message: "Problem reading contact "+req.params.contactid+" from CMDB ("+error+")"});
-		});
+		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Problem reading programmes from CMDB ("+error+")"});
@@ -206,7 +206,7 @@ app.post('/contacts/:contactid', function (req, res) {
 		}).catch(function (error) {
 			res.status(502);
 			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
-		});
+		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Problem reading programmes from CMDB ("+error+")"});
@@ -263,7 +263,7 @@ function readProgrammeList(user) {
 			console.log("contact:",contact)
 			programmeList.push({name:contact.name, value:contact.name})
 			console.log("populated programme list:",programmeList)
-		});
+		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
