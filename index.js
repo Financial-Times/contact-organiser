@@ -246,9 +246,6 @@ app.listen(port, function () {
 	Obtain list of programme contacts
 **/
 function readProgrammeList(user) {
-	var programmeList = [
-			{name: "Undefined", value: "Undefined"},
-	];
 	programmesurl = process.env.CMDBAPI + "/items/contact";
 	params = [];
 	params['outputfields'] = "name";
@@ -259,18 +256,22 @@ function readProgrammeList(user) {
 	console.log("programmesurl:",programmesurl);
 	cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 		console.log("programmes:",programmes);
+		var programmeList = [
+			{name: "Undefined", value: "Undefined"},
+		];
 		programmes.forEach(function(contact) {
 			console.log("contact:",contact)
 			programmeList.push({name:contact.name, value:contact.name})
 			console.log("populated programme list:",programmeList)
+			return Promise.resolve(programmeList);
 		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		var programmeList = [];
 		console.log("error programme list:",programmeList);
+		return Promise.resolve(programmeList);
 	});
-	console.log("returned programme list:",programmeList);
-	return Promise.resolve(programmeList);
 }
 
 /** 
