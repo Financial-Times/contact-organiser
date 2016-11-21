@@ -95,7 +95,7 @@ app.get('/', function (req, res) {
 		}).catch(function (error) {
 			res.status(502);
 			res.render("error", {message: "Problem reading index of contacts from CMDB ("+error+")"});
-		});
+		})
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Problem reading programmes from CMDB ("+error+")"});
@@ -131,7 +131,7 @@ app.get('/contacts/:contactid', function (req, res) {
 		res.status(502);
 		res.render("error", {message: "Problem reading programmes from CMDB ("+error+")"});
 	});
-}
+});
 
 /**
  * Provides a form for adding a new contact
@@ -155,7 +155,7 @@ app.get('/new', function (req, res) {
 		res.status(502);
 		res.render("error", {message: "Problem reading programmes from CMDB ("+error+")"});
 	});
-}
+});
 
 /**
  * Generates a unique identifier for the new contact, then treats it just like a save
