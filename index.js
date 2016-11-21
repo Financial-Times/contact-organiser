@@ -73,8 +73,27 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	programmeList = readProgrammeList(res.locals);
-	console.log("read list of programmes:",programmeList);
+	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
+		programmeList = programmeList(programmes);
+		console.log("read list of programmes:",programmeList);
+		cmdb._fetchAll(res.locals, contactsURL(req).then(function (contacts) {
+			contacts.forEach(function (contact) {
+				cleanContact(contact, programmeList);
+			});
+			contacts.sort(CompareOnKey(sortby));
+			res.render('index', {contacts: contacts});
+		}).catch(function (error) {
+			res.status(502);
+			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+		})
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("error programme list:",programmeList);
+	});
+});
+
+function contactsURL(req) {
 	contactsurl = process.env.CMDBAPI + "/items/contact";
 	params = req.query;
 	console.log("params:",params);
@@ -86,17 +105,8 @@ app.get('/', function (req, res) {
 	remove_blank_values(params);
 	contactsurl = contactsurl + '?' +querystring.stringify(params);
 	console.log("url:",contactsurl)
-	cmdb._fetchAll(res.locals, contactsurl).then(function (contacts) {
-		contacts.forEach(function (contact) {
-			cleanContact(contact, programmeList);
-		});
-		contacts.sort(CompareOnKey(sortby));
-		res.render('index', {contacts: contacts});
-	}).catch(function (error) {
-		res.status(502);
-		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
-	});
-});
+	return contactsurl
+}
 
 function CompareOnKey(key) {
 	return function(a,b) {
@@ -115,13 +125,20 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
-	programmeList = readProgrammeList(res.locals)
-	cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
-		cleanContact(result, programmeList);
-		res.render('contact', result);
+	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
+		programmeList = programmeList(programmes);
+		console.log("read list of programmes:",programmeList);
+		cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
+			cleanContact(result, programmeList);
+			res.render('contact', result);
+		}).catch(function (error) {
+			res.status(502);
+			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+		})
 	}).catch(function (error) {
 		res.status(502);
-		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("error programme list:",programmeList);
 	});
 });
 
@@ -130,20 +147,27 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-	programmeList = readProgrammeList(res.locals)
-	var defaultdata = {
-		name: "",
-		contactid: "",
-		ctypeList: getCtypeList("Team"),
-		slack: "",
-		email: "",
-		phone: "",
-		supportRota: "",
-		contactPref: "",
-		programmeList: getProgrammeList(programmeList, "Undefined"),
-		localpath: '/new',
-	};
-	res.render('contact', defaultdata);
+	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
+		programmeList = programmeList(programmes);
+		console.log("read list of programmes:",programmeList);
+		var defaultdata = {
+			name: "",
+			contactid: "",
+			ctypeList: getCtypeList("Team"),
+			slack: "",
+			email: "",
+			phone: "",
+			supportRota: "",
+			contactPref: "",
+			programmeList: getProgrammeList(programmeList, "Undefined"),
+			localpath: '/new',
+		};
+		res.render('contact', defaultdata);
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("error programme list:",programmeList);
+	});
 });
 
 
@@ -168,34 +192,41 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	programmeList = readProgrammeList(res.locals)
-	var contact = {
-		name: req.body.name,
-		contactType: req.body.contactType,
-		slack: req.body.slack,
-		email: req.body.email,
-		phone: req.body.phone,
-		supportRota: req.body.supportRota,
-		contactPref: req.body.contactPref,
-		programme: req.body.programme,
-	}
-
-	cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
-		result.saved = {
-			locals: JSON.stringify(res.locals),
-			contactid: req.params.contactid,
-
-			// TODO: replace with pretty print function
-			json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
-			
-			// TODO: get actual url from cmdb.js
-			url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
+		programmeList = programmeList(programmes);
+		console.log("read list of programmes:",programmeList);
+		var contact = {
+			name: req.body.name,
+			contactType: req.body.contactType,
+			slack: req.body.slack,
+			email: req.body.email,
+			phone: req.body.phone,
+			supportRota: req.body.supportRota,
+			contactPref: req.body.contactPref,
+			programme: req.body.programme,
 		}
-		cleanContact(result, programmeList);
-		res.render('contact', result);
+
+		cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
+			result.saved = {
+				locals: JSON.stringify(res.locals),
+				contactid: req.params.contactid,
+
+				// TODO: replace with pretty print function
+				json: JSON.stringify(req.body).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
+				
+				// TODO: get actual url from cmdb.js
+				url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+			}
+			cleanContact(result, programmeList);
+			res.render('contact', result);
+		}).catch(function (error) {
+			res.status(502);
+			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+		})
 	}).catch(function (error) {
 		res.status(502);
-		res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("error programme list:",programmeList);
 	});
 });
 
@@ -232,9 +263,18 @@ app.listen(port, function () {
 	Obtain list of programme contacts
 **/
 function readProgrammeList(user) {
-	var programmeList = [
-		{name: "Undefined", value: "Undefined"},
-	];
+	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
+		programmeList = programmeList(programmes);
+	}).catch(function (error) {
+		res.status(502);
+		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+		console.log("error programme list:",programmeList);
+	});
+	console.log("returned programme list:",programmeList);
+	return programmeList;
+}
+
+function programmesURl() {
 	programmesurl = process.env.CMDBAPI + "/items/contact";
 	params = [];
 	params['outputfields'] = "name";
@@ -243,17 +283,19 @@ function readProgrammeList(user) {
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	console.log("programmesurl:",programmesurl);
-	programmes = cmdb._fetchAll(user, programmesurl);
+}
+
+function programmeList(programmes) {
+	var programmeList = [
+			{name: "Undefined", value: "Undefined"},
+	];
 	console.log("programmes:",programmes);
 	programmes.forEach(function(contact) {
 		console.log("contact:",contact)
 		programmeList.push({name:contact.name, value:contact.name})
 		console.log("populated programme list:",programmeList)
-	});
-	console.log("returned programme list:",programmeList);
-	return programmeList;
+	return programmeList
 }
-
 /** 
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
