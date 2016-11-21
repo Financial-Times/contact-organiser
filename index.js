@@ -76,7 +76,7 @@ app.get('/', function (req, res) {
 	cmdb._fetchAll(user, programmesURL()).then(function (programmes) {
 		programmeList = programmeList(programmes);
 		console.log("read list of programmes:",programmeList);
-		cmdb._fetchAll(res.locals, contactsURL(req).then(function (contacts) {
+		cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
 			contacts.forEach(function (contact) {
 				cleanContact(contact, programmeList);
 			});
@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
 		}).catch(function (error) {
 			res.status(502);
 			res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
-		})
+		});
 	}).catch(function (error) {
 		res.status(502);
 		res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
