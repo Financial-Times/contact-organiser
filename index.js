@@ -73,7 +73,7 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-	cmdb._fetchAll(res.locals, programmesURL()).then(function (programmes) {
+	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
 		programmeList = programmeList(programmes);
 		console.log("read list of programmes:",programmeList);
 		cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
@@ -125,7 +125,7 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
-	cmdb._fetchAll(res.locals, programmesURL()).then(function (programmes) {
+	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
 		programmeList = programmeList(programmes);
 		console.log("read list of programmes:",programmeList);
 		cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
@@ -147,7 +147,7 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-	cmdb._fetchAll(res.locals, programmesURL()).then(function (programmes) {
+	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
 		programmeList = programmeList(programmes);
 		console.log("read list of programmes:",programmeList);
 		var defaultdata = {
@@ -192,7 +192,7 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-	cmdb._fetchAll(res.locals, programmesURL()).then(function (programmes) {
+	cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
 		programmeList = programmeList(programmes);
 		console.log("read list of programmes:",programmeList);
 		var contact = {
@@ -259,7 +259,7 @@ app.listen(port, function () {
 });
 
 
-function programmesURL() {
+function getProgrammesURL() {
 	programmesurl = process.env.CMDBAPI + "/items/contact";
 	params = [];
 	params['outputfields'] = "name";
