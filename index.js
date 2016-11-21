@@ -244,7 +244,7 @@ function readProgrammeList(user) {
 	params['subjectDetail'] = "False";
 	programmesurl = programmesurl + '?' +querystring.stringify(params);
 	console.log("programmesurl:",programmesurl);
-	while !done {
+	while (!done) {
 		cmdb._fetchAll(user, programmesurl).then(function (programmes) {
 			console.log("programmes:",programmes);
 			programmes.forEach(function(contact) {
