@@ -145,7 +145,6 @@ app.get('/new', function (req, res) {
         programmeList = programmeNames(programmes);
         var defaultdata = {
             name: "",
-            contactid: "",
             ctypeList: getCtypeList("Team"),
             slack: "",
             email: "",
@@ -273,13 +272,13 @@ function programmeNames(programmes) {
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
 function cleanContact(contact, programmeList) {
-    contact.contactid = contact.dataItemID;
+    contact.id = contact.dataItemID;
     if (!contact.hasOwnProperty('name')) {
-        contact.name = contact.contactid
+        contact.name = contact.id
     }
     delete contact.dataItemID;
     delete contact.dataTypeID;
-    contact.localpath = "/contacts/"+contact.contactid;
+    contact.localpath = "/contacts/"+contact.id;
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
