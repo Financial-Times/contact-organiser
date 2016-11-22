@@ -79,7 +79,7 @@
 							{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
 						</span>
 
-						<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 					</div>
 				{{/contacts}}
 				</div>
