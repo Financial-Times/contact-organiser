@@ -169,7 +169,7 @@ app.get('/new', function (req, res) {
 app.post('/new', function (req, res) {
     contactid = req.body.id
     if (!contactid.trim()) {
-        contactid = req.body.name
+        contactid = req.body.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
     };
     cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
         req.body.iderror = "ID already in use, please re-enter"
