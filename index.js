@@ -174,7 +174,7 @@ app.post('/new', function (req, res) {
         req.body.iderror = "ID already in use, please re-enter"
         res.render('contact', req.body);
     }).catch(function (error) {
-        res.redirect(307, '/contacts/' + contactid);
+        res.redirect(307, '/contacts/' +encodeURIComponent(encodeURIComponent(contactid)));
     });
 });
 
@@ -205,7 +205,7 @@ app.post('/contacts/:contactid', function (req, res) {
                 json: JSON.stringify(contact).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
                 
                 // TODO: get actual url from cmdb.js
-                url: 'https://cmdb.ft.com/v2/items/contact/'+req.params.contactid,
+                url: 'https://cmdb.ft.com/v2/items/contact/'+encodeURIComponent(encodeURIComponent(req.params.contactid)),
             }
             cleanContact(result, programmeList);
             res.render('contact', result);
@@ -278,7 +278,7 @@ function cleanContact(contact, programmeList) {
     }
     delete contact.dataItemID;
     delete contact.dataTypeID;
-    contact.localpath = "/contacts/"+contact.id;
+    contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
