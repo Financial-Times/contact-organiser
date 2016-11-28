@@ -27,7 +27,7 @@
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
 					</div>
 
-					<div class="o-forms--wide o-forms-wrapper o-forms-wrapper--highlight">
+					<div class="o-forms--wide o-forms__wrapper o-forms__wrapper--highlight">
 						<div class="o-forms o-forms--wide {{#iderror}}o-forms--error{{/iderror}}">
 							<label class="o-forms__label" for="id">ID</label>
 							<small class="o-forms__additional-info">A unique identification for the contact (defaults to name).</small>
@@ -78,7 +78,7 @@
 							{{#programmeList}}<option value="{{value}}" default="Undefined" {{#selected}}selected{{/selected}}>{{name}}</option>{{/programmeList}}
 						</select>
 					</div>
-					
+
 					{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
 
 					<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>
