@@ -185,6 +185,12 @@ body {
 		padding: 0.4em 1em;
 	}
 
+	.o-icons-icon {
+		width: 20px;
+		height: 20px;
+		vertical-align: bottom;
+	}
+
 	.o-icons--big {
 		width: 40px;
 		height: 40px;
