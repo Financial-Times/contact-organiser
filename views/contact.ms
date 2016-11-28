@@ -21,7 +21,7 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
