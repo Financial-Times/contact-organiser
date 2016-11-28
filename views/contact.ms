@@ -57,11 +57,11 @@
 						<label class="o-forms__label" for="email">Email</label>
 						<input type="email" name="email" value="{{email}}" placeholder="contact.name@ft.com" class="o-forms__text" id="email"></input>
 					</div>
-					<div cclass="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="phone">Phone number</label>
 						<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms__text" id="phone" pattern="\+?[0-9\s\-]+"></input>
 					</div>
-					<div cclass="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="supportRota">Support Rota</label>
 						<small class="o-forms__additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
 						<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms__text" id="supportRota"></input>
