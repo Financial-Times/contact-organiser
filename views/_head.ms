@@ -10,7 +10,4 @@
 	<link rel="stylesheet" href="/css/style.css" >
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="/js/forms.js"/></script>
-
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
