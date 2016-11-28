@@ -21,7 +21,7 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms--wide ">
+					<div class="o-forms--wide">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
@@ -50,6 +50,7 @@
 						<div class="o-forms-affix-wrapper">
 							<span class="o-forms-prefix">#</span>
 							<input type="text" name="slack" value="{{slack}}" placeholder="teamname-support" class="o-forms__text" id="slack" pattern="[a-z0-9\-_]{1,21}"></input>
+							<div class="o-forms__errortext">Slack channel names are limited to 21 lowercase alphanumeric characters or hyphens.</div>
 						</div>
 					</div>
 					<div class="o-forms o-forms--wide">
