@@ -21,6 +21,12 @@ body {
 	color: #900;
 }
 
+.o-labels {
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+	width: 100%;
+}
+
 #save, #delete {
 	margin: auto;
 	padding: 0.5em 0;
