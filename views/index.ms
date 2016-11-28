@@ -69,8 +69,8 @@
 					<div class='contact'>
 						<img class='avatar' src="{{avatar}}" />
 						<span class='details'>
-							<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
-							id:{{contactid}}
+							<h3><a href="/contacts/{{id}}">{{name}}</a></h3>
+							id:{{id}}
 							{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
 							{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
 							{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
@@ -79,7 +79,7 @@
 							{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
 						</span>
 
-						<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 					</div>
 				{{/contacts}}
 				</div>

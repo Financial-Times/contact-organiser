@@ -21,6 +21,12 @@ body {
 	color: #900;
 }
 
+.o-labels {
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+	width: 100%;
+}
+
 #save, #delete {
 	margin: auto;
 	padding: 0.5em 0;
@@ -117,9 +123,6 @@ label {
 .details {
 	margin: 0 14px 2em;
 	display: block;
-}
-h1 {
-	text-align: center;
 }
 h3 > a {
 	color: inherit;
