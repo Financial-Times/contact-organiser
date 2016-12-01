@@ -21,13 +21,13 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
 					</div>
 
-					<div class="o-forms--wide o-forms-wrapper o-forms-wrapper--highlight">
+					<div class="o-forms--wide o-forms__wrapper o-forms__wrapper--highlight">
 						<div class="o-forms o-forms--wide {{#iderror}}o-forms--error{{/iderror}}">
 							<label class="o-forms__label" for="id">ID</label>
 							<small class="o-forms__additional-info">A unique identification for the contact (defaults to name).</small>
@@ -57,11 +57,11 @@
 						<label class="o-forms__label" for="email">Email</label>
 						<input type="email" name="email" value="{{email}}" placeholder="contact.name@ft.com" class="o-forms__text" id="email"></input>
 					</div>
-					<div cclass="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="phone">Phone number</label>
 						<input type="tel" name="phone" value="{{phone}}" placeholder="0780 1234 5678" class="o-forms__text" id="phone" pattern="\+?[0-9\s\-]+"></input>
 					</div>
-					<div cclass="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="supportRota">Support Rota</label>
 						<small class="o-forms__additional-info">The URL of your support rota (eg a Google doc).  Make sure the operations teams have permissions to view.</small>
 						<input type="url" name="supportRota" value="{{supportRota}}" placeholder="link to spreadsheet" class="o-forms__text" id="supportRota"></input>
@@ -78,6 +78,8 @@
 							{{#programmeList}}<option value="{{value}}" default="Undefined" {{#selected}}selected{{/selected}}>{{name}}</option>{{/programmeList}}
 						</select>
 					</div>
+
+					{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
 
 					<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>
 				</form>
@@ -97,7 +99,6 @@
 			</div>
 			{{/id}}
 		</div>
-		{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
-		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1"></script>
+		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-labels@^2.0.0,o-table@^5.0.0,o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1,o-icons@^v5.1.3"></script>
 	</body>
 </html>

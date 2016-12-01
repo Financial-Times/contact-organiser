@@ -73,6 +73,7 @@ app.use(authS3O);
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
@@ -121,6 +122,7 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
@@ -141,6 +143,7 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var defaultdata = {
@@ -166,6 +169,7 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
     contactid = req.body.id
     if (!contactid.trim()) {
         contactid = req.body.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -183,6 +187,7 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var contact = {
@@ -223,6 +228,7 @@ app.post('/contacts/:contactid', function (req, res) {
  * Send delete requests back to the CMDB
  */
 app.post('/contacts/:contactid/delete', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
 
     cmdb.deleteItem(res.locals, 'contact', req.params.contactid).then(function (result) {
         
