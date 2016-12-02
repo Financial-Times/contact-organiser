@@ -9,12 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	 **/
 	function addChecks(input, group) {
 		function checkValidity() {
+			var classes = group.getAttribute("class") == null ? "" : group.getAttribute("class");
 			if(!input.value) {
-				group.setAttribute("class","o-forms-group");
+				group.setAttribute("class", classes);
 			} else if(input.checkValidity()){
-				group.setAttribute("class","o-forms-group o-forms--valid");
+				group.setAttribute("class", classes + " o-forms--valid");
 			} else {
-				group.setAttribute("class","o-forms-group o-forms--error");
+				group.setAttribute("class", classes + " o-forms--error");
 			}
 		}
 		input.addEventListener('change', checkValidity);

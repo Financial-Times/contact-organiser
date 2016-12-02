@@ -8,31 +8,37 @@
 			<form id="filter" action="/" method="get">
 				<div class="o-forms-group">
 					<fieldset>
-						<legend class="o-forms__label" for="filter">Contact Filtering</legend>
+						<legend class="o-forms__label" for="filter">Contact Filtering (enter one or more fields)</legend>
 						<div class="o-grid-container">
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="dataItemID">ID</label>
+									<small class="o-forms__additional-info">Please be exact.</small>
 									<input name="dataItemID" value="{{dataItemID}}" class="o-forms__text" id="dataItemID"></input>
 								</div>
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="name">Name</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="name" value="{{name}}" class="o-forms__text" id="name"></input>
 								</div>
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="slack">Slack Channel</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="slack" value="{{slack}}" class="o-forms__text" id="slack"></input>
 								</div>
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="email">Email</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="email" value="{{email}}" class="o-forms__text" id="email"></input>
 								</div>
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="phone">Phone</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="phone" value="{{phone}}" class="o-forms__text" id="phone"></input>
 								</div>
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="programme">Programme</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 								</div>
 							</div>
@@ -69,8 +75,8 @@
 					<div class='contact'>
 						<img class='avatar' src="{{avatar}}" />
 						<span class='details'>
-							<h3><a href="/contacts/{{contactid}}">{{name}}</a></h3>
-							id:{{contactid}}
+							<h3><a href="/contacts/{{id}}">{{name}}</a></h3>
+							id:{{id}}
 							{{#slack}}<span class='contactfield'>Slack: <a href="https://financialtimes.slack.com/messages/{{slack}}" target="__blank">#{{slack}}</a></span>{{/slack}}
 							{{#email}}<span class='contactfield'>Email: <a href="mailto:{{email}}">{{email}}</a></span>{{/email}}
 							{{#phone}}<span class='contactfield'>Phone Number: <a href="tel:{{phone}}">{{phone}}</a></span>{{/phone}}
@@ -79,7 +85,7 @@
 							{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
 						</span>
 
-						<form action="/contacts/{{contactid}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
+						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 					</div>
 				{{/contacts}}
 				</div>
