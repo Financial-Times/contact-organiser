@@ -287,8 +287,8 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
-    contact.countSystems = countReferences(['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
-    contact.countObsolete = countReferences(['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
+    contact.countSystems = countReferences(contact, ['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
+    contact.countObsolete = countReferences(contact, ['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
     console.log("countSystems:",contact.countSystems)
 
     if (!contact.avatar) {
@@ -303,7 +303,7 @@ function cleanContact(contact, programmeList) {
     return contact;
 }
 
-function countReferences(names) {
+function countReferences(contact, names) {
     var usageCount = 0
     for (var i = 0; i < names.length; i++) {
         name = names[i]
