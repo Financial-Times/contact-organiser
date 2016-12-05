@@ -311,7 +311,7 @@ function countReferences(contact, names) {
             usageCount = usageCount + contact[name].system.length
         }
     }
-    return usgaeCount
+    return usageCount
 }
 
 function getCtypeList(selected) {
