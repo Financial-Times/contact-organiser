@@ -287,10 +287,9 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
+    console.log(contact)
     contact.countSystems = countReferences(contact, ['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
     contact.countObsolete = countReferences(contact, ['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
-    console.log(contact.id,"countSystems:",contact.countSystems)
-    console.log(contact.id,"countObsolete:",contact.countObsolete)
 
     if (!contact.avatar) {
 
