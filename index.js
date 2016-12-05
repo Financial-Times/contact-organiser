@@ -98,8 +98,8 @@ function contactsURL(req) {
     sortby = params.sortby
     delete params.sortby // to avoid it being added to cmdb params
     params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
-    params['objectDetail'] = "False";
-    params['subjectDetail'] = "False";
+//    params['objectDetail'] = "False";
+//    params['subjectDetail'] = "False";
     remove_blank_values(params);
     contactsurl = contactsurl + '?' +querystring.stringify(params);
     return contactsurl
@@ -287,7 +287,6 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
-    console.log(contact)
     contact.countSystems = countReferences(contact, ['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
     contact.countObsolete = countReferences(contact, ['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
 
