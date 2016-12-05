@@ -289,7 +289,8 @@ function cleanContact(contact, programmeList) {
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
     contact.countSystems = countReferences(contact, ['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
     contact.countObsolete = countReferences(contact, ['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
-    console.log("countSystems:",contact.countSystems)
+    console.log(contact.id,"countSystems:",contact.countSystems)
+    console.log(contact.id,"countObsolete:",contact.countObsolete)
 
     if (!contact.avatar) {
 
