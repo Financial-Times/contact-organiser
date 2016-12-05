@@ -305,7 +305,8 @@ function cleanContact(contact, programmeList) {
 
 function countReferences(names) {
     var usageCount = 0
-    for name in names {
+    for (var i = 0; i < names.length; i++) {
+        name = names[i]
         if (contact.hasOwnProperty(name)) {
             usageCount = usageCount + contact[name].system.length
         }
