@@ -290,14 +290,18 @@ function cleanContact(contact, programmeList) {
     contact.countSystems = 0
     if (contact.isProgrammeFor) {
         contact.countSystems = contact.countSystems + contact.isProgrammeFor.system.length
+    }
     if (contact.isPrimaryContactFor) {
         contact.countSystems = contact.countSystems + contact.isPrimaryContactFor.system.length
+    }
     if (contact.isSecondaryContactFor) {
         contact.countSystems = contact.countSystems + contact.isSecondaryContactFor.system.length
+    }
     if (contact.isProductOwnerFor) {
-        contact.countSystems = contact.countSystems + contact.isProductOwnerFor.system.length
+    }
     if (contact.isTechnicalLeadFor) {
         contact.countSystems = contact.countSystems + contact.IsTechnicalLeadFor.system.length
+    }
 
     if (!contact.avatar) {
 
