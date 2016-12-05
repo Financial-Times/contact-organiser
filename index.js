@@ -287,21 +287,8 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
-    contact.countSystems = 0
-    if (contact.isProgrammeFor) {
-        contact.countSystems = contact.countSystems + contact.isProgrammeFor.system.length
-    }
-    if (contact.isPrimaryContactFor) {
-        contact.countSystems = contact.countSystems + contact.isPrimaryContactFor.system.length
-    }
-    if (contact.isSecondaryContactFor) {
-        contact.countSystems = contact.countSystems + contact.isSecondaryContactFor.system.length
-    }
-    if (contact.isProductOwnerFor) {
-    }
-    if (contact.isTechnicalLeadFor) {
-        contact.countSystems = contact.countSystems + contact.IsTechnicalLeadFor.system.length
-    }
+    contact.countSystems = countReferences(['isProgrammeFor','PrimaryContactFor', 'isSecondaryContactFor', 'isProductOwnerFor', 'isTechnicalLeadFor'])
+    contact.countObsolete = countReferences(['isSupportContactFor','isSupportFirstLineFor','isSupportSecondLineFor', 'isSupportThirdLineFor','isBusinessLeadsfor','isBusinessOwnerfor','isRunbookAuthorfor'])
     console.log("countSystems:",contact.countSystems)
 
     if (!contact.avatar) {
@@ -314,6 +301,16 @@ function cleanContact(contact, programmeList) {
         contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
     }
     return contact;
+}
+
+function countReferences(names) {
+    var usageCount = 0
+    for name in names {
+        if (contact.hasOwnProperty(name)) {
+            usageCount = usageCount + contact[name].system.length
+        }
+    }
+    return usgaeCount
 }
 
 function getCtypeList(selected) {

@@ -83,7 +83,8 @@
 							{{#supportRota}}<form action="{{supportRota}}" target="_blank"><button class="o-buttons o-buttons--standout o-buttons--small">View Support Rota</button></form>{{/supportRota}}
 							{{#contactPref}}<span class='contactfield'>Preferred contact method: {{contactPref}}</span>{{/contactPref}}
 							{{#programme}}<span class='contactfield'>Programme: {{programme}}</span>{{/programme}}
-							{{#countSystems}}<span class='contactfield'>Used: {{countSystems}}</span>{{/countSystems}}
+							{{#countSystems}}<span class='contactfield'>System References: {{countSystems}}</span>{{/countSystems}}
+							{{#countObsolete}}<span class='contactfield'>Obsolete References: {{countObsolete}}</span>{{/countObsolete}}
 						</span>
 
 						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
