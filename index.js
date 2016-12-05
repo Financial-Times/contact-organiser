@@ -287,11 +287,17 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
-    contact.countSystems = contact.isProgrammeFor.system.length + 
-                           contact.isPrimaryContactFor.system.length +
-                           contact.isSecondaryContactFor.system.length + 
-                           contact.isProductOwnerFor.system.length +
-                           contact.IsTechncalLeadFor.system.length
+    contact.countSystems = 0
+    if (contact.isProgrammeFor) {
+        contact.countSystems = contact.countSystems + contact.isProgrammeFor.system.length
+    if (contact.isPrimaryContactFor) {
+        contact.countSystems = contact.countSystems + contact.isPrimaryContactFor.system.length
+    if (contact.isSecondaryContactFor) {
+        contact.countSystems = contact.countSystems + contact.isSecondaryContactFor.system.length
+    if (contact.isProductOwnerFor) {
+        contact.countSystems = contact.countSystems + contact.isProductOwnerFor.system.length
+    if (contact.isTechnicalLeadFor) {
+        contact.countSystems = contact.countSystems + contact.IsTechnicalLeadFor.system.length
 
     if (!contact.avatar) {
 
