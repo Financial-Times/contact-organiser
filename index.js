@@ -302,6 +302,7 @@ function cleanContact(contact, programmeList) {
     if (contact.isTechnicalLeadFor) {
         contact.countSystems = contact.countSystems + contact.IsTechnicalLeadFor.system.length
     }
+    console.log("countSystems:",contact.countSystems)
 
     if (!contact.avatar) {
 
