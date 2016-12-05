@@ -287,7 +287,11 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
-    contact.countSystems = len(contact.isPrimaryContactFor.system)+len(contact.isSecondaryContactFor.system)+len(contact.isProductOwnerFor.system)+len(contact.IsTechncalLeadFor.system)
+    contact.countSystems = contact.isProgrammeFor.system.length + 
+                           contact.isPrimaryContactFor.system.length +
+                           contact.isSecondaryContactFor.system.length + 
+                           contact.isProductOwnerFor.system.length +
+                           contact.IsTechncalLeadFor.system.length
 
     if (!contact.avatar) {
 
