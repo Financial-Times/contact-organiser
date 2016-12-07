@@ -9,7 +9,6 @@ deployment:
       - git fetch origin --unshallow
       - git push git@heroku.com:oi-contact-organiser-dev.git $CIRCLE_SHA1:refs/heads/master
       - heroku maintenance:off --app oi-contact-organiser-dev
-      - heroku drains:add https://log:5punk@splunk.glb.ft.com/heroku/oi-contact-organiser-dev --app oi-contact-organiser-dev
   staging:
     branch: test
     commands:

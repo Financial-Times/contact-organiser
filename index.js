@@ -97,9 +97,9 @@ function contactsURL(req) {
     params = req.query;
     sortby = params.sortby
     delete params.sortby // to avoid it being added to cmdb params
-//    params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
-//    params['objectDetail'] = "False";
-//    params['subjectDetail'] = "False";
+    params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
+    params['objectDetail'] = "False";
+    params['subjectDetail'] = "False";
     remove_blank_values(params);
     contactsurl = contactsurl + '?' +querystring.stringify(params);
     return contactsurl
