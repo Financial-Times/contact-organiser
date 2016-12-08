@@ -93,7 +93,7 @@
 							</div>
 						</div>
 						{{/relationships}}
-						{{^relationships}}<div class="empty">{{This contact is not being referenced}}</div>{{/relationships}}
+						{{^relationships}}<div class="empty">This contact is not being referenced</div>{{/relationships}}
 					</div>
 
 
