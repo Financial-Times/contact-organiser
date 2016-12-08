@@ -288,11 +288,11 @@ function cleanContact(contact, programmeList) {
     // look for relationships  contact.xxx.[..,..,..]
     contact.relationships = []
     for (var reltype in contact) {
-        console.log('reltype:',reltype, typeof retype)
+        console.log('reltype:',reltype, typeof reltype)
         for (var itemtype in contact[reltype]) {
             console.log('itemtype:',itemtype, typeof itemtype)
             for (relationship in contact[reltype][itemtype]) {
-                console.log('relationship:',relationship)
+                console.log('relationship:',relationship, typeof relationship)
                 contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + relationship})
             }
         }
