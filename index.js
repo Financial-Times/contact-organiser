@@ -301,14 +301,19 @@ function cleanContact(contact, programmeList) {
     // look for relationships  contact.xxx.[..,..,..]
     contact.relationships = []
     for (var attribute in contact) {
-        for (var relationship in attribute) {
+        console.log('attribute:',attribute)
+        for (var relationships in attribute) {
+            console.log('relationships:',relationships)
             if (typeof relationships === 'array') {
-                for (relationship in relatrionships) {
-                    contact.relationships = {'reltype': attribute, 'relitem': relationship}
+                console.log('relationships is an array')
+                for (relationship in relationships) {
+                    console.log('relationship:',relationship)
+                    contact.relationships.push({'reltype': attribute, 'relitem': relationship})
                 }
             }
         }
     }
+    console.log(contact.relationships)
 
     return contact;
 }
