@@ -297,6 +297,19 @@ function cleanContact(contact, programmeList) {
         }
         contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
     }
+
+    // look for relationships  contact.xxx.[..,..,..]
+    contact.relationships = []
+    for (var attribute in contact) {
+        for (var relationship in attribute) {
+            if (typeof relationships === 'array') {
+                for (relationship in relatrionships) {
+                    contact.relationships = {'reltype': attribute, 'relitem': relationship}
+                }
+            }
+        }
+    }
+
     return contact;
 }
 

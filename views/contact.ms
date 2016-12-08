@@ -79,6 +79,23 @@
 						</select>
 					</div>
 
+					<div class="o-forms o-forms--wide">
+						<label class="o-forms__label" for="programme">Related Items</label>
+						{{#relationships}}
+						<div class="o-grid-container">
+							<div class="o-grid-row">
+								<div data-o-grid-colspan="3">
+									{{reltype}}
+								</div>
+								<div data-o-grid-colspan="3">
+									{{relitem}}
+								</div>
+							</div>
+						</div>
+						{{/relationships}}
+					</div>
+
+
 					{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
 
 					<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>
