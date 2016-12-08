@@ -29,6 +29,10 @@ body {
 
 /* contact */
 
+    #empty {
+    	font-style: italic;
+    }
+
 	#save {
 		margin: auto;
 		padding: 0.5em 0;
