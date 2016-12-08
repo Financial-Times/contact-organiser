@@ -26,6 +26,8 @@ var cmdb = new CMDB({
     apikey: process.env.APIKEY,
 });
 
+var systemTool = process.env.SYSTEMREGISTRY || 'https://systemregistry.in.ft.com/manage/';
+var endpointTool = process.env.ENDPOINTMANAGER || 'https://endpointmanager.in.ft.com/manage/';
 
 var path = require('path');
 var ftwebservice = require('express-ftwebservice');
@@ -291,7 +293,15 @@ function cleanContact(contact, programmeList) {
         for (var itemtype in contact[reltype]) {
             if (typeof contact[reltype][itemtype] === 'object') {
                 for (relationship in contact[reltype][itemtype]) {
-                    relationships.push({'reltype': reltype, 'relitem': itemtype + ": " + contact[reltype][itemtype][relationship].dataItemID})
+                    relitemlink = ""
+                    relitem = itemtype + ": " + contact[reltype][itemtype][relationship].dataItemID
+                    if (itemtype == 'system') {
+                        relitemlink = systemTool + contact[reltype][itemtype][relationship].dataItemID
+                    }
+                    if (itemtype == 'endpoint') {
+                        relitemlink = endpointTool + contact[reltype][itemtype][relationship].dataItemID
+                    }
+                    relationships.push({'reltype': reltype, 'relitem': relitem, 'relitemlink': relitemlink})
                 }
             }
         }

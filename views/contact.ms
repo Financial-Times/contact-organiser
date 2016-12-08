@@ -88,7 +88,7 @@
 									{{reltype}}
 								</div>
 								<div data-o-grid-colspan="3">
-									{{relitem}}
+									{{#relitemlink}}<a href="{{relitemlink}}">{{/relitemlink}}{{relitem}}{{#relitemlink}}</a>{{/relitemlink}}
 								</div>
 							</div>
 						</div>
