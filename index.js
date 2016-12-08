@@ -284,6 +284,23 @@ function cleanContact(contact, programmeList) {
     }
     delete contact.dataItemID;
     delete contact.dataTypeID;
+
+    // look for relationships  contact.xxx.[..,..,..]
+    contact.relationships = []
+    for (var reltype in contact) {
+        console.log('reltype:',reltype, typeof retype)
+        for (var itemtype in contact[reltype]) {
+            console.log('itemtype:',itemtype, typeof itemtype)
+                for (relationship in contact[reltype][itemtype]) {
+                    console.log('relationship:',relationship)
+                    contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + relationship})
+                }
+            }
+        }
+    }
+    console.log(contact.relationships)
+
+    // now add other fields to enable user interface
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
@@ -297,23 +314,6 @@ function cleanContact(contact, programmeList) {
         }
         contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
     }
-
-    // look for relationships  contact.xxx.[..,..,..]
-    contact.relationships = []
-    for (var attribute in contact) {
-        console.log('attribute:',attribute, typeof attribute)
-        for (var relationships in contact[attribute]) {
-            console.log('relationships:',relationships, typeof relationships)
-            if (typeof relationships === 'array') {
-                console.log('relationships is an array')
-                for (relationship in contact[attribute][relationships]) {
-                    console.log('relationship:',relationship)
-                    contact.relationships.push({'reltype': attribute, 'relitem': relationship})
-                }
-            }
-        }
-    }
-    console.log(contact.relationships)
 
     return contact;
 }
