@@ -301,9 +301,9 @@ function cleanContact(contact, programmeList) {
     // look for relationships  contact.xxx.[..,..,..]
     contact.relationships = []
     for (var attribute in contact) {
-        console.log('attribute:',attribute)
+        console.log('attribute:',attribute, typeof attribute)
         for (var relationships in contact[attribute]) {
-            console.log('relationships:',relationships)
+            console.log('relationships:',relationships, typeof relationships)
             if (typeof relationships === 'array') {
                 console.log('relationships is an array')
                 for (relationship in contact[attribute][relationships]) {
