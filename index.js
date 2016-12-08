@@ -302,11 +302,11 @@ function cleanContact(contact, programmeList) {
     contact.relationships = []
     for (var attribute in contact) {
         console.log('attribute:',attribute)
-        for (var relationships in attribute) {
+        for (var relationships in contact[attribute]) {
             console.log('relationships:',relationships)
             if (typeof relationships === 'array') {
                 console.log('relationships is an array')
-                for (relationship in relationships) {
+                for (relationship in contact[attribute][relationships]) {
                     console.log('relationship:',relationship)
                     contact.relationships.push({'reltype': attribute, 'relitem': relationship})
                 }
