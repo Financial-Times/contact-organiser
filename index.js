@@ -290,10 +290,10 @@ function cleanContact(contact, programmeList) {
     for (var reltype in contact) {
         console.log('reltype:',reltype, typeof reltype)
         for (var itemtype in contact[reltype]) {
-            console.log('itemtype:',itemtype, typeof itemtype)
+            console.log('itemtype:',contact[reltype][itemtype], typeof contact[reltype][itemtype])
             for (relationship in contact[reltype][itemtype]) {
-                console.log('relationship:',relationship, typeof relationship)
-                contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + relationship})
+                console.log('relationship:',contact[reltype][itemtype][relationship], typeof contact[reltype][itemtype][relationship])
+                contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + contact[reltype][itemtype][relationship]})
             }
         }
     }
