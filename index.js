@@ -286,20 +286,19 @@ function cleanContact(contact, programmeList) {
     delete contact.dataTypeID;
 
     // look for relationships  contact.xxx.[..,..,..]
-    contact.relationships = []
+    relationships = []
     for (var reltype in contact) {
-        console.log('reltype:',reltype, typeof reltype)
         for (var itemtype in contact[reltype]) {
-            console.log('itemtype:',contact[reltype][itemtype], typeof contact[reltype][itemtype])
             if (typeof contact[reltype][itemtype] === 'object') {
                 for (relationship in contact[reltype][itemtype]) {
-                    console.log('relationship:',contact[reltype][itemtype][relationship], typeof contact[reltype][itemtype][relationship])
-                    contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + contact[reltype][itemtype][relationship].dataItemID})
+                    relationships.push({'reltype': reltype, 'relitem': itemtype + ": " + contact[reltype][itemtype][relationship].dataItemID})
                 }
             }
         }
     }
-    console.log(contact.relationships)
+    if (relationships) {
+        contact.relationships = relationships
+    }
 
     // now add other fields to enable user interface
     contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
