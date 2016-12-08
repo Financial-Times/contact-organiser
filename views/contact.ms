@@ -80,7 +80,7 @@
 					</div>
 
 					<div class="o-forms o-forms--wide">
-						<label class="o-forms__label" for="programme">Related Items</label>
+						<label class="o-forms__label" for="programme">Related Items({{relationships.length}})</label>
 						{{#relationships}}
 						<div class="o-grid-container">
 							<div class="o-grid-row">
