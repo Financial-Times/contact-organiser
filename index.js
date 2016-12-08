@@ -291,10 +291,9 @@ function cleanContact(contact, programmeList) {
         console.log('reltype:',reltype, typeof retype)
         for (var itemtype in contact[reltype]) {
             console.log('itemtype:',itemtype, typeof itemtype)
-                for (relationship in contact[reltype][itemtype]) {
-                    console.log('relationship:',relationship)
-                    contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + relationship})
-                }
+            for (relationship in contact[reltype][itemtype]) {
+                console.log('relationship:',relationship)
+                contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + relationship})
             }
         }
     }
