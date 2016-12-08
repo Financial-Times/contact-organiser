@@ -291,9 +291,11 @@ function cleanContact(contact, programmeList) {
         console.log('reltype:',reltype, typeof reltype)
         for (var itemtype in contact[reltype]) {
             console.log('itemtype:',contact[reltype][itemtype], typeof contact[reltype][itemtype])
-            for (relationship in contact[reltype][itemtype]) {
-                console.log('relationship:',contact[reltype][itemtype][relationship], typeof contact[reltype][itemtype][relationship])
-                contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + contact[reltype][itemtype][relationship]})
+            if (typeof contact[reltype][itemtype] === 'object') {}
+                for (relationship in contact[reltype][itemtype]) {
+                    console.log('relationship:',contact[reltype][itemtype][relationship], typeof contact[reltype][itemtype][relationship])
+                    contact.relationships.push({'reltype': reltype, 'relitem': itemtype + ":" + contact[reltype][itemtype][relationship].dataItemID})
+                }
             }
         }
     }
