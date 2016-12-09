@@ -80,7 +80,7 @@ app.get('/', function (req, res) {
     sortby = req.query.sortby
     cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
         contacts.forEach(function (contact) {
-            indexController(contact, programmeList);
+            indexController(contact);
         });
         contacts.sort(CompareOnKey(sortby));
         console.timeEnd('CMDB api call for all contacts')
