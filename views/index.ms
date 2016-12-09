@@ -45,6 +45,7 @@
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<input type='submit' class="o-buttons o-buttons--standout " value='Filter' />
+									<a class="o-buttons o-buttons--standout" href="/">Clear</a>
 								</div>
 							</div>
 						</div>
