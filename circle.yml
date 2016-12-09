@@ -4,7 +4,7 @@ machine:
 
 deployment:
   dev:
-    branch: MON-2225
+    branch: MON-2226
     commands:
       - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow

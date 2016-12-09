@@ -76,34 +76,31 @@ app.use(authS3O);
  */
 app.get('/', function (req, res) {
     res.setHeader('Cache-Control', 'no-cache');
-    cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
-        programmeList = programmeNames(programmes);
-        cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
-            contacts.forEach(function (contact) {
-                cleanContact(contact, programmeList);
-            });
-            contacts.sort(CompareOnKey(sortby));
-            res.render('index', {contacts: contacts});
-        }).catch(function (error) {
-            res.status(502);
-            res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
-        })
+    console.time('CMDB api call for all contacts')
+    sortby = req.query.sortby
+    cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
+        contacts.forEach(function (contact) {
+            indexController(contact);
+        });
+        contacts.sort(CompareOnKey(sortby));
+        console.timeEnd('CMDB api call for all contacts')
+        res.render('index', Object.assign({contacts: contacts}, req.query));
     }).catch(function (error) {
         res.status(502);
-        res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+        res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
     });
 });
 
 function contactsURL(req) {
     contactsurl = process.env.CMDBAPI + "/items/contact";
-    params = req.query;
-    sortby = params.sortby
-    delete params.sortby // to avoid it being added to cmdb params
-    params['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
-    params['objectDetail'] = "False";
-    params['subjectDetail'] = "False";
-    remove_blank_values(params);
-    contactsurl = contactsurl + '?' +querystring.stringify(params);
+    cmdbparams = req.query;
+    console.log("cmdbparams:",cmdbparams);
+    cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
+    cmdbparams['objectDetail'] = "False";
+    cmdbparams['subjectDetail'] = "False";
+    remove_blank_values(cmdbparams);
+    contactsurl = contactsurl + '?' +querystring.stringify(cmdbparams);
+    console.log("url:",contactsurl)
     return contactsurl
 }
 
@@ -276,6 +273,32 @@ function programmeNames(programmes) {
     });
     return programmeList
 }
+
+/** 
+ * Ties up the contact data coming from CMDB to something expected by the index
+ */
+function indexController(contact) {
+    contact.id = contact.dataItemID;
+    if (!contact.hasOwnProperty('name')) {
+        contact.name = contact.id
+    }
+
+    // now add other fields to enable user interface
+    contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
+
+    if (!contact.avatar) {
+
+        // Use gravatar to get avatar from email
+        var md5hash = "";
+        if (contact.email) {
+            md5hash = crypto.createHash('md5').update(contact.email).digest('hex');
+        }
+        contact.avatar = "https://www.gravatar.com/avatar/"+md5hash+"?s=80&d=blank";
+    }
+
+    return contact;
+}
+
 /** 
  * Ties up the contact data coming from CMDB to something expected by the templates
  */
