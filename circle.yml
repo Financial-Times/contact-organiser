@@ -4,11 +4,11 @@ machine:
 
 deployment:
   dev:
-    branch: formatting
+    branch: MON-2226
     commands:
       - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow
-      - git push git@heroku.com:oi-contact-organiser-dev.git $CIRCLE_SHA1:refs/heads/master
+      - git push --force git@heroku.com:oi-contact-organiser-dev.git $CIRCLE_SHA1:refs/heads/master
       - heroku maintenance:off --app oi-contact-organiser-dev
 
   staging:

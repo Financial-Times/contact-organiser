@@ -79,6 +79,24 @@
 						</select>
 					</div>
 
+					<div class="o-forms o-forms--wide">
+						<label class="o-forms__label" for="programme">Related Items({{relationships.length}})</label>
+						{{#relationships}}
+						<div class="o-grid-container">
+							<div class="o-grid-row">
+								<div data-o-grid-colspan="3">
+									{{reltype}}
+								</div>
+								<div data-o-grid-colspan="3">
+									{{#relitemlink}}<a href="{{relitemlink}}">{{/relitemlink}}{{relitem}}{{#relitemlink}}</a>{{/relitemlink}}
+								</div>
+							</div>
+						</div>
+						{{/relationships}}
+						{{^relationships}}<div class="empty">This contact is not being referenced</div>{{/relationships}}
+					</div>
+
+
 					{{#lastUpdate}}<div class="last-update">Contact Last Updated: {{lastUpdate}}</div>{{/lastUpdate}}
 
 					<div id="save"><input type='submit' class="o-buttons o-buttons--standout save-button" value='Save' /></div>

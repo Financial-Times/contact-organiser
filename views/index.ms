@@ -45,6 +45,7 @@
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<input type='submit' class="o-buttons o-buttons--standout " value='Filter' />
+									<a class="o-buttons o-buttons--standout" href="/">Clear</a>
 								</div>
 							</div>
 						</div>
@@ -57,7 +58,7 @@
 			<div class="o-grid-container">
 				<div class="o-grid-row">
 					<div data-o-grid-colspan="3">
-						<h2>Existing Contacts</h2>
+						<h2>Existing Contacts ({{contacts.length}})</h2>
 					</div>
 					<div data-o-grid-colspan="3">
 					</div>
