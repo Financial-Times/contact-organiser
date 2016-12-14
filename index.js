@@ -234,8 +234,13 @@ app.post('/contacts/:contactid/delete', function (req, res) {
         // TODO: show messaging to indicate the delete was successful
         res.redirect(303, '/');
     }).catch(function (error) {
-        res.status(502);
-        res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+        if (error.includes(" 409 ")) {
+            // display a dependencies exist message
+            res.render('contact',{dependerror:'Unable to delete, dependendies exist. Please reassign the related items before retrying'})
+        } else {
+            res.status(502);
+            res.render("error", {message: "Problem deleting "+req.params.contactid+" from CMDB ("+error+")"});
+        }
     });
 });
 

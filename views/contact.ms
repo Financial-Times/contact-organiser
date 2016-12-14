@@ -94,6 +94,7 @@
 						</div>
 						{{/relationships}}
 						{{^relationships}}<div class="empty">This contact is not being referenced</div>{{/relationships}}
+						{{#dependerror}}<div class="o-forms__errortext">{{dependerror}}</div>{{/dependerror}}
 					</div>
 
 
