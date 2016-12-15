@@ -21,10 +21,11 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide {{#dependerror}}o-forms--error{{/dependerror}}">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
+						{{#dependerror}}<div class="o-forms__errortext">{{dependerror}}</div>{{/dependerror}}
 					</div>
 
 					<div class="o-forms--wide o-forms__wrapper o-forms__wrapper--highlight">
@@ -94,7 +95,6 @@
 						</div>
 						{{/relationships}}
 						{{^relationships}}<div class="empty">This contact is not being referenced</div>{{/relationships}}
-						{{#dependerror}}<div class="o-forms__errortext">{{dependerror}}</div>{{/dependerror}}
 					</div>
 
 
