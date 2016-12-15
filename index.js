@@ -241,7 +241,7 @@ app.post('/contacts/:contactid/delete', function (req, res) {
                 cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
                     cleanContact(result, programmeList);
                     // display a dependencies exist message
-                    result.dependerror = 'Unable to delete, dependendies exist. Please reassign the related items before retrying'
+                    result.dependerror = 'Unable to delete this contact, dependencies exist - see below. Please reassign the related items before retrying'
                     res.render('contact', result);
                 }).catch(function (error) {
                     res.status(502);
