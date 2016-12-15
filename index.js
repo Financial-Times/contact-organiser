@@ -235,8 +235,22 @@ app.post('/contacts/:contactid/delete', function (req, res) {
         res.redirect(303, '/');
     }).catch(function (error) {
         if (error.toString().includes(" 409 ")) {
-            // display a dependencies exist message
-            res.render('contact',{dependerror:'Unable to delete, dependendies exist. Please reassign the related items before retrying'})
+            // get contact details ready to display error in context
+            cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+                programmeList = programmeNames(programmes);
+                cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
+                    cleanContact(result, programmeList);
+                    // display a dependencies exist message
+                    result.dependerror = 'Unable to delete, dependendies exist. Please reassign the related items before retrying'
+                    res.render('contact', result);
+                }).catch(function (error) {
+                    res.status(502);
+                    res.render("error", {message: "Problem connecting to CMDB whilst displaying dependency error ("+error+")"});
+                })
+            }).catch(function (error) {
+                res.status(502);
+                res.render("error", {message: "Unable to read list of programmes from the CMDB whilst dispalying dependency error("+error+")"});
+            })
         } else {
             res.status(502);
             res.render("error", {message: "Problem deleting "+req.params.contactid+" from CMDB ("+error+")"});
