@@ -70,7 +70,7 @@
 				</div>
 			</div>
 
-			<div class="truncate">
+			<div id="truncate">
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
 					<table class="o-table o-table--row-stripes" data-o-component="o-table">
