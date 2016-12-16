@@ -70,7 +70,7 @@
 				</div>
 			</div>
 
-			<div id="truncate">
+			<div id="contactindex">
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
 					<table class="o-table o-table--row-stripes" data-o-component="o-table">
@@ -87,8 +87,8 @@
 						<tbody>
 							{{#contacts}}
 								<tr>
-									<td><a href="{{localpath}}">{{id}}</a></td>
-									<td>{{name}}</td>
+									<td class='truncateID'><a href="{{localpath}}">{{id}}</a></td>
+									<td class='truncateName'>{{name}}</td>
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>

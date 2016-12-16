@@ -8,12 +8,17 @@ body {
 	padding: 20px 0;
 }
 
-#truncate {
-    width: 6em; 
+#contactindex td.truncateID {
+    width: 6em; max-width:6em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
+}
+#contactindex td.truncateName{
+    width: 6em; max-width:6em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .o-forms-errortext {
