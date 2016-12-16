@@ -84,8 +84,8 @@
 						<tbody>
 							{{#contacts}}
 								<tr>
-									<td><a href="{{localpath}}">{{id}}</a></td>
-									<td>{{name}}</td>
+									<td class="truncate"><a href="{{localpath}}">{{id}}</a></td>
+									<td class="truncate">{{name}}</td>
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>

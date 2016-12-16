@@ -8,6 +8,11 @@ body {
 	padding: 20px 0;
 }
 
+#truncate {
+    width: 12em; 
+	text-overflow: ellipsis; 
+}
+
 .o-forms-errortext {
 	display: none;
 }
