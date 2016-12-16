@@ -79,17 +79,19 @@
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=email">Email</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
+							<th>Support Rota</th>
+							<th>Contact Preference</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
 						</thead>
 						<tbody>
 							{{#contacts}}
 								<tr>
-									<td class="truncateid"><a href="{{localpath}}">{{id}}</a></td>
-									<td class="truncatename">{{name}}</td>
+									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;"><a href="{{localpath}}">{{id}}</a></td>
+									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;">{{name}}</td>
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>
-									<td>{{supportRota}}</td>
+									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;>{{supportRota}}</td>
 									<td>{{contactPref}}</td>
 									<td>{{programme}}</td>
 								</tr>
