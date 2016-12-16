@@ -8,9 +8,17 @@ body {
 	padding: 20px 0;
 }
 
-.truncate {
+.truncateID {
     width: 12em; 
-	text-overflow: ellipsis; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.truncatename {
+    width: 12em; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .o-forms-errortext {
