@@ -72,6 +72,35 @@
 
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
+					<table class="o-table o-table--row-stripes" data-o-component="o-table">
+						<thead>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID">ID</th>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=name">Name</th>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=email">Email</th>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
+							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
+						</thead>
+						<tbody>
+							{{#contacts}}
+								<tr>
+									<td><a href="{{localpath}}">{{id}}</a></td>
+									<td>{{name}}</td>
+									<td>{{slack}}</td>
+									<td>{{email}}</td>
+									<td>{{phone}}</td>
+									<td>{{supportRota}}</td>
+									<td>{{contactPref}}</td>
+									<td>{{programme}}</td>
+								</tr>
+							{{/contacts}}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="o-grid-row">
+				<div data-o-grid-colspan="12">
 				{{#contacts}}
 					<div class='contact'>
 						<img class='avatar' src="{{avatar}}" />
@@ -91,6 +120,7 @@
 				{{/contacts}}
 				</div>
 			</div>
+
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1"></script>
 	</body>
