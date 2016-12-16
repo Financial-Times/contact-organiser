@@ -105,6 +105,7 @@
 			</div>
 
 			{{#id}}
+			{{^relationships}}
 			<div class='o-grid-row' data-o-grid-colspan="9">
 				<div class='delete-notice-container'>
 					<h2><i class="o-icons-icon o-icons-icon--warning o-icons--big"></i>Delete this record</h2>
@@ -116,6 +117,7 @@
 					</div>
 				</div>
 			</div>
+			{{/relationships}}
 			{{/id}}
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-labels@^2.0.0,o-table@^5.0.0,o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1,o-icons@^v5.1.3"></script>

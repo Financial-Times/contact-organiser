@@ -28,6 +28,7 @@ var cmdb = new CMDB({
 
 var systemTool = process.env.SYSTEMREGISTRY || 'https://systemregistry.in.ft.com/manage/';
 var endpointTool = process.env.ENDPOINTMANAGER || 'https://endpointmanager.in.ft.com/manage/';
+var contactTool = process.env.CONTACTORGANISER || 'https://contactorganiser.in.ft.com/manage/';
 
 var path = require('path');
 var ftwebservice = require('express-ftwebservice');
@@ -329,7 +330,8 @@ function cleanContact(contact, programmeList) {
     delete contact.dataItemID;
     delete contact.dataTypeID;
 
-    // look for relationships  contact.xxx.[..,..,..]
+    // look for relationships  contact.xxx.[..,..,..] - but they should only be the reverse relationships
+    // not sure we have a way to find those at the moment since cmdb return has already translated them
     relationships = []
     for (var reltype in contact) {
         for (var itemtype in contact[reltype]) {
@@ -342,6 +344,9 @@ function cleanContact(contact, programmeList) {
                     }
                     if (itemtype == 'endpoint') {
                         relitemlink = endpointTool + contact[reltype][itemtype][relationship].dataItemID
+                    }
+                     if (itemtype == 'contact') {
+                        relitemlink = contactTool + contact[reltype][itemtype][relationship].dataItemID
                     }
                     relationships.push({'reltype': reltype, 'relitem': relitem, 'relitemlink': relitemlink})
                 }
