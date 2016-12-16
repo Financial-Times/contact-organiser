@@ -80,7 +80,6 @@
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=email">Email</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
-							<th>Support Rota</th>
 							<th>Contact Preference</th>
 							<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
 						</thead>
@@ -92,8 +91,7 @@
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>
-									<td>{{supportRota}}</td>
-									<td>{{contactPref}}</td>
+									<td class='truncatePref'>{{contactPref}}</td>
 									<td>{{programme}}</td>
 								</tr>
 							{{/contacts}}

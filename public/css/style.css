@@ -9,13 +9,19 @@ body {
 }
 
 #contactindex td.truncateID {
-    width: 6em; max-width:6em;
+    width: 12em; max-width:12em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 #contactindex td.truncateName{
-    width: 6em; max-width:6em;
+    width: 12em; max-width:12em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#contactindex td.truncatePref{
+    width: 12em; max-width:12em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
