@@ -70,6 +70,7 @@
 				</div>
 			</div>
 
+			<div class="truncate">
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
 					<table class="o-table o-table--row-stripes" data-o-component="o-table">
@@ -86,12 +87,12 @@
 						<tbody>
 							{{#contacts}}
 								<tr>
-									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;"><a href="{{localpath}}">{{id}}</a></td>
-									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;">{{name}}</td>
+									<td><a href="{{localpath}}">{{id}}</a></td>
+									<td>{{name}}</td>
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>
-									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;">{{supportRota}}</td>
+									<td>{{supportRota}}</td>
 									<td>{{contactPref}}</td>
 									<td>{{programme}}</td>
 								</tr>
@@ -99,6 +100,7 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
 			</div>
 
 			<div class="o-grid-row">

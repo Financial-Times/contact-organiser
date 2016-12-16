@@ -8,14 +8,8 @@ body {
 	padding: 20px 0;
 }
 
-.truncateID {
-    width: 12em; 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.truncatename {
-    width: 12em; 
+#truncate {
+    width: 6em; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
