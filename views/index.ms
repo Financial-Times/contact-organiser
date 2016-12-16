@@ -91,7 +91,7 @@
 									<td>{{slack}}</td>
 									<td>{{email}}</td>
 									<td>{{phone}}</td>
-									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;>{{supportRota}}</td>
+									<td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden;">{{supportRota}}</td>
 									<td>{{contactPref}}</td>
 									<td>{{programme}}</td>
 								</tr>
