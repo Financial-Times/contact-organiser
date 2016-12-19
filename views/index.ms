@@ -70,7 +70,7 @@
 							<input type="hidden" name="email" value="{{email}}" />
 							<input type="hidden" name="phone" value="{{phone}}" />
 							<input type="hidden" name="programme" value="{{programme}}" />
-							<input type="hidden" name="sortby" value="dataItemID" />
+							<input type="hidden" name="sortby" value="{{sortby}}" />
 							{{#indextable}}
 							<input type="hidden" name="index" value="tiles" />
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
