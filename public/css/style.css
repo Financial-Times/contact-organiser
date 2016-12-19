@@ -136,16 +136,6 @@ body {
 	}
 
 
-	#new {
-		margin: auto;
-		padding: 3em 0;
-		max-width: 400px;
-		display: block;
-		clear: both;
-	}
-	#new input {
-		width: 100%;
-	}
 	.avatar {
 		float: right;
 		width: 40px;
