@@ -79,6 +79,7 @@ app.get('/', function (req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     console.time('CMDB api call for all contacts')
     sortby = req.query.sortby
+    indextiles = req.query.indextiles
     cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
         contacts.forEach(function (contact) {
             indexController(contact);
@@ -97,6 +98,7 @@ function contactsURL(req) {
     cmdbparams = req.query;
     console.log("cmdbparams:",cmdbparams);
     delete cmdbparams.sortby // to avoid it being added to cmdb params
+    delete cmdbparams.indextiles // to avoid it being added to cmdb params
     cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
     cmdbparams['objectDetail'] = "False";
     cmdbparams['subjectDetail'] = "False";
