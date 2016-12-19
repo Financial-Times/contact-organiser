@@ -79,14 +79,18 @@ app.get('/', function (req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     console.time('CMDB api call for all contacts')
     sortby = req.query.sortby
-    indextiles = req.query.indextiles
+    index = req.query.index
     cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
         contacts.forEach(function (contact) {
             indexController(contact);
         });
         contacts.sort(CompareOnKey(sortby));
         console.timeEnd('CMDB api call for all contacts')
-        res.render('index', Object.assign({contacts: contacts}, req.query));
+        if (index == 'tiles') {
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextiles':true}));
+        } else {
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextable':true}));
+        }
     }).catch(function (error) {
         res.status(502);
         res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
@@ -98,7 +102,7 @@ function contactsURL(req) {
     cmdbparams = req.query;
     console.log("cmdbparams:",cmdbparams);
     delete cmdbparams.sortby // to avoid it being added to cmdb params
-    delete cmdbparams.indextiles // to avoid it being added to cmdb params
+    delete cmdbparams.index // to avoid it being added to cmdb params
     cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
     cmdbparams['objectDetail'] = "False";
     cmdbparams['subjectDetail'] = "False";
