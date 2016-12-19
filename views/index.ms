@@ -62,14 +62,14 @@
 					</div>
 					<div data-o-grid-colspan="2">
 					</div>
-					<div data-o-grid-colspan="3">
-						<form id="new" action="/new" method="get">
-							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Add New Contact' />
-						</form>
-					</div>
 					<div data-o-grid-colspan="2">
 						<form id="switch" action="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID&amp;index=tiles" method="get">
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
+						</form>
+					</div>
+					<div data-o-grid-colspan="3">
+						<form id="new" action="/new" method="get">
+							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Add New Contact' />
 						</form>
 					</div>
 				</div>
