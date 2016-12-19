@@ -96,6 +96,7 @@ function contactsURL(req) {
     contactsurl = process.env.CMDBAPI + "/items/contact";
     cmdbparams = req.query;
     console.log("cmdbparams:",cmdbparams);
+    delete cmdbparams.sortby // to avoid it being added to cmdb params
     cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
     cmdbparams['objectDetail'] = "False";
     cmdbparams['subjectDetail'] = "False";

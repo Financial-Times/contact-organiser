@@ -67,6 +67,11 @@
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Add New Contact' />
 						</form>
 					</div>
+					<div data-o-grid-colspan="3">
+						<form id="switch" action="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID&amp;index=tiles" method="get">
+							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
+						</form>
+					</div>
 				</div>
 			</div>
 
@@ -101,6 +106,7 @@
 			</div>
 			</div>
 
+			{{#indextiles}}
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
 				{{#contacts}}
@@ -122,6 +128,7 @@
 				{{/contacts}}
 				</div>
 			</div>
+			{{/indextiles}}
 
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1"></script>
