@@ -21,10 +21,11 @@
 						</aside>
 					</div>{{/saved}}
 
-					<div class="o-forms o-forms--wide">
+					<div class="o-forms o-forms--wide {{#dependerror}}o-forms--error{{/dependerror}}">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
 						<small class="o-forms__additional-info">Can be a team name or an individual.  Names should be clear to people working outside of your programme.</small>
 						<input type="text" name="name" value="{{name}}" placeholder="Name of Contact" class="o-forms__text" id="name" required></input>
+						{{#dependerror}}<div class="o-forms__errortext">{{dependerror}}</div>{{/dependerror}}
 					</div>
 
 					<div class="o-forms--wide o-forms__wrapper o-forms__wrapper--highlight">
@@ -104,6 +105,7 @@
 			</div>
 
 			{{#id}}
+			{{^relationships}}
 			<div class='o-grid-row' data-o-grid-colspan="9">
 				<div class='delete-notice-container'>
 					<h2><i class="o-icons-icon o-icons-icon--warning o-icons--big"></i>Delete this record</h2>
@@ -115,6 +117,7 @@
 					</div>
 				</div>
 			</div>
+			{{/relationships}}
 			{{/id}}
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-labels@^2.0.0,o-table@^5.0.0,o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1,o-icons@^v5.1.3"></script>
