@@ -87,9 +87,9 @@ app.get('/', function (req, res) {
         contacts.sort(CompareOnKey(sortby));
         console.timeEnd('CMDB api call for all contacts')
         if (index == 'tiles') {
-            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextiles':true}));
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextiles':true, 'sortby':sortby}));
         } else {
-            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextable':true}));
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextable':true, 'sortby':sortby}));
         }
     }).catch(function (error) {
         res.status(502);
