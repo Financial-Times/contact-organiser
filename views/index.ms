@@ -41,6 +41,7 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 								</div>
+								<input type="hidden" name="sortby" value="{{sortby}}" id=sortby />
 							</div>
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
@@ -60,7 +61,26 @@
 					<div data-o-grid-colspan="3">
 						<h2>Existing Contacts ({{contacts.length}})</h2>
 					</div>
-					<div data-o-grid-colspan="3">
+					<div data-o-grid-colspan="2">
+					</div>
+					<div data-o-grid-colspan="2">
+						<form id="switch" action="/" method="get">
+							<input type="hidden" name="dataItemID" value="{{dataItemID}}" />
+							<input type="hidden" name="name" value="{{name}}" />
+							<input type="hidden" name="slack" value="{{slack}}" />
+							<input type="hidden" name="email" value="{{email}}" />
+							<input type="hidden" name="phone" value="{{phone}}" />
+							<input type="hidden" name="programme" value="{{programme}}" />
+							<input type="hidden" name="sortby" value="{{sortby}}" />
+							{{#indextable}}
+							<input type="hidden" name="index" value="tiles" />
+							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
+							{{/indextable}}
+							{{#indextiles}}
+							<input type="hidden" name="index" value="table" />
+							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Table' />
+							{{/indextiles}}
+						</form>
 					</div>
 					<div data-o-grid-colspan="3">
 						<form id="new" action="/new" method="get">
@@ -70,6 +90,40 @@
 				</div>
 			</div>
 
+			{{#indextable}}
+			<div id="contactindex">
+				<div class="o-grid-row">
+					<div data-o-grid-colspan="12">
+						<table class="o-table o-table--row-stripes" data-o-component="o-table">
+							<thead>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID">ID</th>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=name">Name</th>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=email">Email</th>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
+								<th>Contact Preference</th>
+								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
+							</thead>
+							<tbody>
+								{{#contacts}}
+									<tr>
+										<td class='truncateID'><a href="{{localpath}}">{{id}}</a></td>
+										<td class='truncateName'>{{name}}</td>
+										<td>{{slack}}</td>
+										<td>{{email}}</td>
+										<td>{{phone}}</td>
+										<td class='truncatePref'>{{contactPref}}</td>
+										<td>{{programme}}</td>
+									</tr>
+								{{/contacts}}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			{{/indextable}}
+
+			{{#indextiles}}
 			<div class="o-grid-row">
 				<div data-o-grid-colspan="12">
 				{{#contacts}}
@@ -91,6 +145,8 @@
 				{{/contacts}}
 				</div>
 			</div>
+			{{/indextiles}}
+
 		</div>
 		<script src="https://build.origami.ft.com/v2/bundles/js?modules=o-header-services@^1.0.0,o-buttons@^4.0.0,o-forms@^2.0.3,o-grid@^4.2.1"></script>
 	</body>

@@ -28,6 +28,7 @@ var cmdb = new CMDB({
 
 var systemTool = process.env.SYSTEMREGISTRY || 'https://systemregistry.in.ft.com/manage/';
 var endpointTool = process.env.ENDPOINTMANAGER || 'https://endpointmanager.in.ft.com/manage/';
+var contactTool = process.env.CONTACTORGANISER || 'https://contactorganiser.in.ft.com/manage/';
 
 var path = require('path');
 var ftwebservice = require('express-ftwebservice');
@@ -78,13 +79,18 @@ app.get('/', function (req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     console.time('CMDB api call for all contacts')
     sortby = req.query.sortby
+    index = req.query.index
     cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
         contacts.forEach(function (contact) {
             indexController(contact);
         });
         contacts.sort(CompareOnKey(sortby));
         console.timeEnd('CMDB api call for all contacts')
-        res.render('index', Object.assign({contacts: contacts}, req.query));
+        if (index == 'tiles') {
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextiles':true, 'sortby':sortby}));
+        } else {
+            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextable':true, 'sortby':sortby}));
+        }
     }).catch(function (error) {
         res.status(502);
         res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
@@ -95,6 +101,8 @@ function contactsURL(req) {
     contactsurl = process.env.CMDBAPI + "/items/contact";
     cmdbparams = req.query;
     console.log("cmdbparams:",cmdbparams);
+    delete cmdbparams.sortby // to avoid it being added to cmdb params
+    delete cmdbparams.index // to avoid it being added to cmdb params
     cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
     cmdbparams['objectDetail'] = "False";
     cmdbparams['subjectDetail'] = "False";
@@ -234,8 +242,27 @@ app.post('/contacts/:contactid/delete', function (req, res) {
         // TODO: show messaging to indicate the delete was successful
         res.redirect(303, '/');
     }).catch(function (error) {
-        res.status(502);
-        res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+        if (error.toString().includes(" 409 ")) {
+            // get contact details ready to display error in context
+            cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+                programmeList = programmeNames(programmes);
+                cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
+                    cleanContact(result, programmeList);
+                    // display a dependencies exist message
+                    result.dependerror = 'Unable to delete this contact, dependencies exist - see below. Please reassign the related items before retrying'
+                    res.render('contact', result);
+                }).catch(function (error) {
+                    res.status(502);
+                    res.render("error", {message: "Problem connecting to CMDB whilst displaying dependency error ("+error+")"});
+                })
+            }).catch(function (error) {
+                res.status(502);
+                res.render("error", {message: "Unable to read list of programmes from the CMDB whilst dispalying dependency error("+error+")"});
+            })
+        } else {
+            res.status(502);
+            res.render("error", {message: "Problem deleting "+req.params.contactid+" from CMDB ("+error+")"});
+        }
     });
 });
 
@@ -310,7 +337,8 @@ function cleanContact(contact, programmeList) {
     delete contact.dataItemID;
     delete contact.dataTypeID;
 
-    // look for relationships  contact.xxx.[..,..,..]
+    // look for relationships  contact.xxx.[..,..,..] - but they should only be the reverse relationships
+    // not sure we have a way to find those at the moment since cmdb return has already translated them
     relationships = []
     for (var reltype in contact) {
         for (var itemtype in contact[reltype]) {
@@ -323,6 +351,9 @@ function cleanContact(contact, programmeList) {
                     }
                     if (itemtype == 'endpoint') {
                         relitemlink = endpointTool + contact[reltype][itemtype][relationship].dataItemID
+                    }
+                     if (itemtype == 'contact') {
+                        relitemlink = contactTool + contact[reltype][itemtype][relationship].dataItemID
                     }
                     relationships.push({'reltype': reltype, 'relitem': relitem, 'relitemlink': relitemlink})
                 }
