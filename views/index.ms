@@ -41,6 +41,7 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 								</div>
+								<input type="hidden" name="sortby" value="{{sortby}}" id=sortby />
 							</div>
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
