@@ -61,7 +61,15 @@
 					<div data-o-grid-colspan="3">
 						<h2>Existing Contacts ({{contacts.length}})</h2>
 					</div>
-					<div data-o-grid-colspan="2">
+					<div data-o-grid-colspan="4">
+						<div class="o-buttons__pagination">
+						{{#pages}}
+							{{#faux}}...{{/faux}}
+							{{^faux}}
+								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID&amp;page={{number}}">{{number}}</a>
+							{{/faux}}
+						{{/pages}}
+						</div>
 					</div>
 					<div data-o-grid-colspan="2">
 						<form id="switch" action="/" method="get">

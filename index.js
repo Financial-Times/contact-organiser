@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 const querystring = require('querystring');
-var CMDB = require("cmdb.js");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const crypto = require('crypto');
@@ -18,6 +17,13 @@ app.set('views', __dirname + '/views');
 
 // Set the public directory as public for serving assets
 app.use(express.static('public'));
+
+var path = require('path');
+if (process.env.LOCALCMDBJS) {
+    var CMDB = require( path.resolve( __dirname, "./cmdb.js" ) );
+} else {
+    var CMDB = require( "cmdb.js" );
+}
 
 /** Environment variables **/
 var port = process.env.PORT || 3001;
@@ -71,45 +77,94 @@ ftwebservice(app, {
 });
 var authS3O = require('s3o-middleware');
 app.use(authS3O);
+app.use(function(req, res, next) {
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
 
 /**
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
-    console.time('CMDB api call for all contacts')
-    sortby = req.query.sortby
-    index = req.query.index
-    cmdb._fetchAll(res.locals, contactsURL(req)).then(function (contacts) {
-        contacts.forEach(function (contact) {
-            indexController(contact);
+    console.timeEnd('CMDB api call for contact count')
+    cmdb.getItemCount(res.locals, 'contact', contactFilter(req)).then(function (counters) {
+        console.timeEnd('CMDB api call for contacts count')
+        console.log(counters)
+        console.time('CMDB api call for all contacts')
+        sortby = req.query.sortby
+        index = req.query.index
+        page = req.query.page
+        // prepare pagination links
+        pagebuttons = getPageButtons(page, counters['pages'])
+        // read one page of contacts
+        cmdb.getItemPageFields(res.locals, 'contact', page, contactFields(req), contactFilter(req)).then(function (contacts) {
+            contacts.forEach(function (contact) {
+                indexController(contact);
+            });
+            contacts.sort(CompareOnKey(sortby));
+            console.timeEnd('CMDB api call for all contacts')
+            if (index == 'tiles') {
+                res.render('index', Object.assign({'pages':pagebuttons}, {contacts: contacts}, req.query, {'indextiles':true, 'sortby':sortby}));
+            } else {
+                res.render('index', Object.assign({'pages':pagebuttons}, {contacts: contacts}, req.query, {'indextable':true, 'sortby':sortby}));
+            }
+        }).catch(function (error) {
+            res.status(502);
+            res.render("error", {message: "Problem obtaining list of filtered contacts from CMDB ("+error+")"});
         });
-        contacts.sort(CompareOnKey(sortby));
-        console.timeEnd('CMDB api call for all contacts')
-        if (index == 'tiles') {
-            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextiles':true, 'sortby':sortby}));
-        } else {
-            res.render('index', Object.assign({contacts: contacts}, req.query, {'indextable':true, 'sortby':sortby}));
-        }
     }).catch(function (error) {
         res.status(502);
-        res.render("error", {message: "Problem connecting to CMDB ("+error+")"});
+        res.render("error", {message: "Problem obtaiing count of filtered contacts from CMDB ("+error+")"});
     });
 });
 
-function contactsURL(req) {
-    contactsurl = process.env.CMDBAPI + "/items/contact";
+function getPageButtons(page, maxpages) {
+    // which page are we on
+    if (!page) {
+        page = 1
+    }
+    // prepare pagination links
+    pagination = []
+    var pageno = page - 3
+    if (pageno < 1) {
+        pageno = 1
+    }
+    // prefix for page 1
+    if (pageno != 1 ) {
+        pagination.push({'number':1, 'selected':false })
+        pagination.push({'faux':true})
+    }
+    // main set of page links centerde around the current page
+    while (pageno <= maxpages && pagination.length < 9) {
+        if (pageno == page) {
+            pagination.push({'number':pageno, 'selected':true })
+        } else {
+            pagination.push({'number':pageno, 'selected':false })
+        }
+        pageno = pageno + 1
+    }
+    // suffix for last page
+    if (pageno < maxpages ) {
+        pagination.push({'faux':true})
+        pagination.push({'number':maxpages, 'selected':false })
+    }
+    return pagination
+}
+
+function contactFilter(req) {
     cmdbparams = req.query;
     console.log("cmdbparams:",cmdbparams);
     delete cmdbparams.sortby // to avoid it being added to cmdb params
     delete cmdbparams.index // to avoid it being added to cmdb params
-    cmdbparams['outputfields'] = "name,slack,email,phone,supportRota,contactPref,programme";
-    cmdbparams['objectDetail'] = "False";
-    cmdbparams['subjectDetail'] = "False";
     remove_blank_values(cmdbparams);
-    contactsurl = contactsurl + '?' +querystring.stringify(cmdbparams);
-    console.log("url:",contactsurl)
-    return contactsurl
+    console.log("filter:",cmdbparams)
+    return cmdbparams
+}
+
+function contactFields(req) {
+    return ["name","slack","email","phone","supportRota","contactPref","programme"];
+//    cmdbparams['objectDetail'] = "False";
+//    cmdbparams['subjectDetail'] = "False";
 }
 
 function CompareOnKey(key) {
@@ -129,7 +184,6 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
@@ -150,7 +204,6 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var defaultdata = {
@@ -176,7 +229,6 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
     contactid = req.body.id
     if (!contactid.trim()) {
         contactid = req.body.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -185,7 +237,7 @@ app.post('/new', function (req, res) {
         req.body.iderror = "ID already in use, please re-enter"
         res.render('contact', req.body);
     }).catch(function (error) {
-        res.redirect(307, '/contacts/' +encodeURIComponent(encodeURIComponent(contactid)));
+        res.redirect(307, '/contacts/' +encodeURIComponent(contactid));
     });
 });
 
@@ -194,7 +246,6 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
     cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var contact = {
@@ -235,7 +286,6 @@ app.post('/contacts/:contactid', function (req, res) {
  * Send delete requests back to the CMDB
  */
 app.post('/contacts/:contactid/delete', function (req, res) {
-    res.setHeader('Cache-Control', 'no-cache');
 
     cmdb.deleteItem(res.locals, 'contact', req.params.contactid).then(function (result) {
         
@@ -311,7 +361,7 @@ function indexController(contact) {
     }
 
     // now add other fields to enable user interface
-    contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
+    contact.localpath = "/contacts/"+encodeURIComponent(contact.id);
 
     if (!contact.avatar) {
 
@@ -365,7 +415,7 @@ function cleanContact(contact, programmeList) {
     }
 
     // now add other fields to enable user interface
-    contact.localpath = "/contacts/"+encodeURIComponent(encodeURIComponent(contact.id));
+    contact.localpath = "/contacts/"+encodeURIComponent(contact.id);
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
