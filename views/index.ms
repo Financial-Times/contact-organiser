@@ -66,7 +66,7 @@
 						{{#pages}}
 							{{#faux}}...{{/faux}}
 							{{^faux}}
-								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID&amp;page={{number}}">{{number}}</a>
+								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby={{sortby}}&amp;page={{number}}">{{number}}</a>
 							{{/faux}}
 						{{/pages}}
 						</div>
