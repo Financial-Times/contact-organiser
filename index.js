@@ -34,7 +34,7 @@ var cmdb = new CMDB({
 
 var systemTool = process.env.SYSTEMREGISTRY || 'https://systemregistry.in.ft.com/manage/';
 var endpointTool = process.env.ENDPOINTMANAGER || 'https://endpointmanager.in.ft.com/manage/';
-var contactTool = process.env.CONTACTORGANISER || 'https://contactorganiser.in.ft.com/manage/';
+var contactTool = process.env.CONTACTORGANISER || 'https://contactorganiser.in.ft.com/contacts/';
 
 var path = require('path');
 var ftwebservice = require('express-ftwebservice');
