@@ -301,7 +301,14 @@ cmdb.prototype.getItemPage = function getItemPage(locals, type, page = 1, criter
 		query = Object.assign(query, criteria)
 	}
 
-	return this._fetch(locals, path, querystring.stringify(query), undefined, undefined, timeout);
+	return this._fetch(locals, path, querystring.stringify(query), undefined, undefined, timeout).then(function(response) {
+		return response
+	}).catch(function (error) {
+	    if (error.toString().includes(" 404 ")) {
+            // no details available but thats not a surprise
+            return []
+        }
+	});
 };
 
 /**
@@ -324,7 +331,14 @@ cmdb.prototype.getItemPageFields = function getItemPageFields(locals, type, page
 		query = Object.assign(query, criteria)
 	}
 	console.log("getItemPageFields:", querystring.stringify(query))
-	return this._fetch(locals, path, querystring.stringify(query), undefined, undefined, timeout);
+	return this._fetch(locals, path, querystring.stringify(query), undefined, undefined, timeout).then(function(response) {
+		return response
+	}).catch(function (error) {
+	    if (error.toString().includes(" 404 ")) {
+            // no details available but thats not a surprise
+            return []
+        }
+	});
 };
 
 module.exports = cmdb;
