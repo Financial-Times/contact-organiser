@@ -152,7 +152,8 @@ function getPageButtons(page, maxpages) {
 }
 
 function contactFilter(req) {
-    cmdbparams = req.query;
+    var cmdbparams = {}
+    Object.assign(cmdbparams, req.query);
     console.log("cmdbparams:",cmdbparams);
     delete cmdbparams.sortby // to avoid it being added to cmdb params
     delete cmdbparams.index // to avoid it being added to cmdb params
