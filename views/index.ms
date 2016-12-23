@@ -104,6 +104,7 @@
 					<div data-o-grid-colspan="12">
 						<table class="o-table o-table--row-stripes" data-o-component="o-table">
 							<thead>
+								{{#contacts.length}}
 								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID">ID</th>
 								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=name">Name</th>
 								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
@@ -111,6 +112,7 @@
 								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
 								<th>Contact Preference</th>
 								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
+								{{/contacts.length}}
 							</thead>
 							<tbody>
 								{{#contacts}}
@@ -123,6 +125,9 @@
 										<td class='truncatePref'>{{contactPref}}</td>
 										<td>{{programme}}</td>
 									</tr>
+								{{/contacts}}
+								{{^contacts}}
+									<div id='emptylist'>Sorry, no records are available. Please adjust your filter</div>
 								{{/contacts}}
 							</tbody>
 						</table>
@@ -150,6 +155,9 @@
 
 						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 					</div>
+				{{/contacts}}
+				{{^contacts}}
+					<div id='emptylist'>Sorry, no records are available. Please adjust your filter</div>
 				{{/contacts}}
 				</div>
 			</div>
