@@ -13,4 +13,8 @@ All environment variables are optional.
 - _APIKEY_ The API key for this application to talk to CMDB.  Defaults to 'changeme';
 - _SYSTEMREGISTRY_ The URL that allows related systems to be modified. Defaults to https://systemregistry.in.ft.com/manage/
 - _ENDPOINTMANAGER_ The URL that allows related endpoints to be modified. Defaults to https://endpointmanager.in.ft.com/manage/
-- _CONTACTORGANISER_ The URL that allows related contacts to be modified. Defaults to https://contactorganiser.in.ft.com/manage/
+- _CONTACTORGANISER_ The URL that allows related contacts to be modified. Defaults to https://contactorganiser.in.ft.com/contacts/
+
+To allow for a development verison of cmdb.js you may also define the following environmental variable to force runtime execution of a copy of cmdb.js from within the same directory as index.js. If the environmental variable is not present then the latest production npm verion of cmd.bjs will be used.
+
+- _LOCALCMDBJS_ 
