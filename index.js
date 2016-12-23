@@ -265,11 +265,9 @@ app.post('/contacts/:contactid', function (req, res) {
                 locals: JSON.stringify(res.locals),
                 contactid: req.params.contactid,
 
-                // TODO: replace with pretty print function
-                json: JSON.stringify(contact).replace(/,/g, ",\n\t").replace(/}/g, "\n}").replace(/{/g, "{\n\t"),
+                json: JSON.stringify(contact).replace(/,/g, ",\n\t").replace(/\}/g, "\n}").replace(/\{/g, "{\n\t"), // TODO:replace with pretty print function
                 
-                // TODO: get actual url from cmdb.js
-                url: 'https://cmdb.ft.com/v2/items/contact/'+encodeURIComponent(encodeURIComponent(req.params.contactid)),
+                url: 'https://cmdb.ft.com/v2/items/contact/'+encodeURIComponent(encodeURIComponent(req.params.contactid)), // TODO:get actual url from cmdb.js
             }
             cleanContact(result, programmeList);
             res.render('contact', result);
@@ -297,8 +295,8 @@ app.post('/contacts/:contactid/delete', function (req, res) {
             // get contact details ready to display error in context
             cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
                 programmeList = programmeNames(programmes);
-                cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
-                    cleanContact(result, programmeList);
+                cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (contact) {
+                    result = cleanContact(contact, programmeList);
                     // display a dependencies exist message
                     result.dependerror = 'Unable to delete this contact, dependencies exist - see below. Please reassign the related items before retrying'
                     res.render('contact', result);
