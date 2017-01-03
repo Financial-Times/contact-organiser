@@ -41,7 +41,6 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 								</div>
-								<input type="hidden" name="sortby" value="{{sortby}}" id=sortby />
 							</div>
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
@@ -66,7 +65,7 @@
 						{{#pages}}
 							{{#faux}}...{{/faux}}
 							{{^faux}}
-								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby={{sortby}}&amp;page={{number}}">{{number}}</a>
+								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;page={{number}}">{{number}}</a>
 							{{/faux}}
 						{{/pages}}
 						</div>
@@ -79,7 +78,6 @@
 							<input type="hidden" name="email" value="{{email}}" />
 							<input type="hidden" name="phone" value="{{phone}}" />
 							<input type="hidden" name="programme" value="{{programme}}" />
-							<input type="hidden" name="sortby" value="{{sortby}}" />
 							{{#indextable}}
 							<input type="hidden" name="index" value="tiles" />
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
