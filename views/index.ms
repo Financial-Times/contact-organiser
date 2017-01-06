@@ -13,7 +13,7 @@
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="dataItemID">ID</label>
-									<small class="o-forms__additional-info">Please be exact.</small>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="dataItemID" value="{{dataItemID}}" class="o-forms__text" id="dataItemID"></input>
 								</div>
 								<div data-o-grid-colspan="3">
@@ -41,7 +41,6 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
 								</div>
-								<input type="hidden" name="sortby" value="{{sortby}}" id=sortby />
 							</div>
 							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
@@ -61,7 +60,15 @@
 					<div data-o-grid-colspan="3">
 						<h2>Existing Contacts ({{contacts.length}})</h2>
 					</div>
-					<div data-o-grid-colspan="2">
+					<div data-o-grid-colspan="4">
+						<div class="o-buttons__pagination">
+						{{#pages}}
+							{{#faux}}...{{/faux}}
+							{{^faux}}
+								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;page={{number}}">{{number}}</a>
+							{{/faux}}
+						{{/pages}}
+						</div>
 					</div>
 					<div data-o-grid-colspan="2">
 						<form id="switch" action="/" method="get">
@@ -71,7 +78,6 @@
 							<input type="hidden" name="email" value="{{email}}" />
 							<input type="hidden" name="phone" value="{{phone}}" />
 							<input type="hidden" name="programme" value="{{programme}}" />
-							<input type="hidden" name="sortby" value="{{sortby}}" />
 							{{#indextable}}
 							<input type="hidden" name="index" value="tiles" />
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
@@ -96,13 +102,15 @@
 					<div data-o-grid-colspan="12">
 						<table class="o-table o-table--row-stripes" data-o-component="o-table">
 							<thead>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=dataItemID">ID</th>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=name">Name</th>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=slack">Slack</th>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=email">Email</th>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=phone">Phone</th>
+								{{#contacts.length}}
+								<th>ID</th>
+								<th>Name</th>
+								<th>Slack</th>
+								<th>Email</th>
+								<th>Phone</th>
 								<th>Contact Preference</th>
-								<th><a href="/?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;sortby=programme">Programme</th>
+								<th>Programme</th>
+								{{/contacts.length}}
 							</thead>
 							<tbody>
 								{{#contacts}}
@@ -115,6 +123,9 @@
 										<td class='truncatePref'>{{contactPref}}</td>
 										<td>{{programme}}</td>
 									</tr>
+								{{/contacts}}
+								{{^contacts}}
+									<div id='emptylist'>Sorry, no records are available. Please adjust your filter</div>
 								{{/contacts}}
 							</tbody>
 						</table>
@@ -142,6 +153,9 @@
 
 						<form action="/contacts/{{id}}"><input type='submit' class="o-buttons edit-button" value='Edit' /></form>
 					</div>
+				{{/contacts}}
+				{{^contacts}}
+					<div id='emptylist'>Sorry, no records are available. Please adjust your filter</div>
 				{{/contacts}}
 				</div>
 			</div>
