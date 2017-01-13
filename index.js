@@ -97,7 +97,7 @@ app.get('/', function (req, res) {
         // prepare pagination links
         pagebuttons = getPageButtons(page, counters['pages'])
         // read one page of contacts
-        cmdb.getItemPageFields(res.locals, 'contact', page, contactFields(req), contactFilter(req)).then(function (contacts) {
+        cmdb.getItemPageFields(res.locals, 'contact', page, contactFields(), contactFilter(req), contactRelatedFields()).then(function (contacts) {
             contacts.forEach(function (contact) {
                 indexController(contact);
             });
@@ -171,11 +171,11 @@ function contactFilter(req) {
     console.log("filter:",cmdbparams)
     return cmdbparams
 }
-
-function contactFields(req) {
+function contactFields() {
     return ["name","slack","email","phone","supportRota","contactPref","programme"];
-//    cmdbparams['objectDetail'] = "False";
-//    cmdbparams['subjectDetail'] = "False";
+}
+function contactRelatedFields() {
+    return 'False' // no related items are to be included
 }
 
 function CompareOnKey(key) {
@@ -195,7 +195,7 @@ function CompareOnKey(key) {
  * Gets info about a given Contact from the CMDB and provides a form for editing it
  */
 app.get('/contacts/:contactid', function (req, res) {
-    cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+    cmdb.getAllItemFields(res.locals, 'contact', programmeFields(), programmeFilter(), programmeRelatedFields()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (result) {
             cleanContact(result, programmeList);
@@ -215,7 +215,7 @@ app.get('/contacts/:contactid', function (req, res) {
  * Provides a form for adding a new contact
  */
 app.get('/new', function (req, res) {
-    cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+    cmdb.getAllItemFields(res.locals, 'contact', programmeFields(), programmeFilter(), programmeRelatedFields()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var defaultdata = {
             name: "",
@@ -257,7 +257,7 @@ app.post('/new', function (req, res) {
  * Send save requests back to the CMDB
  */
 app.post('/contacts/:contactid', function (req, res) {
-    cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+    cmdb.getAllItemFields(res.locals, 'contact', programmeFields(), programmeFilter(), programmeRelatedFields()).then(function (programmes) {
         programmeList = programmeNames(programmes);
         var contact = {
             name: req.body.name,
@@ -303,7 +303,7 @@ app.post('/contacts/:contactid/delete', function (req, res) {
     }).catch(function (error) {
         if (error.toString().includes(" 409 ")) {
             // get contact details ready to display error in context
-            cmdb._fetchAll(res.locals, getProgrammesURL()).then(function (programmes) {
+            cmdb.getAllItemFields(res.locals, 'contact', programmeFields(), programmeFilter(), programmeRelatedFields()).then(function (programmes) {
                 programmeList = programmeNames(programmes);
                 cmdb.getItem(res.locals, 'contact', req.params.contactid).then(function (contact) {
                     result = cleanContact(contact, programmeList);
@@ -339,17 +339,6 @@ app.listen(port, function () {
 });
 
 
-function getProgrammesURL() {
-    var programmesurl = process.env.CMDBAPI + "/items/contact";
-    var params = [];
-    params['outputfields'] = "name";
-    params['contactType'] = "Programme";
-    params['objectDetail'] = "False";
-    params['subjectDetail'] = "False";
-    programmesurl = programmesurl + '?' +querystring.stringify(params);
-    return programmesurl
-}
-
 function programmeNames(programmes) {
     var programmeList = [
             {name: "Undefined", value: "Undefined"},
@@ -358,6 +347,16 @@ function programmeNames(programmes) {
         programmeList.push({name:contact.name, value:contact.name})
     });
     return programmeList
+}
+
+function programmeFields() {
+    return ["name"];
+}
+function programmeFilter() {
+    return {"contactType":"Programme"} // just the programme contacts
+}
+function programmeRelatedFields() {
+    return 'False' // no related items are to be included
 }
 
 /** 
