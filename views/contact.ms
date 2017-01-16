@@ -8,7 +8,8 @@
 				<form action="{{localpath}}" method="post">
 					<div class='link-all'><a href="/"><i class="o-icons-icon o-icons-icon--arrow-left"></i>View all Contacts</a></div>
 					<h1>{{^id}}Add New{{/id}}{{#id}}Edit{{/id}} Contact</h1>
-					{{#saved}}<div class="o-forms-message o-forms-message--highlight" id='saved'>
+					{{#saved}}
+					<div class="o-forms-message o-forms-message--highlight" id='saved'>
 						<p class='success'>Contact data saved succesfully</p>
 						<aside data-collapse='true'>
 							<h3>How can I automate this action?</h3>
@@ -19,7 +20,8 @@
 								<p>NB: both these methods will require an <a href="https://cmdb-key-manager-prod.herokuapp.com/">API Key</a></p>
 							</div>
 						</aside>
-					</div>{{/saved}}
+					</div>
+					{{/saved}}
 
 					<div class="o-forms o-forms--wide {{#dependerror}}o-forms--error{{/dependerror}}">
 						<label class="o-forms__label o-forms__label--required" for="name">Name</label>
@@ -32,8 +34,8 @@
 						<div class="o-forms o-forms--wide {{#iderror}}o-forms--error{{/iderror}}">
 							<label class="o-forms__label" for="id">ID</label>
 							<small class="o-forms__additional-info">A unique identification for the contact (defaults to name).</small>
-							{{#id}}<small class="o-forms__additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/id}}
-							<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms__text" id="id" {{#id}}disabled{{/id}}></input>
+							{{#id}}{{^iderror}}<small class="o-forms__additional-info">Can't be edited after creation.  If incorrect, create a new contact and delete the old one.</small>{{/iderror}}{{/id}}
+							<input type="text" name="id" value="{{id}}" placeholder="{{name}}" default="{{name}}" class="o-forms__text" id="id" {{#id}}{{^iderror}}disabled{{/iderror}}{{/id}}></input>
 							{{#iderror}}<div class="o-forms__errortext">{{iderror}}</div>{{/iderror}}
 						</div>
 					</div>
