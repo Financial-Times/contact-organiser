@@ -231,7 +231,7 @@ app.get('/new', function (req, res) {
         res.render('contact', defaultdata);
     }).catch(function (error) {
         res.status(502);
-        res.render("error", {message: "Unable to read list of programmes from the CMDB ("+error+")"});
+        res.render("error", {message: "Unable to read list of programmes (new get) from the CMDB ("+error+")"});
     });
 });
 
@@ -240,18 +240,32 @@ app.get('/new', function (req, res) {
  * Generates a unique identifier for the new contact, then treats it just like a save
  */
 app.post('/new', function (req, res) {
-    contactid = req.body.id
-    if (!contactid.trim()) {
-        contactid = req.body.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    };
-    cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
-        req.body.iderror = "ID already in use, please re-enter"
-        res.render('contact', req.body);
+    cmdb.getAllItemFields(res.locals, 'contact', programmeFields(), programmeFilter(), programmeRelatedFields()).then(function (programmes) {
+        programmeList = programmeNames(programmes);
+        contactid = req.body.id
+        if (!contactid.trim()) {
+            contactid = req.body.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        };
+        cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
+            req.body.iderror = "ID already in use, please re-enter"
+            res.render('contact', reformatRequest(req, programmeList));
+        }).catch(function (error) {
+            console.log("dup-read:",error)
+            res.redirect(307, '/contacts/' +encodeURIComponent(contactid));
+        });
     }).catch(function (error) {
-        res.redirect(307, '/contacts/' +encodeURIComponent(contactid));
+        res.status(502);
+        res.render("error", {message: "Unable to read list of programmes (new post) from the CMDB ("+error+")"});
     });
 });
 
+function formattedRequest(req, programmeList) {
+    var request = req.body
+    request.ctypeList = getCtypeList(request.contactType);
+    request.programmeList = getProgrammeList(programmeList, request.programme);
+
+    return request
+}
 
 /**
  * Send save requests back to the CMDB
