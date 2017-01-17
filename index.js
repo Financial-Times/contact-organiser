@@ -248,7 +248,7 @@ app.post('/new', function (req, res) {
         };
         cmdb.getItem(res.locals, 'contact', contactid).then(function (contact) {
             req.body.iderror = "ID already in use, please re-enter"
-            res.render('contact', reformatRequest(req, programmeList));
+            res.render('contact', formattedRequest(req, programmeList));
         }).catch(function (error) {
             console.log("dup-read:",error)
             res.redirect(307, '/contacts/' +encodeURIComponent(contactid));
