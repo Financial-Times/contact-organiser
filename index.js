@@ -427,7 +427,7 @@ function cleanContact(contact, programmeList) {
                     if (itemtype == 'endpoint') {
                         relitemlink = endpointTool + contact[reltype][itemtype][relationship].dataItemID
                     }
-                     if (itemtype == 'contact') {
+                    if (itemtype == 'contact') {
                         relitemlink = contactTool + contact[reltype][itemtype][relationship].dataItemID
                     }
                     relationships.push({'reltype': reltype, 'relitem': relitem, 'relitemlink': relitemlink})
@@ -442,7 +442,7 @@ function cleanContact(contact, programmeList) {
     // now add other fields to enable user interface
     contact.localpath = "/contacts/"+encodeURIComponent(contact.id);
     contact.ctypeList = getCtypeList(contact.contactType);
-    contact.status = getStatusList(contact.status);
+    contact.statusList = getStatusList(contact.status);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
     if (!contact.avatar) {
