@@ -227,7 +227,7 @@ app.get('/new', function (req, res) {
             contactPref: "",
             programmeList: getProgrammeList(programmeList, "Undefined"),
             localpath: '/new',
-            status: getStatusList("Active"),
+            statusList: getStatusList("Active"),
         };
         res.render('contact', defaultdata);
     }).catch(function (error) {
@@ -492,7 +492,7 @@ function getStatusList(selected) {
         }
     });
     if (!found) {
-        statusList[statusList.length-1].selected = true;
+        statusList[0].selected = true;
     }
     return statusList;
 }

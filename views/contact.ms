@@ -50,7 +50,7 @@
 
 					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label o-forms__label--required" for="status">Status</label>
-						<small class="o-forms__additional-info">Is this a person, team, company or programme?</small>
+						<small class="o-forms__additional-info">Is this contact type active or retired/left the company?</small>
 						<select class="o-forms__select" id="status" name="status" data-bind="status">
 							{{#statusList}}<option value="{{value}}" default="Active" {{#selected}}selected{{/selected}}>{{name}}</option>{{/statusList}}
 						</select>
