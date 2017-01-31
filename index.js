@@ -468,7 +468,7 @@ function getCtypeList(selected) {
     ];
     var found = false;
     ctypeList.forEach(function (ctype) {
-        if (ctype.value == selected) {
+        if (ctype.value.toLowerCase() == selected.toLowerCase()) {
             ctype.selected = true;
             found = true;
         }
@@ -486,7 +486,7 @@ function getStatusList(selected) {
     ];
     var found = false;
     statusList.forEach(function (status) {
-        if (status.value == selected) {
+        if (status.value.toLowerCase() == selected.toLowerCase()) {
             status.selected = true;
             found = true;
         }
@@ -500,7 +500,7 @@ function getStatusList(selected) {
 function getProgrammeList(programmeList, selected) {
     var found = false;
     programmeList.forEach(function (programme) {
-        if (programme.value == selected) {
+        if (programme.value.toLowerCase() == selected.toLowerCase()) {
             programme.selected = true;
             found = true;
         }
