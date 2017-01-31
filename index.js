@@ -227,6 +227,7 @@ app.get('/new', function (req, res) {
             contactPref: "",
             programmeList: getProgrammeList(programmeList, "Undefined"),
             localpath: '/new',
+            statusList: getStatusList("Active"),
         };
         res.render('contact', defaultdata);
     }).catch(function (error) {
@@ -262,6 +263,7 @@ app.post('/new', function (req, res) {
 function formattedRequest(req, programmeList) {
     var request = req.body
     request.ctypeList = getCtypeList(request.contactType);
+    request.statusList = getStatusList(request.status);
     request.programmeList = getProgrammeList(programmeList, request.programme);
 
     return request
@@ -282,6 +284,7 @@ app.post('/contacts/:contactid', function (req, res) {
             supportRota: req.body.supportRota,
             contactPref: req.body.contactPref,
             programme: req.body.programme,
+            status: req.body.status,
         }
 
         cmdb.putItem(res.locals, 'contact', req.params.contactid, contact).then(function (result) {
@@ -424,7 +427,7 @@ function cleanContact(contact, programmeList) {
                     if (itemtype == 'endpoint') {
                         relitemlink = endpointTool + contact[reltype][itemtype][relationship].dataItemID
                     }
-                     if (itemtype == 'contact') {
+                    if (itemtype == 'contact') {
                         relitemlink = contactTool + contact[reltype][itemtype][relationship].dataItemID
                     }
                     relationships.push({'reltype': reltype, 'relitem': relitem, 'relitemlink': relitemlink})
@@ -439,6 +442,7 @@ function cleanContact(contact, programmeList) {
     // now add other fields to enable user interface
     contact.localpath = "/contacts/"+encodeURIComponent(contact.id);
     contact.ctypeList = getCtypeList(contact.contactType);
+    contact.statusList = getStatusList(contact.status);
     contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
     if (!contact.avatar) {
@@ -473,6 +477,24 @@ function getCtypeList(selected) {
         ctypeList[ctypeList.length-1].selected = true;
     }
     return ctypeList;
+}
+
+function getStatusList(selected) {
+    var statusList = [
+        {name: "Active", value: "Active"},
+        {name: "Inactive", value: "Inactive"},
+    ];
+    var found = false;
+    statusList.forEach(function (status) {
+        if (status.value == selected) {
+            status.selected = true;
+            found = true;
+        }
+    });
+    if (!found) {
+        statusList[0].selected = true;
+    }
+    return statusList;
 }
 
 function getProgrammeList(programmeList, selected) {

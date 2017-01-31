@@ -4,7 +4,7 @@ machine:
 
 deployment:
   dev:
-    branch: exclude_related
+    branch: DET-6-retired-state-for-contacts
     commands:
       - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow

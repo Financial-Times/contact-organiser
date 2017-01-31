@@ -49,6 +49,14 @@
 					</div>
 
 					<div class="o-forms o-forms--wide">
+						<label class="o-forms__label o-forms__label--required" for="status">Status</label>
+						<small class="o-forms__additional-info">Is this contact type still active?</small>
+						<select class="o-forms__select" id="status" name="status" data-bind="status">
+							{{#statusList}}<option value="{{value}}" default="Active" {{#selected}}selected{{/selected}}>{{name}}</option>{{/statusList}}
+						</select>
+					</div>
+
+					<div class="o-forms o-forms--wide">
 						<label class="o-forms__label" for="slack">Slack Channel</label>
 						<div class="o-forms-affix-wrapper">
 							<span class="o-forms-prefix">#</span>
