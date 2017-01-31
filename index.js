@@ -86,7 +86,7 @@ app.use(function(req, res, next) {
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-    console.timeEnd('CMDB api call for contact count')
+    console.time('CMDB api call for contacts count')
     cmdb.getItemCount(res.locals, 'contact', contactFilter(req)).then(function (counters) {
         console.timeEnd('CMDB api call for contacts count')
         console.log(counters)

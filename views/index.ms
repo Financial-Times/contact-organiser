@@ -31,6 +31,8 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="email" value="{{email}}" class="o-forms__text" id="email"></input>
 								</div>
+							</div>
+							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="phone">Phone</label>
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
