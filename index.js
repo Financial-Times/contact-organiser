@@ -172,7 +172,7 @@ function contactFilter(req) {
     return cmdbparams
 }
 function contactFields() {
-    return ["name","slack","email","phone","supportRota","contactPref","programme"];
+    return ["name","slack","email","phone","supportRota","contactType","contactPref","programme"];
 }
 function contactRelatedFields() {
     return 'False' // no related items are to be included
