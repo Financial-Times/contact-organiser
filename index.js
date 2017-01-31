@@ -467,6 +467,9 @@ function getCtypeList(selected) {
         {name: "Undefined", value: "Undefined"},
     ];
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     ctypeList.forEach(function (ctype) {
         if (ctype.value.toLowerCase() == selected.toLowerCase()) {
             ctype.selected = true;
@@ -483,8 +486,12 @@ function getStatusList(selected) {
     var statusList = [
         {name: "Active", value: "Active"},
         {name: "Inactive", value: "Inactive"},
+        {name: "Undefined", value: "Undefined"},
     ];
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     statusList.forEach(function (status) {
         if (status.value.toLowerCase() == selected.toLowerCase()) {
             status.selected = true;
@@ -492,13 +499,16 @@ function getStatusList(selected) {
         }
     });
     if (!found) {
-        statusList[0].selected = true;
+        statusList[statusList.length-1].selected = true;
     }
     return statusList;
 }
 
 function getProgrammeList(programmeList, selected) {
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     programmeList.forEach(function (programme) {
         if (programme.value.toLowerCase() == selected.toLowerCase()) {
             programme.selected = true;
