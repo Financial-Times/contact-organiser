@@ -86,7 +86,7 @@ app.use(function(req, res, next) {
  * Gets a list of Contacts from the CMDB and renders them nicely
  */
 app.get('/', function (req, res) {
-    console.timeEnd('CMDB api call for contact count')
+    console.time('CMDB api call for contacts count')
     cmdb.getItemCount(res.locals, 'contact', contactFilter(req)).then(function (counters) {
         console.timeEnd('CMDB api call for contacts count')
         console.log(counters)
@@ -172,7 +172,7 @@ function contactFilter(req) {
     return cmdbparams
 }
 function contactFields() {
-    return ["name","slack","email","phone","supportRota","contactPref","programme"];
+    return ["name","slack","email","phone","supportRota","contactType","contactPref","programme"];
 }
 function contactRelatedFields() {
     return 'False' // no related items are to be included
@@ -467,8 +467,11 @@ function getCtypeList(selected) {
         {name: "Undefined", value: "Undefined"},
     ];
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     ctypeList.forEach(function (ctype) {
-        if (ctype.value == selected) {
+        if (ctype.value.toLowerCase() == selected.toLowerCase()) {
             ctype.selected = true;
             found = true;
         }
@@ -483,24 +486,31 @@ function getStatusList(selected) {
     var statusList = [
         {name: "Active", value: "Active"},
         {name: "Inactive", value: "Inactive"},
+        {name: "Undefined", value: "Undefined"},
     ];
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     statusList.forEach(function (status) {
-        if (status.value == selected) {
+        if (status.value.toLowerCase() == selected.toLowerCase()) {
             status.selected = true;
             found = true;
         }
     });
     if (!found) {
-        statusList[0].selected = true;
+        statusList[statusList.length-1].selected = true;
     }
     return statusList;
 }
 
 function getProgrammeList(programmeList, selected) {
     var found = false;
+    if (!selected) {
+        selected = "Undefined"
+    }
     programmeList.forEach(function (programme) {
-        if (programme.value == selected) {
+        if (programme.value.toLowerCase() == selected.toLowerCase()) {
             programme.selected = true;
             found = true;
         }

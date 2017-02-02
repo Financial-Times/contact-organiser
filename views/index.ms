@@ -31,6 +31,8 @@
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="email" value="{{email}}" class="o-forms__text" id="email"></input>
 								</div>
+							</div>
+							<div class="o-grid-row">
 								<div data-o-grid-colspan="3">
 									<label class="o-forms__label" for="phone">Phone</label>
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
@@ -40,6 +42,16 @@
 									<label class="o-forms__label" for="programme">Programme</label>
 									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
 									<input name="programme" value="{{programme}}" class="o-forms__text" id="programme"></input>
+								</div>
+								<div data-o-grid-colspan="3">
+									<label class="o-forms__label" for="contactType">Contact Type</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
+									<input name="contactType" value="{{contactType}}" class="o-forms__text" id="contactType"></input>
+								</div>
+								<div data-o-grid-colspan="3">
+									<label class="o-forms__label" for="contactPref">Contact Pref</label>
+									<small class="o-forms__additional-info">Wildcards (* and ?) can be used.</small>
+									<input name="contactPref" value="{{contactPref}}" class="o-forms__text" id="contactPref"></input>
 								</div>
 							</div>
 							<div class="o-grid-row">
@@ -65,7 +77,7 @@
 						{{#pages}}
 							{{#faux}}...{{/faux}}
 							{{^faux}}
-								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;page={{number}}">{{number}}</a>
+								<a class="o-buttons" aria-selected="{{selected}}" href="?dataItemID={{dataItemID}}&amp;name={{name}}&amp;slack={{slack}}&amp;email={{email}}&amp;phone={{phone}}&amp;programme={{programme}}&amp;contactType={{contactType}}&amp;contactPref={{contactPref}}&amp;page={{number}}">{{number}}</a>
 							{{/faux}}
 						{{/pages}}
 						</div>
@@ -78,6 +90,8 @@
 							<input type="hidden" name="email" value="{{email}}" />
 							<input type="hidden" name="phone" value="{{phone}}" />
 							<input type="hidden" name="programme" value="{{programme}}" />
+							<input type="hidden" name="contactType" value="{{contectType}}" />
+							<input type="hidden" name="contactPref" value="{{contactPref}}" />
 							{{#indextable}}
 							<input type="hidden" name="index" value="tiles" />
 							<input type='submit' class="o-buttons o-buttons--standout o-buttons--big" value='Show Tiles' />
