@@ -4,7 +4,7 @@ machine:
 
 deployment:
   dev:
-    branch: det-4
+    branch: DET-153
     commands:
       - heroku maintenance:on --app oi-contact-organiser-dev
       - git fetch origin --unshallow
