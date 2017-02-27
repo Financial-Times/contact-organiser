@@ -26,6 +26,7 @@ deployment:
       - git fetch origin --unshallow
       - git push git@heroku.com:oi-contact-organiser.git $CIRCLE_SHA1:refs/heads/master
       - heroku maintenance:off --app oi-contact-organiser
+      - bash <(curl -s https://raw.githubusercontent.com/Financial-Times/konstructor-services-scripts/master/raiselog) -s contact-organiser
 
 test:
   override:
