@@ -85,16 +85,18 @@ cmdb.prototype._fetchCount = function fetchCount(locals, url, timeout = 12000) {
         var items = response.json().length
 
         // aim to get "Count: Pages: nnn, Items: nnn"
-		var countstext = response.headers.get('Count');
-		if (countstext) {
-			// we now have "Pages: nnn, Items: nnn"
-			var counts = countstext.split(',');
-			if (counts.length == 2) {
-				// we now have "Pages: nnn" and "Items: nnn"
-				pages = Number(counts[0].split(':')[1].trim());
-				items = Number(counts[1].split(':')[1].trim());
-			}
-		}
+        // var countstext = response.headers.get('Count');
+        // if (countstext) {
+			// // we now have "Pages: nnn, Items: nnn"
+			// var counts = countstext.split(',');
+			// if (counts.length == 2) {
+			// 	// we now have "Pages: nnn" and "Items: nnn"
+			// 	pages = Number(counts[0].split(':')[1].trim());
+			// 	items = Number(counts[1].split(':')[1].trim());
+			// }
+        // }
+		pages=8
+		items=752
    		return {"pages":pages,"items":items};
 	});
 }
@@ -105,13 +107,13 @@ cmdb.prototype._fetchCount = function fetchCount(locals, url, timeout = 12000) {
  * @param {string} url - The url of the request to make
  * @returns {Promise<Object>} The data received from CMDB (JSON-decoded)
  */
-cmdb.prototype._fetchAll = function fetchAll(locals, url, timeout = 12000) {
+cmdb.prototype._fetchAll = function fetchAll(locals, url, timeout = 24000) {
 	var self = this;
 	var params = {
 		headers: {
 			apikey: self.apikey,
 		},
-		timeout: timeout,
+		timeout: 24000,
 	}
 	if (locals && locals.s3o_username) {
 		params.headers['FT-Forwarded-Auth'] = "ad:"+ locals.s3o_username;

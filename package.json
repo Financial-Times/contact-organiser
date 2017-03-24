@@ -22,8 +22,10 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "cmdb.js": "^1.0.0",
+    "es6-promise": "^4.1.0",
     "express": "^4.13.4",
     "express-ftwebservice": "^2.2.2",
+    "isomorphic-fetch": "^2.2.1",
     "mustache-express": "^1.2.2",
     "node-uuid": "^1.4.7",
     "request": "^2.69.0",

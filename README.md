@@ -18,3 +18,12 @@ All environment variables are optional.
 To allow for a development verison of cmdb.js you may also define the following environmental variable to force runtime execution of a copy of cmdb.js from within the same directory as index.js. If the environmental variable is not present then the latest production npm verion of cmd.bjs will be used.
 
 - _LOCALCMDBJS_ 
+
+
+TODOs:
+
+- Try and remove encoding of URLs in cmdb.js encoding
+- Add two headers for pagination for Items, Pages, Links ( page before and after)
+- Add query strings to our AWS CMDB
+-- Special query strings : outputfields
+- page get all
