@@ -509,10 +509,14 @@ function getProgrammeList(programmeList, selected) {
     if (!selected) {
         selected = "Undefined"
     }
+    var i = 0
     programmeList.forEach(function (programme) {
-        if (programme.value.toLowerCase() == selected.toLowerCase()) {
+        console.log(i)
+        i = i + 1
+        if (programme.value!=null && (programme.value.toLowerCase() == selected.toLowerCase())) {
             programme.selected = true;
             found = true;
+            return
         }
     });
     if (!found) {
