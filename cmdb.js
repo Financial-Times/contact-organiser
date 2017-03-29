@@ -27,7 +27,7 @@ cmdb.prototype._fetch = function _fetch(locals, path, query, method, body, timeo
 	var params = {
 		headers: {
 			apikey: this.apikey,
-			x-api-key: this.apikey
+			"x-api-key": this.apikey
 		},
 		timeout: timeout,
 	}
@@ -68,7 +68,7 @@ cmdb.prototype._fetchCount = function fetchCount(locals, url, timeout = 12000) {
 	var params = {
 		headers: {
 			apikey: self.apikey,
-			x-api-key: self.apikey
+			"x-api-key": self.apikey
 		},
 		timeout: timeout,
 	}
@@ -115,7 +115,7 @@ cmdb.prototype._fetchAll = function fetchAll(locals, url, timeout = 12000) {
 	var params = {
 		headers: {
 			apikey: self.apikey,
-			x-api-key: self.apikey
+			"x-api-key": self.apikey
 		},
 		timeout: timeout,
 	}
