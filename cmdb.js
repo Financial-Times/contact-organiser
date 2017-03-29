@@ -40,7 +40,10 @@ cmdb.prototype._fetch = function _fetch(locals, path, query, method, body, timeo
 	}
 
 	// HACK: CMDB decodes paths before they hit its router, so do an extra encode on the whole path here
-	// path = encodeURIComponent(path);
+	// Check for existence of CMDBV3 variable to avoid encoding
+    if (!process.env.CMDBV3) {
+		path = encodeURIComponent(path);
+    }
 	if (query) {
 		path = path + "?" + query
 	}

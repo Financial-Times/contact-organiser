@@ -471,7 +471,7 @@ function getCtypeList(selected) {
         selected = "Undefined"
     }
     ctypeList.forEach(function (ctype) {
-        if (ctype.value.toLowerCase() == selected.toLowerCase()) {
+        if (ctype.value && ctype.value.toLowerCase() == selected.toLowerCase()) {
             ctype.selected = true;
             found = true;
         }
@@ -493,7 +493,7 @@ function getStatusList(selected) {
         selected = "Undefined"
     }
     statusList.forEach(function (status) {
-        if (status.value.toLowerCase() == selected.toLowerCase()) {
+        if (status.value && status.value.toLowerCase() == selected.toLowerCase()) {
             status.selected = true;
             found = true;
         }
@@ -509,14 +509,10 @@ function getProgrammeList(programmeList, selected) {
     if (!selected) {
         selected = "Undefined"
     }
-    var i = 0
     programmeList.forEach(function (programme) {
-        console.log(i)
-        i = i + 1
-        if (programme.value!=null && (programme.value.toLowerCase() == selected.toLowerCase())) {
+        if (programme.value && programme.value.toLowerCase() == selected.toLowerCase()) {
             programme.selected = true;
             found = true;
-            return
         }
     });
     if (!found) {
