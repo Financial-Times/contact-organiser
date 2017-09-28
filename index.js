@@ -172,7 +172,7 @@ function contactFilter(req) {
     return cmdbparams
 }
 function contactFields() {
-    return ["name","slack","email","phone","supportRota","contactType","contactPref","programme"];
+    return ["name","slack","email","phone"];//,"supportRota","contactType","contactPref","programme"];
 }
 function contactRelatedFields() {
     return 'False' // no related items are to be included
@@ -443,7 +443,7 @@ function cleanContact(contact, programmeList) {
     contact.localpath = "/contacts/"+encodeURIComponent(contact.id);
     contact.ctypeList = getCtypeList(contact.contactType);
     contact.statusList = getStatusList(contact.status);
-    contact.programmeList = getProgrammeList(programmeList, contact.programme);
+//    contact.programmeList = getProgrammeList(programmeList, contact.programme);
 
     if (!contact.avatar) {
 
