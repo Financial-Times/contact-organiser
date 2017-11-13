@@ -78,7 +78,7 @@ ftwebservice(app, {
 var authS3O = require('s3o-middleware');
 app.use(authS3O);
 app.use(function(req, res, next) {
-  res.setHeader('Cache-Control', 'private, no-store, max-age=0');
+  res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate, max-age=0');
   next();
 });
 
