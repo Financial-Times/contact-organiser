@@ -53,6 +53,10 @@ body {
 	background-color: #e9decf;
 }
 
+.warning-row {
+	background-color: white;
+    text-indent: -1em;
+}
 
 /* contact */
 
